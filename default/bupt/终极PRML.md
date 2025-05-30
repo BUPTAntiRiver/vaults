@@ -183,7 +183,38 @@ $$0\leq H(P)\leq \log|X|$$
 
 假设分类模型是一个条件概率分布 $P(Y|X)$，表示对于给定的输入 $X$ 以 $P(Y|X)$ 输出 $Y$。
 对于给定的训练数据集，我们可以确定 $P(X,Y)$ 和 $P(X)$ 的经验分布。用 $\tilde P(X,Y)$ 和 $\tilde P(X)$ 表示。
-用特征函数
+用**特征函数** $f(x,y)$ 描述输入输出 $x,y$ 之间的某一个事实，其定义是
+
+$$
+f(x,y)=\begin{cases}
+1, & x,y\ 满足某种条件\\
+0, & 否则
+\end{cases}
+$$
+
+它是一个认为定义的二值函数，此处所说的“某种条件”比较难以理解，其实特征函数就是一个**筛选函数**，满足这个条件的样本才会被纳入考虑，这也是为什么我们会人为设定特征函数。
+最大熵模型是一个**优化问题**，优化问题就涉及到**目标函数**和**约束条件**，最大熵模型的目标函数就是**条件熵**，约束条件是实际的概率分布的期望与数据的概率分布的**期望相同**。
+于是建模如下：
+
+$$
+\begin{align}
+\min_{P\in\text{C}}\quad &-H(P)=\sum_{x,y}\tilde P(x)P(y|x)\log P(y|x)\\
+\text{s.t} \quad &E_P(f_i)-\tilde E_P(f_i)=0,\quad i=1,\ldots,n\\
+&\sum_y
+P(y|x)=1\end{align}
+$$
+
+同样的为了求解优化问题我们进行拉格朗日**对偶化**
+
+$$
+\begin{align}
+L(P,w)\equiv &-H(P)+w_0\left(1-\sum_yP(y|x)\right)+\sum_{i=1}^nw_i\left(E_P(f_i)-\tilde E_P(f_i)\right)\\
+=&\sum_{x,y}\tilde P(x)P(y|x)\log P(y|x)+w_0\left(1-\sum_yP(y|x)\right)+\\
+&\sum_{i=1}^nw_i\left(\sum_{x,y}\tilde P(x,y)f_i(x,y)-\sum_{x,y}\tilde P(x)P(y|x)f_i(x,y)\right)
+\end{align}
+$$
+
+两个期望的定义就在此处，前面就不重复了。
 
 # Lecture 5 Ensemble Learning 集成学习
 
