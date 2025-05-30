@@ -215,6 +215,7 @@ L(P,w)\equiv &-H(P)+w_0\left(1-\sum_yP(y|x)\right)+\sum_{i=1}^nw_i\left(E_P(f_i)
 $$
 
 两个期望的定义就在此处，前面就不重复了。
+求解就是先极小再极大，令偏导为 0 等等。
 
 # Lecture 5 Ensemble Learning 集成学习
 
