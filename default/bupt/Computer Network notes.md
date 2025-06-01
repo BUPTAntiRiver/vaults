@@ -84,7 +84,7 @@ Self-learning: when received data from a host, remember its sender, and check wh
 Traditional networks that the services are provided by a **base station**.
 ##### Ad hoc networks 自组网
 Has **no base station**, the hosts themselves must provide for services like routing, DNS-like name translation, address assignment and more.
-#### Avoiding collisions
+#### Avoiding collisions 冲突避免 
 A 先传输一段较短的 RTS 来建立通道，如果确认收到 RTS 则广播相应的 CTS 表明确立通道，防止其他主机传输数据，然后 A 再传输全部的数据，BS 确认收到后发送 ACK
 #### Cellular network 蜂窝网
 #### Mobility

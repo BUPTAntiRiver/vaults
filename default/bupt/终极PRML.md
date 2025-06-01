@@ -346,21 +346,21 @@ EM 算法所做的就是：
 ##### Forward recursion for HMM
 
 定义前向变量 $\alpha_k(i)$ 表示观测到序列 $o_1o_2\ldots o_k$ 且在第 $k$ 步的隐状态是 $s_i$的联合概率。
-$\alpha_k(i)=P(o_1o_2\ldots o_k,q_k=s_i)$
+$$\alpha_k(i)=P(o_1o_2\ldots o_k,q_k=s_i)$$
 
 ###### 初始化
 
 假设有 $N$ 个隐状态，序列长度为 $K$
-$\alpha_1(i)=P(o_1,q_1=s_i)=\pi_i b_i(o_1),1\leq i\leq N$
+$$\alpha_1(i)=P(o_1,q_1=s_i)=\pi_i b_i(o_1),1\leq i\leq N$$
 
 ###### 前向递归
 
-$\alpha_{k+1}(i)=[\sum_j\alpha_k(j)a_{ji}]b_i$
+$$\alpha_{k+1}(i)=[\sum_j\alpha_k(j)a_{ji}]b_i$$
 
 ###### 结束
 
 $M$ 表示参数。
-$P(o_1o_2\ldots o_K|M)=\sum_i \alpha_K(i)$
+$$P(o_1o_2\ldots o_K|M)=\sum_i \alpha_K(i)$$
 
 ##### Backward Recursion for HMM
 
