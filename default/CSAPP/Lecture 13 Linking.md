@@ -12,9 +12,21 @@
 2. Relocation
    把所有代码和数据整合到一起，同时调整每个符号的地址，使得最终它们在内存中的可执行区域。当然也要更新对于这些符号的引用。
 
+#### Object files
+
 我们有三种 Object 文件，也就是所谓的模块。
 
 - Relocatable object file (`.o` file)
   包含代码和数据，不过是一种全新的形式，可以和其他 Relocatable object file 结合形成可执行对象文件。每个 `.o` 文件都由一个对应的 `.c` 文件得到。
+- Executable object file (`.out` file)
+  包含代码和数据，可以直接复制到内存中然后运行。
+- Shared object file (`.so` file)
+  一种特殊的 Relocatable object file 可以动态地被加载入内存或者链接，在加载时或者运行时。
+
+#### Linker Symbols
+
+- Global symbols
+- External symbols
+- Local symbols
 
 # Case Study: Library Interpositioning
