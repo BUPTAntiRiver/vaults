@@ -314,7 +314,7 @@ EM 算法所做的就是：
    完整的 EM 算法如下：
    Repeat until convergence {
    (E-step) For each $i$, set
-   $Q_i(z^{(i)}):=p(z^{(i)}|x^{(i)};\theta)$.
+   $$Q_i(z^{(i)}):=p(z^{(i)}|x^{(i)};\theta)$$.
    (M-step) Set
    $$
    \begin{align}
@@ -439,7 +439,7 @@ $$
 $$
 \begin{align}
 \delta_k(i)&=\max_j[\delta_{k-1}(j)a_{ji}]b_i(o_k)\quad 1\leq i\leq N\\
-\psi_1(i)&=\arg\max_j[\delta_{k-1}(j)a_{ji}\quad 1\leq i\leq N
+\psi_1(i)&=\arg\max_j[\delta_{k-1}(j)a_{ji}]\quad 1\leq i\leq N
 \end{align}
 $$
 
