@@ -20,6 +20,8 @@
   3.  估计参数
 - Inference 推理，找到问题的最优解。
 
+---
+
 # Lecture 2 决策树
 
 以数据的 Attribute 为节点，根据 Attribute 不同的值进行分割，生成相应数量的新节点，可以继续用其他的 Attribute 分割，或者以分割得到的子集中**个数最多**的元素作为节点的 Value 生成一个叶子节点。当分割结束决策树生成完毕。
@@ -68,6 +70,8 @@ $I$ 为指示函数。
 遍历切分变量 $j$，以及切分点 $s$ 选择预测误差最小的情况。
 $$\min_{j,s}[\min_{c_1}\sum_{x_i\in R_1(j,s)}(y_i-c_1)^2+\min_{c_2}\sum_{x_i\in R_2(j,s)}(y_i-c_2)^2]$$
 此处的 $R_1,R_2$ 即切分后的左右两侧。
+
+---
 
 # Lecture 3 Perceptron & SVM
 
@@ -170,6 +174,8 @@ $$K(x,z)=\left\langle\phi(x),\phi(z)\right\rangle$$
 其中 $\left\langle\right\rangle$ 表示点积，核函数相当于高维空间中的点积。
 并非所有的函数可以当作核函数，需要使用时可以搜索。
 
+---
+
 # Lecture 4 Maximum Entropy
 
 ## 最大熵原理
@@ -217,6 +223,8 @@ $$
 两个期望的定义就在此处，前面就不重复了。
 求解就是先极小再极大，令偏导为 0 等等。
 
+---
+
 # Lecture 5 Ensemble Learning 集成学习
 
 多个弱模型合起来变成一个强模型。
@@ -244,6 +252,8 @@ AdaBoost 主要做两件事情：
    不断重复知道达到终止条件如准确率。
 
 ## 提升树 Boosting Tree
+
+---
 
 # Lecture 6 Expectation Maximization
 
@@ -313,6 +323,8 @@ EM 算法所做的就是：
    		\end{align}
    $$
    }
+
+---
 
 # Lecture 7 隐马尔可夫模型 HMM
 
@@ -439,6 +451,8 @@ $$P^*=\arg\max_i[\delta_K(i)] \quad 1\leq i\leq N$$
 
 $$i^*_k=\psi_{k+1}(i^*_{k+1})\quad k=K-1,K-2,\ldots,1$$
 最优路径 $I^*=(i^*_1,\ldots,i^*_K)$
+
+---
 
 # Lecture 8 条件随机场
 
