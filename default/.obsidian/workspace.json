@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "1d9e4ffa78f9b4d9",
@@ -172,9 +173,9 @@
   },
   "active": "45ebdbaec180b836",
   "lastOpenFiles": [
-    "bupt/形式语言与自动机.md",
-    "bupt/PRML.md",
     "bupt/计算机网络.md",
+    "bupt/PRML.md",
+    "bupt/形式语言与自动机.md",
     "bupt/毛概.md",
     "CSAPP/Lecture 14 Exceptional Control Flow.md",
     "CSAPP/Lecture 13 Linking.md",

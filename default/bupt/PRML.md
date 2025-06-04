@@ -56,8 +56,8 @@ $$\text{Gini}(D,A)=\dfrac{|D_1|}{|D|}\text{Gini}(D_1)+\dfrac{|D_2|}{|D|}\text{Gi
 ### Misclassification Error
 
 $$E(D)=1-\underset{k}{\max}\dfrac{|C_k|}{|D|}$$
-分割后的 ME 添加分割类别的权重。
-其中，$D$ 为数据集，$C_k$ 为数据集中属于第 $k$ 类的样本集合。
+分割后的 ME 添加分割属性的权重。
+其中，$D$ 为数据集，$C_k$ 为数据集中 label 属于第 $k$ 类的样本集合。
 选择 Misclassification Error **最小**的。
 
 ## 回归
@@ -344,7 +344,7 @@ EM 算法所做的就是：
    完整的 EM 算法如下：
    Repeat until convergence {
    (E-step) For each $i$, set
-   $$Q_i(z^{(i)}):=p(z^{(i)}|x^{(i)};\theta)$$.
+   $$Q_i(z^{(i)}):=p(z^{(i)}|x^{(i)};\theta)$$
    (M-step) Set
    $$
    \begin{align}
