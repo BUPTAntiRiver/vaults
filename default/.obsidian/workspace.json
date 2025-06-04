@@ -35,8 +35,7 @@
               "title": "PRML"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -157,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "bupt/PRML.md",
+                "file": "bupt/计算机网络.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of PRML"
+              "title": "Outline of 计算机网络"
             }
           }
         ],
@@ -185,10 +184,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3b0937663927f3ed",
+  "active": "45ebdbaec180b836",
   "lastOpenFiles": [
-    "bupt/计算机网络.md",
     "bupt/PRML.md",
+    "bupt/计算机网络.md",
     "bupt/毛概.md",
     "bupt/形式语言与自动机.md",
     "CSAPP/Lecture 14 Exceptional Control Flow.md",
