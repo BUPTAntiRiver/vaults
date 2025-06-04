@@ -1,4 +1,4 @@
-# Lecture 1: 介绍
+# Lecture 1 介绍
 
 什么是机器学习？
 从拥有某种表现度量方法$P$的任务$T$的经验$E$中学习，并且能够提升$T$在$P$下的表现。
@@ -104,6 +104,19 @@ $b\leftarrow b+\eta y_i$
 #### 对偶形式
 
 从原形式中我们发现，每次对 $w,b$ 进行更新变化的值都是固定的，因此我们可以通过记录某个误分类点被选取的次数来进行计算。
+
+$$
+\begin{aligned}
+w&=\sum_{i=1}^N\alpha_iy_ix_i\\
+b&=\sum_{i=1}^N\alpha_iy_i\\
+\alpha_i&=n_i\eta
+\end{aligned}
+$$
+
+$n_i$ 表示第 $i$ 个实例点由于误分类而进行更新的次数.
+于是当我们进行更新时, 可以简化为如果 $y_i(\sum_{j=1}^N\alpha_jy_jx_j\cdot x_i+b)\leq 0$ 那么更新次数加一
+$\alpha_i\leftarrow \alpha_i + \eta$
+$b\leftarrow b+\eta y_i$
 
 ## SVM 支持向量机
 
@@ -252,6 +265,23 @@ AdaBoost 主要做两件事情：
    不断重复知道达到终止条件如准确率。
 
 ## 提升树 Boosting Tree
+
+提升方法采用**加法模型**（即基函数的线性组合）与**前向分布算法**，以决策树为基函数的提升方法即为**提升树**。对于分类（回归）问题，我们就使用二叉分类（回归）树。
+提升树模型可以表示为决策树的加法模型：
+$$f_M(x)=\sum_{m=1}^MT(x;\Theta_m)$$
+其中，$T(x;\Theta_m)$ 表示决策树，$\Theta_m$ 表示决策树的参数，$M$ 为树的个数。
+
+### 提升树算法
+
+注：在提升树算法中所使用的决策树都是决策树桩，即只有一个分裂节点的决策树。
+提升树采用前向分布算法。首先确定初始提升树 $f_0(x)=0$，第 $m$ 步的模型是
+$$f_m(x)=f_{m-1}(x)+T(x;\Theta_m)$$
+通过经验风险极小化确定下一颗树的参数 $\Theta_m$
+$$\hat\Theta_m=\arg\min_{\Theta_m}\sum_{i=1}^NL(y_i,f_{m-1}(x_i)+T(x_i;\Theta_m))$$
+此处的损失函数为前向分布算法中的指数损失函数
+$$L(y,f(x))=\exp(-yf(x))$$
+其实对于**分类问题**来说提升树可以理解为 Adaboost 的一个特殊情况，接下来讨论**回归问题**。
+其实差别也不大，算法没什么改变。只是损失函数会发生变化，可以使用**平方误差损失函数**，如果使用更加一般的损失函数，那么就引出了**梯度提升算法**，其实也是一个道理，求偏导置零的思想，前面的所有损失函数都可以理解为特例。
 
 ---
 
@@ -439,13 +469,13 @@ $$
 $$
 \begin{align}
 \delta_k(i)&=\max_j[\delta_{k-1}(j)a_{ji}]b_i(o_k)\quad 1\leq i\leq N\\
-\psi_1(i)&=\arg\max_j[\delta_{k-1}(j)a_{ji}]\quad 1\leq i\leq N
+\psi_k(i)&=\arg\max_j[\delta_{k-1}(j)a_{ji}]\quad 1\leq i\leq N
 \end{align}
 $$
 
 ##### 结束
 
-$$P^*=\arg\max_i[\delta_K(i)] \quad 1\leq i\leq N$$
+$$P^*=\arg\max_i[\delta_K(i)],\ i^*_K =\arg\max_i[\delta_K(i)]\quad 1\leq i\leq N$$
 
 ##### 反向计算最优路径
 
@@ -480,3 +510,7 @@ CRF 对一个观测序列下某个标签序列的条件概率建模。
   \phi_t(y_t,y_{t-1},x)&=\exp\left(\sum_{k}\lambda_kf_k(y_t,y_{t-1},x,t)\right)
   \end{align}
   $$
+
+### 矩阵表示
+
+理解起来比较简单, 要注意规范化. 规范化因子可通过观察矩阵乘法结果获得.

@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "371c70cd0a2711bf",
+        "id": "53016cafe449a203",
         "type": "tabs",
         "children": [
           {
-            "id": "f9553c49b11b71fc",
+            "id": "45ebdbaec180b836",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "bupt/终极PRML.md",
+                "file": "bupt/PRML.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "终极PRML"
+              "title": "PRML"
             }
           }
         ]
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "1d9e4ffa78f9b4d9",
@@ -143,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "bupt/终极PRML.md",
+                "file": "bupt/PRML.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 终极PRML"
+              "title": "Outline of PRML"
             }
           }
         ],
@@ -157,7 +156,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -170,22 +170,22 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "f9553c49b11b71fc",
+  "active": "45ebdbaec180b836",
   "lastOpenFiles": [
+    "bupt/形式语言与自动机.md",
+    "bupt/PRML.md",
+    "bupt/计算机网络.md",
+    "bupt/毛概.md",
     "CSAPP/Lecture 14 Exceptional Control Flow.md",
     "CSAPP/Lecture 13 Linking.md",
-    "bupt/终极PRML.md",
     "CSAPP/Lecture 12 Cache Memories.md",
     "拉格朗日对偶 Lagrange duality.md",
-    "bupt/终极形式语言与自动机.md",
-    "bupt/终极计算机网络.md",
     "CSAPP/Cache Lab.md",
     "CSAPP/Bomb Lab.md",
     "CSAPP/CSAPP.md",
     "CSAPP/Lecture 07 Machine-Level Programming 3 Procedures.md",
     "CSAPP/Lecture 11 Memory Hierarchy.md",
     "CSAPP/Attack Lab.md",
-    "bupt/形式语言与自动机.md",
     "CSAPP/Lecture 09 Machine-Level Programming 5 Advanced Topics.md",
     "CSAPP/Lecture 10 Programme Optimization.md",
     "CSAPP/Lecture 08 Machine-Level Programming 4 Data.md",
@@ -197,7 +197,6 @@
     "Machine Learning/Quantization - TinyML.md",
     "Machine Learning/Pruning and Sparsity - TinyML.md",
     "Machine Learning/GPU.md",
-    "Machine Learning/GANs.md",
     "Unclassified",
     "Templates",
     "CSAPP",
