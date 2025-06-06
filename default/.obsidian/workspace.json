@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "1d9e4ffa78f9b4d9",
@@ -179,20 +180,21 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "b1bd9e9cb2f7eb89",
+  "active": "c7aa147c97136ea4",
   "lastOpenFiles": [
-    "Untitled.canvas",
-    "2025-06-06.md",
-    "bupt/计算机网络.md",
+    "拉格朗日对偶 Lagrange duality.md",
+    "Intercultural Communication Scenario.md",
     "bupt/PRML.md",
     "hw13.md",
+    "Untitled.md",
+    "bupt/计算机网络.md",
     "bupt/形式语言与自动机.md",
     "bupt/毛概.md",
+    "Untitled.canvas",
+    "2025-06-06.md",
     "CSAPP/Lecture 14 Exceptional Control Flow.md",
-    "Intercultural Communication Scenario.md",
     "CSAPP/Lecture 13 Linking.md",
     "CSAPP/Lecture 12 Cache Memories.md",
-    "拉格朗日对偶 Lagrange duality.md",
     "CSAPP/Cache Lab.md",
     "CSAPP/Bomb Lab.md",
     "CSAPP/CSAPP.md",
