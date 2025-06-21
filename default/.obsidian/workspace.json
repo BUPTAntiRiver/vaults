@@ -11,10 +11,14 @@
             "id": "9d7511e5fa08ad14",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "bupt/PRML.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "PRML"
             }
           }
         ]
@@ -175,8 +179,15 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "9d7511e5fa08ad14",
+  "active": "b79b4c5f29a7881e",
   "lastOpenFiles": [
+    "bupt/形式语言与自动机.md",
+    "bupt/计算机网络.md",
+    "bupt/毛概.md",
+    "诗词/别.md",
+    "诗词/山鬼.md",
+    "诗词/忆江南·夏至.md",
+    "诗词/如梦令·盹睡.md",
     "CSAPP/Lecture 19 & 20 Dynamic Memory Allocation.md",
     "CSAPP/Proxy Lab.md",
     "CSAPP/Attack Lab.md",
@@ -185,15 +196,9 @@
     "CSAPP/CSAPP.md",
     "CSAPP/Malloc Lab.md",
     "Untitled.md",
-    "诗词/忆江南·夏至.md",
-    "诗词/别.md",
     "CSAPP/Lecture 17 & 18 Virtual Memory.md",
     "诗词",
-    "bupt/计算机网络.md",
-    "bupt/形式语言与自动机.md",
     "bupt/PRML.md",
-    "bupt/毛概.md",
-    "诗词/如梦令·盹睡.md",
     "CSAPP/Shell Lab.md",
     "CSAPP/Lecture 12 Cache Memories.md",
     "CSAPP/Lecture 11 Memory Hierarchy.md",
@@ -201,7 +206,6 @@
     "CSAPP/Lecture 15 Exceptional Control Flow Signals and Nonlocal Jumps.md",
     "CSAPP/Lecture 16 System Level IO.md",
     "拉格朗日对偶 Lagrange duality.md",
-    "诗词/山鬼.md",
     "Euler's formula.md",
     "Hexo.md",
     "CS144",
