@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "9852f49aaac6a558",
+        "id": "3be45ac9ad4b6502",
         "type": "tabs",
         "children": [
           {
-            "id": "9d7511e5fa08ad14",
+            "id": "72555ce70099c6cd",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "bupt/PRML.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "PRML"
+              "title": "New tab"
             }
           }
         ]
@@ -166,7 +162,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -179,15 +176,18 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "b79b4c5f29a7881e",
+  "active": "72555ce70099c6cd",
   "lastOpenFiles": [
-    "bupt/形式语言与自动机.md",
-    "bupt/计算机网络.md",
-    "bupt/毛概.md",
-    "诗词/别.md",
     "诗词/山鬼.md",
+    "诗词/满江红·蝇.md",
+    "诗词/别.md",
     "诗词/忆江南·夏至.md",
     "诗词/如梦令·盹睡.md",
+    "CSAPP/Lecture 23 Concurrent Programming.md",
+    "bupt/形式语言与自动机.md",
+    "bupt/PRML.md",
+    "bupt/计算机网络.md",
+    "bupt/毛概.md",
     "CSAPP/Lecture 19 & 20 Dynamic Memory Allocation.md",
     "CSAPP/Proxy Lab.md",
     "CSAPP/Attack Lab.md",
@@ -198,7 +198,6 @@
     "Untitled.md",
     "CSAPP/Lecture 17 & 18 Virtual Memory.md",
     "诗词",
-    "bupt/PRML.md",
     "CSAPP/Shell Lab.md",
     "CSAPP/Lecture 12 Cache Memories.md",
     "CSAPP/Lecture 11 Memory Hierarchy.md",
@@ -206,8 +205,6 @@
     "CSAPP/Lecture 15 Exceptional Control Flow Signals and Nonlocal Jumps.md",
     "CSAPP/Lecture 16 System Level IO.md",
     "拉格朗日对偶 Lagrange duality.md",
-    "Euler's formula.md",
-    "Hexo.md",
     "CS144",
     "Untitled.canvas",
     "Unclassified",
