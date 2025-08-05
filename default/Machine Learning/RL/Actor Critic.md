@@ -1,0 +1,3 @@
+Actor Critic model is designed to solve continuous action space problems.
+In discrete problems, we can pick the best action with highest Q value by using a simple $\arg\max$ method. However in continuous space, we cannot do that, so we train a model to find the policy that can maximize $E_{\mathbf{a}\sim \pi(\mathbf{a}|\mathbf{s})}Q(\mathbf{s},\mathbf{a})$.
+The model we talked above is called *Actor*, and the Q function model is *Critic*.
