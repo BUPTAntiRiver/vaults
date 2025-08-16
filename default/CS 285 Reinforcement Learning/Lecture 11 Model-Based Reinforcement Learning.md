@@ -32,7 +32,7 @@ small loop: step 3 to 5, big loop (for every N steps): step 2 to 5
 ### How to re-plan?
 The more you re-plan, the less perfect each individual plan need to be.
 So we can use shorter horizons, and even random sampling can often work here!
-# Uncertainty in Model-Based $\text{RL}$
+# Uncertainty in Model-Based RL
 Uncertainty can help the model to fit a wider range of functions, this is also the meaning of planning all the actions, that means, we will take actions for which we think we'll get high reward in expectation while maybe high variance but this avoids "exploiting" the model and makes the model adapt and get better.
 # Uncertainty-Aware Neural Net Models
 ## *Model-Based reinforcement learning with latent state*:

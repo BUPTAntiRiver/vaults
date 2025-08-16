@@ -44,7 +44,8 @@ $$TQ=r + \gamma P\max_{a}Q,T \text{ is Bellman operator}$$
 abstract model of approximate fitted Q-iteration: 
 $$
 \hat{Q}_{k+1}\leftarrow \arg\min_{\hat{Q}}\lvert \lvert \hat{Q}-\hat{T}\hat{Q}_{k} \rvert  \rvert \text{ which norm to use?}
-$$The $\hat{T}$ here is approximate Bellman operator: 
+$$
+The $\hat{T}$ here is approximate Bellman operator: 
 $$
 \begin{align}
 \hat{T}Q&=\hat{r}+\gamma \hat{P}\max_{a}Q \\
