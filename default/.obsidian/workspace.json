@@ -1,24 +1,24 @@
 {
   "main": {
-    "id": "4ed46893b2f79db4",
+    "id": "9f03f96957887804",
     "type": "split",
     "children": [
       {
-        "id": "e91239e90a154987",
+        "id": "b552f5ae68e4545c",
         "type": "tabs",
         "children": [
           {
-            "id": "3ca19c76ff74ec46",
+            "id": "bcfcbc40ddd06649",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Machine Learning/MoE Mixture of Experts.md",
+                "file": "bupt/数据库系统原理.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "MoE Mixture of Experts"
+              "title": "数据库系统原理"
             }
           }
         ]
@@ -27,15 +27,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "c841d006d15681d2",
+    "id": "9089df312824206b",
     "type": "split",
     "children": [
       {
-        "id": "b384220a25d6b7d0",
+        "id": "e41daee5e0206d20",
         "type": "tabs",
         "children": [
           {
-            "id": "b79b4c5f29a7881e",
+            "id": "ac696cb59e5a94fe",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -48,12 +48,12 @@
             }
           },
           {
-            "id": "77770489bf9885ad",
+            "id": "60dff3a15028365b",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "softmax",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -65,7 +65,7 @@
             }
           },
           {
-            "id": "1e0631319955141a",
+            "id": "bc5ac10539baf615",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -78,51 +78,50 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 300,
+    "collapsed": true
   },
   "right": {
-    "id": "1d9e4ffa78f9b4d9",
+    "id": "6d9fca73aa408d17",
     "type": "split",
     "children": [
       {
-        "id": "87fb6c22ca733f8e",
+        "id": "e4ec579bcee67c9f",
         "type": "tabs",
         "children": [
           {
-            "id": "939aaee8ff8d74e4",
+            "id": "c9604204d043c8fe",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "bupt/计算机网络.md",
-                "collapseAll": true,
+                "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
                 "searchQuery": "",
                 "backlinkCollapsed": false,
-                "unlinkedCollapsed": false
+                "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 计算机网络"
+              "title": "Backlinks"
             }
           },
           {
-            "id": "cfb9aabc91a9e527",
+            "id": "e858b90d34e08277",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "CSAPP/Lecture 12 Cache Memories.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Lecture 12 Cache Memories"
+              "title": "Outgoing links"
             }
           },
           {
-            "id": "584c4392c63e55b6",
+            "id": "d7fb0317ed537012",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -137,32 +136,20 @@
             }
           },
           {
-            "id": "d1899806a046ab82",
+            "id": "c9804455093ed2b0",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "bupt/计算机网络.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 计算机网络"
-            }
-          },
-          {
-            "id": "c7aa147c97136ea4",
-            "type": "leaf",
-            "state": {
-              "type": "git-view",
-              "state": {},
-              "icon": "git-pull-request",
-              "title": "Source Control"
+              "title": "Outline"
             }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "horizontal",
@@ -177,54 +164,16 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
+      "bases:Create new base": false,
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3ca19c76ff74ec46",
+  "active": "bcfcbc40ddd06649",
   "lastOpenFiles": [
-    "Machine Learning/MoE Mixture of Experts.md",
-    "CS 285 Reinforcement Learning/Lecture 22 Transfer Learning & Meta Learning.md",
-    "CS 285 Reinforcement Learning/Lecture 21 RL with Sequence Models.md",
-    "拉格朗日对偶 Lagrange duality.md",
-    "Euler's formula.md",
-    "Mutable and Immutable.md",
-    "Hexo.md",
-    "Vim.md",
-    "CS 285 Reinforcement Learning/Lecture 19 Control as Inference.md",
-    "CS 285 Reinforcement Learning/Lecture 11 Model-Based Reinforcement Learning.md",
-    "CS 285 Reinforcement Learning/Lecture 16 Offline Reinforcement Learning Part 2.md",
-    "CS 285 Reinforcement Learning/Lecture 17 Reinforcement Learning Theory Basics.md",
-    "CS 285 Reinforcement Learning/Lecture 18 Variational Inference and Generative Models.md",
-    "CS 285 Reinforcement Learning/Lecture 4 Introduction to Reinforcement Learning.md",
-    "Machine Learning/MACs.md",
-    "诗文/别.md",
-    "哲学/不要向你的欲望让步.md",
-    "诗文/无题.md",
-    "MIT 6.S184",
-    "诗文/山鬼.md",
-    "诗文/仿生人会梦到电子羊吗？.md",
-    "images/CPU architecture.png",
-    "CSAPP/Shell Lab.md",
-    "CSAPP/Proxy Lab.md",
-    "CSAPP/Malloc Lab.md",
-    "CSAPP/Lecture 17 & 18 Virtual Memory.md",
-    "CSAPP/Lecture 19 & 20 Dynamic Memory Allocation.md",
-    "CSAPP/Lecture 23 Concurrent Programming.md",
-    "哲学",
-    "Untitled.canvas",
-    "Machine Learning/RL",
-    "images/CPU and GPU 'cores'.png",
-    "CS 285 Reinforcement Learning",
-    "Machine Learning/NLP",
-    "诗文",
-    "CS144",
-    "Unclassified",
-    "Templates",
-    "CSAPP",
-    "images/Hexo file structure.png",
-    "Pasted image 20250521150636.png",
-    "images/GAN.png",
-    "images/k-means-based weight quantization.png",
-    "images/GPU architecture.png"
+    "CSAPP/Lecture 06 Machine-Level Programming 2 Control.md",
+    "bupt/数据库系统原理.md",
+    "CSAPP/CSAPP.md",
+    "Machine Learning/Transformer and LLM.md",
+    "bupt/操作系统.md"
   ]
 }

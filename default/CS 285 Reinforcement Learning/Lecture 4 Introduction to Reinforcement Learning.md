@@ -1,6 +1,6 @@
 # Definitions
 ## Terminology and notation
-[[Lecture 2]]
+[[CS 285 Reinforcement Learning/Lecture 2]]
 **Partially observed Markov Decision Process**
 $\mathcal{M}=\{\mathcal{S,A,O,T,E,r}\}$
 $$
