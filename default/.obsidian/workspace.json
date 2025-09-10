@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "b552f5ae68e4545c",
+        "id": "ac8739a35a9ed760",
         "type": "tabs",
         "children": [
           {
-            "id": "bcfcbc40ddd06649",
+            "id": "d012135c8c0740a8",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "bupt/数据库系统原理.md",
+                "file": "bupt/操作系统.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "数据库系统原理"
+              "title": "操作系统"
             }
           }
         ]
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "softmax",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -168,12 +167,25 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "bcfcbc40ddd06649",
+  "active": "d012135c8c0740a8",
   "lastOpenFiles": [
-    "CSAPP/Lecture 06 Machine-Level Programming 2 Control.md",
-    "bupt/数据库系统原理.md",
-    "CSAPP/CSAPP.md",
+    "ELF.md",
+    "bupt/操作系统.md",
+    "bupt/神经网络与深度学习.md",
+    "Machine Learning/MoE Mixture of Experts.md",
     "Machine Learning/Transformer and LLM.md",
-    "bupt/操作系统.md"
+    "Euler's formula.md",
+    "MIT 6.S184/Lecture 1.md",
+    "Vim.md",
+    "Mutable and Immutable.md",
+    "Hexo.md",
+    "拉格朗日对偶 Lagrange duality.md",
+    "二分查找.md",
+    "bupt/智能计算系统.md",
+    "bupt/PRML.md",
+    "bupt/计算机网络.md",
+    "bupt/数据库系统原理.md",
+    "CSAPP/Lecture 06 Machine-Level Programming 2 Control.md",
+    "CSAPP/CSAPP.md"
   ]
 }

@@ -1,5 +1,3 @@
-###### Search
-
-Press `/` and enter the term you need to search. `n` for the next occurrence and `N` for the previous occurrence.
-###### Go to the Bottom of File
-`G`
+`/`:search content after `/`, after `Enter` is pressed, `n` for next occurrence, `N` for previous occurrence. 
+`G`: go to the bottom of the file.
+`gg`: go to the top of the file.
