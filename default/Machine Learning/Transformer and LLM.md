@@ -21,6 +21,8 @@ The query-key-value design is analogous to a retrieval system, let's take YouTub
 - Key: the titles/descriptions of videos
 - Value: the corresponding videos
 **Multi-heads** helps to learn more semantics of words.
+It is worthy to say, attention is not developed by transformer, in the past we use additive attention in RNN.
+The difference between additive and self attention is additive attention calculates a weighted representation of encoded information with a fully connected network to calculate the weights. So it is called additive and self attention uses dot product of matrices, that is why it is also called dot product attention.
 ### Feed-Forward Network (FFN)
 There is no non-linear activation so far, then we use FFN to bring this functionality.
 ### Layer Normalization
