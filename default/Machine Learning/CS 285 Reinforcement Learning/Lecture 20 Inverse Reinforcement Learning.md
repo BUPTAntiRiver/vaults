@@ -23,4 +23,4 @@ $$
 # IRL and GANs
 It looks like a game...
 ## Generative Adversarial Networks
-[[GANs]]
+[[GAN]]

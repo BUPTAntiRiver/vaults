@@ -1,6 +1,5 @@
 # Latent Variable Models
-## Training
-### Objective
+## Objective
 Latent Variable: $z$
 Output: $x$
 $$
@@ -50,3 +49,14 @@ $$
 $$
 Instead of setting up a separate mean and variance for each data point, we are going to use a neural network.
 But the trade off is **faster and regularization** but **not as precise**.
+Combine with prior sampling we have *Objective*:
+$$
+\sum_{i} \log\frac{1}{K}\sum_{k=1}^{K} \frac{p_{Z}(z_{k}^{(i)})}{q(z_{k}^{(i)}|x^{(i)})}p_{\theta}(x^{(i)}|z_{k}^{(i)}) \quad \text{with} \quad z_{k}^{(i)}\sim q(z_{k}^{(i)}|x^{(i)})
+$$
+And:
+$$
+\min_{\phi}\sum_{i}\text{KL}(q_{\phi}(z|x^{(i)})||p_{\theta}(z|x^{(i)}))
+$$
+We are going to maximize these two terms, some implementations just sum them together to optimize.
+## Optimization
+### Likelihood Ration Gradient

@@ -10,3 +10,5 @@ It's objective is: $\min_D\{-E_{x\sim\text{Data}}\log D(x)-E_{z\sim\text{noise}}
 The workflow of GAN looks like below:
 ![[GAN.png]]
 Put them together it became a "minmax" function.
+# Conditional GAN
+Both generator and discriminator receive a new input like a label or other conditional information so that it won't generate random data.
