@@ -48,3 +48,4 @@ J(\phi)&=E_{z\sim q_{\phi}(z|x_{i})}[r(x_{i},z)]=E_{z\sim q_{\phi(z|x_{i})}}[\lo
 \end{align}
 $$
 # Generative Models: Variational Auto-encoders
+[[Variational Auto-Encoder]]

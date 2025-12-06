@@ -1,0 +1,40 @@
+There are two main information of embedding positional information in transformer: absolute position and relative position.
+# Background Works
+An example of **absolute position** is the original work of attention is all you need.
+The **relative** case is they add a trainable relative positional embedding to both $f_{k}$ and $f_{v}$, which names $\tilde{p}_{r}^{k}$ and $\tilde{p}_{r}^{v}$ respectively, where $r=\text{clip}(m-n,r_{\min},r_{\max})$ represents the relative distance between position $m$ and $n$. They clipped the distance with the assumption that precise relative information is not useful beyond a certain distance.
+# Proposed Approach
+## Formulation
+The ultimate goal of relative information embedding is to find out a function such that:
+$$
+\langle f_q(x_m, m), f_k(x_n, n) \rangle = g(x_m, x_n, m - n)
+$$
+The inner product of positional embedded $q,k$ can be represented by a function of input and their distance.
+## Rotary position embedding
+We begin with a simple 2-dimension case. They find a form satisfy the equation which is:
+$$
+\begin{align}
+f_q(x_m, m) &= (W_q x_m)e^{im\theta} \\
+f_k(x_n, n) &= (W_k x_n)e^{in\theta} \\
+g(x_m, x_n, m-n) &= \mathrm{Re}\!\left[(W_q x_m)(W_k x_n)^{*} e^{i(m-n)\theta}\right]
+\end{align}
+$$
+The inspiration comes from 2-dimension vector relation.
+If we push the case to $n$ dimension, we will get:
+$$
+f_{\{q,k\}}(x_{m},m)=R^{d}_{\Theta,m}W_{\{q,k\}}x_{m}
+$$
+where
+$$
+R^{d}_{\Theta,m} =
+\begin{pmatrix}
+\cos m\theta_{1} & -\sin m\theta_{1} & 0 & 0 & \cdots & 0 & 0 \\
+\sin m\theta_{1} & \cos m\theta_{1} & 0 & 0 & \cdots & 0 & 0 \\
+0 & 0 & \cos m\theta_{2} & -\sin m\theta_{2} & \cdots & 0 & 0 \\
+0 & 0 & \sin m\theta_{2} & \cos m\theta_{2} & \cdots & 0 & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+0 & 0 & 0 & 0 & \cdots & \cos m\theta_{d/2} & -\sin m\theta_{d/2} \\
+0 & 0 & 0 & 0 & \cdots & \sin m\theta_{d/2} & \cos m\theta_{d/2}
+\end{pmatrix}
+$$
+Base on their evaluation, RoPE also can show the decay of $S$ with the relative distance $m-n$ increases by setting $\theta_{i}=10000^{-2i/d}$.
+If you really do the matrix multiplication you  will get something looks like sine and cosine of $\theta_{i}-\theta_{j}$, which is exactly how we measure rotation of vectors.
