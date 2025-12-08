@@ -128,6 +128,21 @@ Segmentation is easy to implement quite straight forward, but the principle down
 ## Paging
 **Definition**: allocating memory in *fixed-sized* chunks called *page frames*. We have a *page table* stores for each process whose entries contain pointers to the page frames.
 Page table is more compact that segment table because it does not need to store bounds. And now the pages are scattered across physical memory regions, yet with each page, the memory access is still contiguous. The memory allocation becomes very simple, we only need to find a page frame.
+### How does it work?
+Since we have fixed page size, suppose we have a 4 KB page size (the most common one), then we let the lowest 12 bits of our virtual address be the offset, and use the first 20 bits (suppose we have 32 bits address) to locate the frame id in the page table. Then we combine the frame id and offset to get the physical address. This is also the only way to get physical address: combine frame id in page table with offset. This will be mentioned again later.
+### How large is the page table?
+Each entry in the page table takes 32 bits, that is 4 bytes and we have $2^{20}$ entries, that will be 4 MB. Remember we have a page table for each process, so now open your task manager and you will find out that most processes only need around 0.1 MB! What a waste if I need 4 MB page table to support such a tiny process! And this is the main disadvantage of page table method.
+### Multi-Level Paging
+To solve such overhead, we introduce multi-level paging, **page directory**.
+Separate the address into 3 parts: **page directory number** (10 bits), **page table number** (10 bits), **page offset** (12 bits). We use page directory number to locate which entry in the page directory to visit, which is the address of page table, then we use page table number to locate the frame id. Finally combine frame id with offset to get physical address.
+Note that page directory and page table only takes 4 KB now. So for processes that only needs small space, the cost of page directory and page table now reduces to 8 KB. The philosophy behind such improvement is to make page table finer-grained.
+We can even extend such multi-level to 3 or more layers.
+___
+Memory management unit (MMU), a hardware, does such translation for us.
+The page size shall be neither too small or too large. Too small will lead to large page table size and low cache hit ratio, too large will lead to internal fragmentation (frame is not fully used), typically page size range from 512 B to 8192 B. Default 4 KB on Linux. Page tables can be sparse, not every page directory entry has a corresponding page table, this saves a lot of space.
+It is also worth mentioning that why it takes 10 bits to decide the entries, it is because we want to fit the directory and table into one frame. So it is actually the frame size decides how the process of translation with page table is done. Refer to the OSTEP book for more info.
+### Page Fault
+
 # Lecture 12 Readers/Writers and Deadlock
 ## Readers/Writers Lock
 The motivation is suppose we have a database, and there are two kinds of operations: **read**, which never modify database and **write**, which read and modify database. Is using a single lock on the whole database a good idea? It is correct but not efficient. Because we can have many readers working at the same time, but for writers, only one can work at a time.
