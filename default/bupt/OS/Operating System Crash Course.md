@@ -303,6 +303,21 @@ But there are still many issues like counter measure, the user can put in a bunc
 Different tickets assign strategy determines different behavior of policy. To approximate shortest remaining time first, short running job gets more and long job gets fewer. To avoid starvation, every job gets at least one ticket.
 #### Completely Fair Scheduler (CFS)
 The goal of CFS is to fairly divide a CPU evenly among all competing processes.
+CFS uses a counting-based technique known as **virtual runtime**. As each process runs, it accumulates virtual runtime, and when a scheduling decision occurs, CFS picks the process with the lowest virtual runtime to run next.
+The scheduling interval is decided by `sched_latency`, it will be divided by number of process running, but if there are too many processes, the switch overhead will be too big, so we also have a `min_granularity`.
+CFS also provides control over process priority, we can assign nice number to process, and larger nice means lower priority. The nice number is an index to some weight, with greater weight, the process can share bigger time slice.
+#### Real Time Scheduling (RTS)
+**Definition**: we might have some scenario that **predictability** is essential, maybe like some transaction system that requires transactions to be processed within limited time, so we have a deadline. Real time is about enforcing predictability, and does not equal fast computing.
+Tasks can be preempted and they have deadlines and computation times, the closest task to deadline will have highest priority.
+## Scheduling on Multi-processor
+Recall the cache consistency is very important with multi-processor, and this leads to a disadvantage of centralized MFQ in multi-processor scenario, the huge overhead of cache consistency. MFQ is a data structure and we visit it in memory, if we use a shared one, it needs to be updated frequently and needs to synchronize across processors, that is huge overhead.
+Also we will have MFQ lock contention. When running a process in MFQ, the corresponding processor will hold the lock of that process, and since this process has high priority, other processors will also try to grab the lock and run it, then they find the lock has already be taken, and waste some time.
+The cache reuse, hit ratio will also be low for each processor. Imagine we have 4 processor with 1 cache block and 5 loop task.
+Since then we propose **affinity scheduling**: a thread is always scheduled or you can say re-scheduled to the same processor.
+## Evaluation about Scheduling Algorithm
+- Deterministic modeling
+- Queuing models
+- Etc
 # Lecture 12 Readers/Writers and Deadlock
 ## Readers/Writers Lock
 The motivation is suppose we have a database, and there are two kinds of operations: **read**, which never modify database and **write**, which read and modify database. Is using a single lock on the whole database a good idea? It is correct but not efficient. Because we can have many readers working at the same time, but for writers, only one can work at a time.
