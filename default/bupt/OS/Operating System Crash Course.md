@@ -134,7 +134,7 @@ Since we have fixed page size, suppose we have a 4 KB page size (the most common
 Each entry in the page table takes 32 bits, that is 4 bytes and we have $2^{20}$ entries, that will be 4 MB. Remember we have a page table for each process, so now open your task manager and you will find out that most processes only need around 0.1 MB! What a waste if I need 4 MB page table to support such a tiny process! And this is the main disadvantage of page table method.
 ### Multi-Level Paging
 To solve such overhead, we introduce multi-level paging, **page directory**.
-Separate the address into 3 parts: **page directory number** (10 bits), **page table number** (10 bits), **page offset** (12 bits). We use page directory number to locate which entry in the page directory to visit, which is the address of page table, then we use page table number to locate the frame id. Finally combine frame id with offset to get physical address.
+Separate the address into 3 parts: **page directory number** (10 bits), **page table number** (10 bits), **page offset** (12 bits). We use page directory number and page directory register `CR3` (tells you which directory to visit) to locate which entry in the page directory to visit, which is the address of page table, then we use page table number to locate the frame id. Finally combine frame id with offset to get physical address.
 Note that page directory and page table only takes 4 KB now. So for processes that only needs small space, the cost of page directory and page table now reduces to 8 KB. The philosophy behind such improvement is to make page table finer-grained.
 We can even extend such multi-level to 3 or more layers.
 ___
@@ -142,7 +142,167 @@ Memory management unit (MMU), a hardware, does such translation for us.
 The page size shall be neither too small or too large. Too small will lead to large page table size and low cache hit ratio, too large will lead to internal fragmentation (frame is not fully used), typically page size range from 512 B to 8192 B. Default 4 KB on Linux. Page tables can be sparse, not every page directory entry has a corresponding page table, this saves a lot of space.
 It is also worth mentioning that why it takes 10 bits to decide the entries, it is because we want to fit the directory and table into one frame. So it is actually the frame size decides how the process of translation with page table is done. Refer to the OSTEP book for more info.
 ### Page Fault
+**Definition**: page fault happens when CPU/MMU access a memory location that is not readily mapped:
+- Pure (soft): memory swapped out; shared pages; etc. After handled, the access will be performed again.
+- Invalid (hard): write to read-only pages; across to pages not allocated; etc. This leads to Segmentation Fault!
 
+In modern OS, `malloc` does memory allocation "lazily", which means:
+- It allocates virtual memory immediately
+- The physical memory is allocated only when program accesses the memory through page fault handler
+- This enables constant time allocation and unlimited resource illusion
+# Lecture 7 TLB and cache
+## Cache Concept
+**Definition**: cache is a repository for copies that can be accessed more quickly that the original
+Average Access Time = Hit Rate$\times$Hit Time+Miss Rate$\times$Miss Time
+### Locality
+The key to cache success is locality, we have two kinds:
+- **Temporal locality**: the memory is accessed is more likely to be accessed again, e.g. iterating variable.
+- **Spatial locality**: when a particular storage location is referenced at a particular time, then its likely that near by memory locations will be referenced soon, e.g. scanning through an array.
+### Memory Hierarchy
+From locality we can infer that we can make system much faster by putting those memory value with good locality near the CPU. This leads to the introduction of **Memory Hierarchy**.
+In this course we will learn about: CPU, TLB, Cache and Memory. The disk is the slowest.
+## TLB
+TLB derives from address translation. Each memory access will take at least 2 extra memory access to page directory and page table. And memory speed is often slower that CPU, when we have more levels of translation, such fall back can be worse.
+**Definition**: Translation Lookaside Buffer, a special cache within MMU that accelerates address translation.
+This is aligned with time and space locality as mentioned before. Memory mapping is page-aligned, so the value within a same page will be accessed more often, by keeping their page information in TLB, we can save a lot of translation cost.
+### TLB Lookup
+A TLB lookup goes through the entire TLB table. TLBs are often set-associative to reduce the comparison, which means the entry in TLB is not unique, we may have multiple entry to save the time of scanning through the whole buffer.
+The cost of address translation with TLB can be calculated like this:
+Cost(address translation) = Cost(TLB Lookup) + Cost(full translation)$\times$P(miss)
+### TLB Miss
+Caused by:
+- Page not accessed before
+- Page evicted due to limited TLB size
+- Page mapping conflict due to association
+- Other processes update the **page table**
+### TLB Performance
+Besides the formula about TLB performance, there are some tricks that can improve TLB performance.
+#### Superpage
+**Definition**: a set of contiguous pages in physical memory that map a contiguous regions of virtual memory, where the pages are aligned so that they share the same high-order (superpage) address. We can increase TLB hit ratio (a bigger target), but we will lose some fine-grained control, and some problem like inner fragment becomes worse.
+#### TLB Prefetching
+**Definition**: Prefetching page table entries into TLB before it's actually used. This is a common technique in speed up, and there are many kinds of prefetching like:
+- Sequential: spatial locality
+- Strided: for array-based computation
+- Correlated: learn from the history, very smart but may have predict overhead
+
+CPU also has instruction prefetching to improve CPU pipeline.
+
+### TLB Consistency
+**Definition**: consistency is a common issue in cache, which means the cache must be the same as the original data whenever the entries are modified.
+- Process Context Switch: flush the TLB when there is a context switch, however modern OS can use tagged TLB, use some extra bits to distinguish page mappings from different processes or address spaces.
+- Permission Reduction: discard the whole TLB, modern ones support the removal of particular TLB entries.
+- TLB shootdown: on multi-processor, any processor changing their page table will need to flush other processor's TLBs as well.
+
+## Memory Cache
+**Block** is the minimal unit of caching. Often larger than 1 word or byte to exploit the spatial locality, modern Intel processors use 64 Bytes.
+### Cache Lookup
+#### Fully Associative
+**Definition**: each address can be stored anywhere in the cache table.
+So we need to compare the cache tag on each cache line. For example, if our block size is 32 Bytes, then we need 5 bits to select the Byte. In 32 bit case, the reset 27 bits will be used to compare.
+The drawback is performance degrades with larger cache, because there are more tags to be compared.
+#### Direct Mapped
+**Definition**: map to one specific cache line through a Hash function. Use the tag as a veryfication.
+For example, we still have 32 Byte block size, and the total size of cache is 1 KB, then we need 32 cache line (easy math), then given address `100000` and hash function `addr & 1111100000`, extracting the last 6 to 10 bits, which skips the byte select bits. We can get the hashed value is 1, so we go to cache line number 1 and check the tag stored there, if matches then get the value.
+#### Set Associative
+**Definition**: N-way set associative means we have N direct mapped caches operates in parallel, so we have N entries per cache index.
+It is kind of lie between Fully Associative and Direct Mapped. If we have 2-way set, then with the same example in Direct Mapped, we only need 4 bits to choose the cache line, but we will get 2 entries now. So we add 1 bit to the cache tag. If we have 4-way set, then add 2 bit.
+So if we have 1-way set, it would just be Direct Mapped. And if we have 32-way set, then it would just be Fully Associative.
+### Cache Replacement
+Direct Mapped only has one possibility, so it does not has such concern, but Set or Fully Associative needs to think about how to decide which cached value to evict.
+Random is simple and has no overhead, sometimes simple is good.
+First-In-First-Out (FIFO) could lead to some worst case in typical workloads like scan through small size array repetitively.
+Least Recently Used (LRU) kind of smart, learning from the past, evict the least recently used.
+Also we have Least Frequently Used (LFU).
+### Further Knowledge
+#### Page Coloring
+When the page offset does not match with Set index and Line Offset, the set number of two different page may be the same, so the value with same page offset will frequently collide with each other. So OS invented Page Coloring the distinguish them with extra information.
+# Lecture 8 Demand Paging
+**Scenario**: modern programs require a lot of physical memory, but they don't use all their memory all of the time.
+**Solution**: use main memory as cache for disk, "lazy" memory allocation.
+## Memory-mapped Files
+**Definition**: memory-mapped files is a segment of virtual memory that has been assigned a direct byte-for-byte correlation with some portion of a file or file-like source.
+For example, you can open a file first, but since we are doing lazy allocation, so it is not fully in the memory now, then we can call `mmap` on it to get a pointer, and do some modification with it. This provides a illusion that we have the whole file in our memory, while we are actually processing a block (page) of data.
+## The Dirty Bit & Page Eviction Policy
+**Definition**: it is used to determine whether a page has been modified.
+The page eviction policy becomes more important now. Because the cost of being wrong is high, we probably need to flush the data into disk, we need to interact with disk and that is slow.
+FIFO, MIN, RANDOM, LRU, etc. LRU seems to be the best among them, let's explain how to implement it.
+We can use a list to track used pages, on each use, we remove the page from list and insert it to the head, when evicting, we evict the tail page.
+But this method still has problem, we need to know immediately when each page is used, so we can change its position in the list, but this involves many instructions for each hardware access. So it is inefficient.
+In practice, people use **Approximate LRU**.
+### Clocking algorithm
+**Definition**: Implementation with the *use* bit. The use bit is initialized to 0 in page table, and set to 1 whenever there is a page access. When we need to evict a page, we look at the page under the hand, if the use bit is 1, we clear the bit and move the hand to next page, repeat until we find a 0 use bit, when find, evict it.
+The running hand looks like a clock, right?
+There is also a **variant** of clock algorithm, that is **N chance** algorithm: when we find a 0 use bit page, we give it a chance by increasing its counter instead of immediately eviction. When the counter reaches N, we do the eviction, and if its use bit is 1, we clear the use bit also clear the counter.
+## Allocation of Page Frame
+The allocation of memory (page frame) is also a philosophy, if we swap most part of a program then it may not be able to proceed further. Each process needs *minimum* number of pages.
+Also the **Replacement Scopes** matters:
+- Global replacement: process select replacement frames from set of all frames.
+- Local replacement: each process select from their own set of allocated frames.
+
+**Self-paging** means: each process is responsible for managing its own page faults and memory allocation, rather than relying on a global operating system-wide policy.
+**Global page management**:
+- each process/user is assigned its fair share of page frames using max min scheduling algorithm.
+- when memory is full, the page eviction happens to the process with the most allocated memory, this avoids malicious attackers that want to starve resources.
+
+## Summary
+To support demand paging:
+- CPU does memory management (MMU), a few bits in page table entry, etc.
+- OS dose page table manipulation, eviction strategy and page fault handler, etc.
+# Lecture 9 Scheduling
+## Concept
+Why we need scheduling? For multitasking and Concurrency. Only useful when there is not enough resources.
+Preemption is the basic assumption for fine-grained scheduling. Such scheduling is handle mostly by OS.
+The goal of scheduling policy is:
+- Minimize Response Time
+- Maximize Throughput
+- Fairness
+
+## Policies
+### First-Come, First-Served
+Just another name of First In First Out. We run any program until it is done.
+It is simple, but short jobs get stuck behind long ones.
+### Shortest Job First
+Always schedule the job with the shortest remaining time. This leads to lowest average time. However it has two cons: starvation, the long job may always be surpassed by short jobs; hard to implement, hard to predict the remaining time of a task.
+### Round Robin
+Each process gets a small unit of CPU time, after quantum expires the process is preempted and added to the end of the ready queue.
+It is fair and better for short jobs, but the frequent context-switching time adds up for long jobs.
+Another disadvantage is cache state must be shared between all jobs with RR but can be devoted to each job with FIFO.
+### Strict Priority Scheduling
+**Definition**: strict priority scheduling has multiple priority queues, each for different priority. The policy always execute highest-priority runnable jobs to completion. Each queue can be processed in RR with some time-quantum.
+The problem is starvation towards lower priority jobs, and deadlock with **priority inversion**, which means high priority jobs depend on low priority jobs that don't have chance to run.
+To solve this we propose dynamic priority, period.
+#### Earliest Deadline First
+Each task is assigned a current priority based on how close the absolute deadline is, the scheduler always schedules the active task with the closest absolute deadline.
+#### Fairness
+We can give each queue some fraction of the CPU or we could increase priority of jobs that don't get service.
+### Multi-level Feedback Queue
+Assuming a mix of two kinds of workloads:
+1. Interactive tasks: using CPU for a short time then yield for IO waiting. Low latency is critical.
+2. CPU-intensive tasks: using CPU for a long period of time. The response time often does not matter much.
+
+A naive version of MFQ is: maintaining many tasks queues with different priorities, and use following schedule rules:
+1. If Priority(A) > Priority(B), A runs, B doesn't
+2. If Priority(A) = Priority(B), A and B run in RR
+
+The key here is how to set the priority. The intuition is if a job repeatedly relinquish the CPU while waiting for input from the keyboard, it shall be kept in high priority. Otherwise, if a job uses CPU intensively for long periods of time it priority shall be reduced.
+Our solution is to assign a quota for each job at a given priority level, and reduces its priority once the quota is used up. So we have some more rules:
+3. When a job enters the system, it is placed at the highest priority
+4. If a job uses up its allotment while running, its priority is reduced
+5. If a job gives up the CPU before the allotment is used up (like performing IO), it stays at the same priority level.
+
+There are many issues with this naive version of MFQ. For example, if we have too many interactive jobs in the system, they will consume all CPU time, imagine they are running one after another in perfect order. Thus the long jobs will be starved.
+One solution is priority boost:
+6. After some time period S, move all the jobs in the system to the top-most queue
+
+Or we can slice the time of queues.
+But there are still many issues like counter measure, the user can put in a bunch of meaning less IO to keep job's priority to be high. Also how to parameterize the scheduler is still a question, how many queues should there be? How big should the time slice be per queue?
+### Fair Share
+**Definition**: this type of scheduler aims to guarantee that each job obtain a certain percentage of CPU time.
+#### Lottery Scheduling
+**Definition**: give each job some number of lottery tickets, on each time slice, randomly pick a winning ticket, on average the CPU time is proportional to the number of tickets given to each job.
+Different tickets assign strategy determines different behavior of policy. To approximate shortest remaining time first, short running job gets more and long job gets fewer. To avoid starvation, every job gets at least one ticket.
+#### Completely Fair Scheduler (CFS)
+The goal of CFS is to fairly divide a CPU evenly among all competing processes.
 # Lecture 12 Readers/Writers and Deadlock
 ## Readers/Writers Lock
 The motivation is suppose we have a database, and there are two kinds of operations: **read**, which never modify database and **write**, which read and modify database. Is using a single lock on the whole database a good idea? It is correct but not efficient. Because we can have many readers working at the same time, but for writers, only one can work at a time.

@@ -36,5 +36,6 @@ R^{d}_{\Theta,m} =
 0 & 0 & 0 & 0 & \cdots & \sin m\theta_{d/2} & \cos m\theta_{d/2}
 \end{pmatrix}
 $$
+The big matrix above is of shape $d\times d$ and the $m$ in it is the position of the query or key to be processed, the query and key has shape $N\times d$, $N$ for sequence length, so we are applying a pair rotation to query and key, this is the essence of RoPE. Finding out such method is really impressive.
 Base on their evaluation, RoPE also can show the decay of $S$ with the relative distance $m-n$ increases by setting $\theta_{i}=10000^{-2i/d}$.
 If you really do the matrix multiplication you  will get something looks like sine and cosine of $\theta_{i}-\theta_{j}$, which is exactly how we measure rotation of vectors.

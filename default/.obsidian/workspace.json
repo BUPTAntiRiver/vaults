@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "2e037bc3672baa1c",
+        "id": "3b2c3134a317e199",
         "type": "tabs",
         "children": [
           {
-            "id": "76e77312c1c60ab0",
+            "id": "346e7d9b82a5048e",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -143,13 +143,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "BUPT/OS/Operating System Crash Course.md",
+                "file": "Scheduler BIG 3.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Operating System Crash Course"
+              "title": "Outline of Scheduler BIG 3"
             }
           }
         ],
@@ -172,34 +172,34 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "76e77312c1c60ab0",
+  "active": "346e7d9b82a5048e",
   "lastOpenFiles": [
+    "Scheduler BIG 3.md",
+    "BUPT/OS/Operating System Crash Course.md",
+    "Machine Learning/Mamba.md",
+    "诗文/别.md",
+    "诗文/别从前.md",
+    "诗文/仿生人会梦到电子羊吗？.md",
+    "诗文/哈姆雷特.md",
+    "诗文/满江红·蝇.md",
+    "诗文/闷热的后脑.md",
+    "诗文/如梦令·盹睡.md",
+    "诗文/山鬼.md",
+    "诗文/无题.md",
+    "诗文/惜昔时.md",
+    "SeerAttention.md",
+    "Machine Learning/Cross Entropy Loss.md",
+    "Machine Learning/Variational Auto-Encoder.md",
+    "Machine Learning/Knowledge Distillation(KD) - TinyML.md",
+    "Machine Learning/DeepSeek-V3.md",
+    "BUPT/NNDL/hw1.md",
+    "Machine Learning/DeepSeekMoE.md",
+    "Machine Learning/CS229 notes.md",
+    "Machine Learning/RoPE.md",
+    "快速.md",
+    "快速上手 TileLang-Ascend.md",
     "Machine Learning/GAN.md",
     "Machine Learning/CS 285 Reinforcement Learning/Lecture 18 Variational Inference and Generative Models.md",
-    "BUPT/OS/Operating System Crash Course.md",
-    "SeerAttention.md",
-    "Machine Learning/Linear Attention.md",
-    "Untitled.md",
-    "Machine Learning/FlashAttention.md",
-    "Machine Learning/Distributed Training - TinyML.md",
-    "Machine Learning/DeepSeek-V3.md",
-    "Machine Learning/Transformer and LLM.md",
-    "Machine Learning/Large Language Model Training.md",
-    "Machine Learning/KTransformers - Quick Transformers.md",
-    "Machine Learning/RoPE.md",
-    "BUPT/OS/homework/homework 7.md",
-    "BUPT/智能计算系统：实验报告：Tacotron2 + WaveGlow 语音合成推理实验.md",
-    "BUPT/OS/homework/easy lab3 报告.md",
-    "Machine Learning/Post Training with Reinforcement Learning Summary.md",
-    "Machine Learning/DeepSeek-R1.md",
-    "Machine Learning/Post-training.md",
-    "[[Post.md",
-    "GRPO.md",
-    "BUPT/OS/homework/homework 8.md",
-    "Mutable and Immutable.md",
-    "NumPy.md",
-    "拉格朗日对偶 Lagrange duality.md",
-    "素数.md",
     "lec2_vae.pdf",
     "lec2_vae.pdf.crdownload",
     "images/Pasted image 20251020210407.png",
