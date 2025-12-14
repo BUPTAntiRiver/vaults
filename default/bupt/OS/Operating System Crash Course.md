@@ -319,7 +319,8 @@ Since then we propose **affinity scheduling**: a thread is always scheduled or y
 - Queuing models
 - Etc
 # Lecture 10 Lock and Conditional Variable Design
-**Atomic Operations**: an operation that always runs to completion or not at all. It cannot be stopped in the middle, and the states can not be modified in the middle. Atomic operations are the fundamental building blocks to make 
+The resources are shared in computer system, so there may be conflict between different threads or processes. We need a method to ensure correctness.
+**Atomic Operations**: an operation that always runs to completion or not at all. It cannot be stopped in the middle, and the states can not be modified in the middle. Atomic operations are the fundamental building blocks to make different threads work together.
 # Lecture 12 Readers/Writers and Deadlock
 ## Readers/Writers Lock
 The motivation is suppose we have a database, and there are two kinds of operations: **read**, which never modify database and **write**, which read and modify database. Is using a single lock on the whole database a good idea? It is correct but not efficient. Because we can have many readers working at the same time, but for writers, only one can work at a time.
