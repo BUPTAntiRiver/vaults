@@ -321,6 +321,57 @@ Since then we propose **affinity scheduling**: a thread is always scheduled or y
 # Lecture 10 Lock and Conditional Variable Design
 The resources are shared in computer system, so there may be conflict between different threads or processes. We need a method to ensure correctness.
 **Atomic Operations**: an operation that always runs to completion or not at all. It cannot be stopped in the middle, and the states can not be modified in the middle. Atomic operations are the fundamental building blocks to make different threads work together.
+Let's clarify some definitions here:
+- **Synchronization**: using atomic operations to ensure cooperation between threads. All synchronization involves waiting.
+- **Mutual Exclusion**: ensuring that only one thread does a particular thing at a time.
+- **Critical Section**: piece of code that only one thread can execute at once.
+- **Lock**: prevents something from doing something. We lock before entering critical section or accessing shared data and unlock when leaving.
+
+## Lock
+Implementation:
+- `lock.acquire()` wait until lock is free, then grab
+- `lock.release()` unlock, wake up anyone waiting
+
+## Conditional Variable
+**Definition**: a queue of threads waiting for something *inside* a critical section.
+Implementation:
+- `Wait(&lock)` atomically release lock and go to sleep, re-acquire lock later, before returning
+- `Signal()` wake up one waiter, if any
+- `Broadcast()` wake up all waiters
+
+### Producer-Consumer Example
+```c
+class bounded_queue {
+	Lock lock;
+	CV itemAdd;
+	CV itemRemoved;
+	void insert(int item);
+	int remove();
+}
+
+void bounded_queue::insert(int item) {
+	lock.acquire();
+	while(queue.full()) {
+		itemRemoved.wait(&lock);
+	}
+	add_item(item);
+	itemAdded.signal();
+	lock.release();
+}
+
+void bounded_queue::remove() {
+	lock.acquire();
+	remove_item(item);
+	itemRemoved.signal();
+	lock.release();
+}
+```
+Two key principles of using conditional variables:
+- CV is always used with lock acquired
+- CV is put in a while loop, we need to check again and again, if we are not using loop, when insert is waked but failed to grab the lock and queue was full, then it will try to add item! With loop we can re-check the condition.
+
+## Semaphores
+**Definition**: a kind of generalized lock.
 # Lecture 12 Readers/Writers and Deadlock
 ## Readers/Writers Lock
 The motivation is suppose we have a database, and there are two kinds of operations: **read**, which never modify database and **write**, which read and modify database. Is using a single lock on the whole database a good idea? It is correct but not efficient. Because we can have many readers working at the same time, but for writers, only one can work at a time.
