@@ -371,7 +371,9 @@ Two key principles of using conditional variables:
 - CV is put in a while loop, we need to check again and again, if we are not using loop, when insert is waked but failed to grab the lock and queue was full, then it will try to add item! With loop we can re-check the condition.
 
 ## Semaphores
-**Definition**: a kind of generalized lock.
+**Definition**: a kind of generalized lock. A semaphore has a non-negative integer value and supports the following two operations:
+- `P()`: an atomic operation that waits for the semaphore to become positive, then decrements it by 1. It works similar to `wait()`
+- 
 # Lecture 12 Readers/Writers and Deadlock
 ## Readers/Writers Lock
 The motivation is suppose we have a database, and there are two kinds of operations: **read**, which never modify database and **write**, which read and modify database. Is using a single lock on the whole database a good idea? It is correct but not efficient. Because we can have many readers working at the same time, but for writers, only one can work at a time.
