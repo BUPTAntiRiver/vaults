@@ -408,19 +408,18 @@ Release() {
 ```
 The key idea is that we keep an **only single** 0 in all the values, so who has the 0 can enter the critical section.
 The disadvantage is **busy waiting**, thread consumes cycles while waiting. How to solve this? The first thing come into mind is probably **conditional variable**, which can sleep and be signaled. That will be introduced later, with `test&set` only, we can also minimize wait cost with some engineering effort.
+## How to implement Conditional Variables?
+Recap the operations: `Wait(&lock)`, `Signal()`, `Broadcast()`. Since when we are using CV we are inside critical section, the implementation is quite simple, check by yourself.
+Key note: we are using while to check the condition, the reason why is discussed in previous sections.
 # Lecture 12 Readers/Writers and Deadlock
 ## Readers/Writers Lock
 The motivation is suppose we have a database, and there are two kinds of operations: **read**, which never modify database and **write**, which read and modify database. Is using a single lock on the whole database a good idea? It is correct but not efficient. Because we can have many readers working at the same time, but for writers, only one can work at a time.
 ## Deadlock
 ### Four requirements for Deadlock
-- Mutual exclusion
-	- Only one thread at a time can use a resource.
-- Hold and Wait
-	- Thread holding at least one resource is waiting to acquire additional resources held by other threads.
-- No preemption
-	- Resources are released only voluntarily by the thread holding the resource, after thread is finished with it.
-- Circular wait
-	- There exist a set of waiting threads each waits the one after it.
+- Mutual exclusion: only one thread at a time can use a resource.
+- Hold and Wait: thread holding at least one resource is waiting to acquire additional resources held by other threads.
+- No preemption: resources are released only voluntarily by the thread holding the resource, after thread is finished with it.
+- Circular wait: there exist a set of waiting threads each waits the one after it.
 ### Preventing Deadlocks
 1. No circular wait: careful design.
 2. No hold-and-wait: use another lock to lock the locks, which may decrease concurrency.
