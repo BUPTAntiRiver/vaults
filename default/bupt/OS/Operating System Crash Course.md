@@ -380,6 +380,34 @@ Two key principles of using conditional variables:
 
 ### Producer Consumer
 Implement Producer Consumer with semaphore. We meed 3 semaphore in total, one to count used slot, one to count available items, one to act as a binary mutex.
+# Lecture 11 Lock and Conditional Variables Implementation
+## How to Implement Locks?
+### With Interrupts
+A naive method would be disable interrupts when acquire locks and enable interrupts when release locks. But we can let user do this! If they acquire lock and do a infinite loop, they can take over the system.
+A better implementation would be putting both disable and enable interrupts in acquire and release. Disable and enable interrupts acts like a lock for lock, they set up a critical section, we can modify data structures to maintain lock information between them.
+However, interrupts are enabled and disabled during context switch and it becomes really time consuming to implement on multi-processor. We have the following alternative.
+### Atomic Read-Modify-Write Instructions
+These instructions read a value and write a new value atomically, and hardware is responsible for this, such method can be used on both uni-processor and multi-processor.
+Some examples are:
+- `test&set(&address)` return value at `address` and set value at `address` to 1
+- `swap(&address, register)` swap register's value to value at `address`
+- `compare&swap(&address, reg1, reg2)` if register 1 and value at `address` are the same, set that value to register 2 and return success, else return failure
+
+#### Implementation with `test&set`
+**Spin lock**: a simple solution.
+```c
+int value = 0;
+
+Acquire() {
+	while (test&set(value));
+}
+
+Release() {
+	value = 0;
+}
+```
+The key idea is that we keep an **only single** 0 in all the values, so who has the 0 can enter the critical section.
+The disadvantage is **busy waiting**, thread consumes cycles while waiting. How to solve this? The first thing come into mind is probably **conditional variable**, which can sleep and be signaled. That will be introduced later, with `test&set` only, we can also minimize wait cost with some engineering effort.
 # Lecture 12 Readers/Writers and Deadlock
 ## Readers/Writers Lock
 The motivation is suppose we have a database, and there are two kinds of operations: **read**, which never modify database and **write**, which read and modify database. Is using a single lock on the whole database a good idea? It is correct but not efficient. Because we can have many readers working at the same time, but for writers, only one can work at a time.
