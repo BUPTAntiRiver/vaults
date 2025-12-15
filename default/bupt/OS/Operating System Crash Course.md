@@ -373,7 +373,13 @@ Two key principles of using conditional variables:
 ## Semaphores
 **Definition**: a kind of generalized lock. A semaphore has a non-negative integer value and supports the following two operations:
 - `P()`: an atomic operation that waits for the semaphore to become positive, then decrements it by 1. It works similar to `wait()`
-- 
+- `V()`: an atomic operation that increments the semaphore by 1, waking up a waiting `P`, if we have any. This is some kind of `signal()`
+### Two use examples
+1. Mutual Exclusion (initial value = 1), also called "Binary Semaphore", can be used for mutual exclusion.
+2. Scheduling Constraints (initial value = 0), allow some thread to wait for signal from another thread.
+
+### Producer Consumer
+Implement Producer Consumer with semaphore. We meed 3 semaphore in total, one to count used slot, one to count available items, one to act as a binary mutex.
 # Lecture 12 Readers/Writers and Deadlock
 ## Readers/Writers Lock
 The motivation is suppose we have a database, and there are two kinds of operations: **read**, which never modify database and **write**, which read and modify database. Is using a single lock on the whole database a good idea? It is correct but not efficient. Because we can have many readers working at the same time, but for writers, only one can work at a time.
