@@ -504,3 +504,41 @@ Another method is called C-SCAN, which only goes in one direction, skips any req
 8. The thread is scheduled on CPU, and return from the `read()`
 
 ## File System Abstraction
+**Definition**: Layer of OS that transforms block interface of disk into Files, Directories, etc.
+**Components**:
+- **Naming**: Interface to find files by name, not by blocks
+- **Disk Management**: collecting disk blocks into files
+- **Protection**: Layers to keep data secure
+- **Reliability/Durability**: Keeping of files durable despite crashes, media failures, attacks, etc.
+
+### Disk Management Policies
+Basic entities on a disk:
+- **File**: user-visible group of blocks arranged sequentially in logical space
+- **Directory**: user-visible index mapping names to files
+
+Access disk as linear array of sectors. Two options:
+- Identify sectors as vectors \[cylinder, surface, sector\], sort in cylinder major order. This is usually used in BIOS, but not in OS anymore.
+- **Logical Block Addressing** (LBA), every sector has a integer address from zero up to max number of sectors.
+- Controller translate from address to physical position, in first case, BIOS needs to handle bad sectors, in second case, hardware shields OS from disk structure.
+
+We also need ways to **track free disk blocks**. Naive methods like linking them together would be too slow now, we can use **bitmap** to represent free space on disk.
+We need way to structure files: **File Header**. Which:
+- Track which blocks belong to which offset within the logical file structure
+- Optimize placement of file's disk blocks to match access and usage patterns
+### File
+**Definition**: named permanent storage.
+**Contains**:
+- Data: blocks on disk.
+- Meta (Attributes): owner, size, last open time, access rights, etc.
+
+### Directory
+**Definition**: basically a **hierarchical** structure. Each directory is a collection of **files** and **directories**, it has a name and attributes.
+Hard links make it a **directed acyclic graph**, rather than a tree. Hard links are link to other files maybe already under other directory. Soft links (alias) are another name of en entry.
+In shell, we have some convention for directory:
+- Root directory: `/`
+- Home directory: `~/dir/file.c`
+- Absolute path: `/home/dir/file.c`
+- Relative path: `file.c`
+
+**Volume**: a collection of physical storage resources that form a **logical** storage device. Could be a part or many physical devices.
+**Mount**: an operation that creates a mapping from some path in the existing file system to the root directory of the mounted volume's file system.
