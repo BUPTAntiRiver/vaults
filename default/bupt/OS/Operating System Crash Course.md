@@ -459,4 +459,48 @@ Made up of:
 Storage capacity = head count $\times$ cylinder count $\times$ sector count $\times$ sector size (usually 512 bytes)
 We are not using track count here because head count $\times$ cylinder count is just track count!
 #### Read and Write
-We have three stages in 
+We have three stages in this process:
+- **Seek time**: to find position the head/arm over the proper track
+- **Rotational latency**: wait for desired sector to rotate under r/w head
+- **Transfer time**: transfer a block of bits under r/w head
+
+The total latency also needs to add software time, that is queuing time and controller time, so in total it is: Disk Latency = Queuing Time + Controller Time + Seek Time + Rotational Latency + Transfer Time
+The transfer time is impossible to reduce with same device, queuing time and controller time are decided by software, so the key to use disk **effectively** (especially for file systems) is to *minimize seek time and rotational latency*.
+#### Intelligence in the Controller
+When there is bad sectors (broken) in the disk, controller provides an illusion like it is totally fine (just like what OS do!), and re-map it to a fine sector on the same surface. Sometimes in order to keep sequential behavior (when there is a bad sector in the middle), controller may re-map all sectors to a new place.
+### Solid State Disk
+#### Read
+There is no seek or rotational latency in SSD, the latency will be Queuing Time + Controller Time + Transfer Time. Also it has the highest bandwidth no matter we are doing Sequential or Random reads.
+#### Write
+Writing is complex, we can only write to empty pages in a block. And we can erase data to provide new spare spaces. The controller will maintain pool of empty blocks by coalescing used pages, also reserve some percent of capacity.
+One rule to keep in mind: write is 10 times slower than read, erase is 10 times slower than write.
+#### Summary
+SSD has:
+- Lower latency and higher throughput
+- No moving parts (very light weight, low power, silent, very shock insensitive)
+- Read at memory speeds (limited by controller and IO bus)
+
+The disadvantages are:
+- Smaller storage and expensive price, however these two cons are reduced greatly in the latest products, no longer true!
+- Asymmetric block write performance: read page/erase/write page, Controller garbage collection (GC) algorithms have major effect on performance
+- Limited drive lifetime. Average failure rate is 6 years, expectancy is 9 to 11 years.
+
+These are changing rapidly! SSD is the main stream now, all disk enterprise are working on it!
+## Disk Scheduling
+Two not that good methods, the methods we are talking about are all based on Magnetic Disks
+- FIFO, may lead to long seek
+- SSTF, shortest seek time first, may lead to starvation
+
+The more common one is SCAN, implementing with an Elevator Algorithm: take the closest request in a fixed direction of travel (reversed at the end), in this case we have no starvation and SSFT like flavor.
+Another method is called C-SCAN, which only goes in one direction, skips any requests on the way back. It is fairer than SCAN, not biased towards pages in the middle.
+## A simple read() life cycle
+1. A process issues a system call `read()`
+2. OS moves the calling thread to a wait queue
+3. OS uses memory-mapped IO to tell the disk to read the requested data and set up the DMA so the disk can place the data in kernel's memory
+4. Disk reads data and DMA it into main memory
+5. Disk triggers an interrupt
+6. OS's interrupt handler copies the data from the kernel's buffer into the process's address space
+7. OS moves the thread to ready state
+8. The thread is scheduled on CPU, and return from the `read()`
+
+## File System Abstraction
