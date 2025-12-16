@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BUPT/OS/Operating System Crash Course.md",
+                "file": "BUPT/OS/homework/homework 10.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Operating System Crash Course"
+              "title": "homework 10"
             }
           }
         ]
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -174,8 +173,9 @@
   },
   "active": "b49c755e54e53d0f",
   "lastOpenFiles": [
-    "Untitled.md",
     "BUPT/OS/Operating System Crash Course.md",
+    "BUPT/OS/homework/homework 10.md",
+    "Untitled.md",
     "诗文/赠近代史学家昱尧.md",
     "诗文/仿生人会梦到电子羊吗？.md",
     "诗文/批评.md",
@@ -199,7 +199,6 @@
     "Machine Learning/CS229 notes.md",
     "Machine Learning/RoPE.md",
     "快速.md",
-    "快速上手 TileLang-Ascend.md",
     "lec2_vae.pdf",
     "lec2_vae.pdf.crdownload",
     "images/Pasted image 20251020210407.png",

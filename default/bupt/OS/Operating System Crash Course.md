@@ -449,6 +449,7 @@ Two complementary ways for CPU to access IO devices:
 OS is deeply connected with hardware so we also need to learn about them.
 Introduce two names here: magnetic disks and flash memory.
 ### Magnetic Disk
+#### Definition
 Made up of:
 - **Sector**: the unit of transfer
 - **Track**: rings of sectors
@@ -457,3 +458,5 @@ Made up of:
 
 Storage capacity = head count $\times$ cylinder count $\times$ sector count $\times$ sector size (usually 512 bytes)
 We are not using track count here because head count $\times$ cylinder count is just track count!
+#### Read and Write
+We have three stages in 
