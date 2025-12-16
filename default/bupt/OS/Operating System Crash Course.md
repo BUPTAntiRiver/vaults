@@ -429,3 +429,31 @@ The motivation is suppose we have a database, and there are two kinds of operati
 Usually the request and assignment of resources are not determined at a single point, which means resources are taken/released over time. So we can't know order/amount of requests ahead of time, we can only assume some worst-case "max" resource needed by each process.
 So we should state maximum resource needed in advance;
 Only allow particular thread to proceed if available resources is greater than requested plus max remaining need resource.
+# Lecture 13 IO devices and disk
+## IO Devices
+**Definition**: IO devices usually have two parts, an interface and in internal structure. Some complex IO devices may have their own CPU and memory.
+The interface usually has 3 registers:
+- **status** register
+- **command** register
+- **data** register
+
+To check the status, we may use polling, but that is too expensive, so we usually use interrupts.
+### Direct Memory Access
+DMA acts like a bridge between CPU and Disk, it is a worker listen to CPU instructions and transfer data from CPU to disk, so that CPU can spend its time on more important jobs. When DMA is complete, it will send a interrupt to notify CPU.
+### IO methods
+Two complementary ways for CPU to access IO devices:
+- Memory-mapped IO (MMIO): let memory and devices share the physical address space. This is most widely adopted and they share a address bus.
+- Port-mapped IO (PMIO), or isolated IO: use specialized instructions to read and write IO devices.
+
+## Storage Devices
+OS is deeply connected with hardware so we also need to learn about them.
+Introduce two names here: magnetic disks and flash memory.
+### Magnetic Disk
+Made up of:
+- **Sector**: the unit of transfer
+- **Track**: rings of sectors
+- **Cylinder**: stacked tracks, all the tracks under the head at a give point on all surfaces
+- **Head**: attached to movable arms to read data, we have 2 per **platter** for each surfaces
+
+Storage capacity = head count $\times$ cylinder count $\times$ sector count $\times$ sector size (usually 512 bytes)
+We are not using track count here because head count $\times$ cylinder count is just track count!
