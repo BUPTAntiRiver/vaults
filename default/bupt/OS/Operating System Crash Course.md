@@ -529,7 +529,7 @@ We need way to structure files: **File Header**. Which:
 **Definition**: named permanent storage.
 **Contains**:
 - Data: blocks on disk.
-- Meta (Attributes): owner, size, last open time, access rights, etc.
+- Metadata (Attributes): owner, size, last open time, access rights, etc.
 
 ### Directory
 **Definition**: basically a **hierarchical** structure. Each directory is a collection of **files** and **directories**, it has a name and attributes.
@@ -585,9 +585,48 @@ To improve IO performance, locality is important, so when placing the files, we 
 Poor locality: there will be fragmentation.
 Poor random access: scan through the list.
 No support for hard link, because FAT does not use inodes.
-File meta data stored in directory entries, therefore being limited: only has file name, size, creation time, but cannot specify the file's owner or group.
+File metadata stored in directory entries, therefore being limited: only has file name, size, creation time, but cannot specify the file's owner or group.
 Limitations on volume and file size.
 
 ### Unix File Systems (FFS)
 #### File Attributes
-We have multi-level index in FFS, which can be represented as 
+We have multi-level index in FFS, which can be represented as fixed, asymmetric tree. The entries are an inode array. In each inode, we have:
+- File Metadata: 9 control bits (user, group, owner, read, write, execute)
+- 12 Direct Pointers, each point to a 4 KB block, so each inode is sufficient for files up to 48 KB.
+- Indirect Pointers, they point to a disk block containing only pointers. So a indirect pointer points to a 4 KB block that holds 1024 pointers, that will be 4 MB, and double indirect pointer turns out to be 4 GB, triple to be 4 TB.
+
+#### Features
+**Tree Structure**. Each file is represented by a tree, which allows the file system to efficiently find any block of a file.
+**High Degree**.
+**Fixed structure**.
+**Asymmetric**. Makes FFS fits both small and big files very well.
+**Locality Heuristics**:
+- Block group placement: FFS places data to optimize for the common case where a file’s data blocks, a file’s data and metadata, and different files from the same directory are accessed together.
+- Reserved space: reserved for locality optimization even when the disk is full, about 10%.
+#### Free Space Management
+FFS allocates a bitmap with one bit per storage block. The i-th bit in the bit map indicates whether the i-th block is free or in use.
+#### Summary
+**PROS**:
+- Efficient storage for both large and small files
+- Locality for both large and small files
+- Locality for metadata and data
+- No de-fragmentation necessity
+
+**CONS**:
+- Inefficient for tiny files (a 1 byte file requires both an inode and a data block)
+- Inefficient encoding when file is mostly contiguous on disk
+- Need to reserve around 10% free space to prevent fragmentation (kind of waste)
+
+### NTFS (New Technology File System)
+Almost everything in NTFS is a sequence of attribute, value pairs, for metadata and data. It mixes direct and indirect freely.
+#### Master File Table
+NTFS has a **Master File Table**, which is a database with flexible 1 KB entries for metadata/data. It has variable-sized attribute records, can be extended with variable depth tree.
+For *small* files, the MFT record contains default info and file name, then, it just store that file inside the record.
+For *medium* files, the MFT record stores start and length pairs to denote where are the data extents.
+For *large or fragment* files, the MFT record stores start length data info and other records info in attribute list too. Because we can store all the data info pairs inside one record.
+For even rarer case *huge or badly fragment* files, we can make the attribute list become non-resident too! (having extents) This is possible because everything in NTFS is described with MFT.
+
+#### Locality Heuristics
+The system tries to place a newly allocated file in the smallest free region that is large enough to hold it. NTFS also specifies the expected size of a file at creation time, which helps to plan space use. It also uses some reserved space to avoid fragmentation (about 12.5%).
+## Virtual File Systems (VFS)
+How to make different file systems work together? This need emerges as we have more and more kinds of devices and networked file system.
