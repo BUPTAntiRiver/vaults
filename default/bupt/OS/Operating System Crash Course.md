@@ -657,7 +657,7 @@ What a Reliable File System does?
 - "All or Nothing"
 - Quite similar to critical section problem in concurrency
 ## Transactions for Atomic Updates
-### Careful Ordering
+### Careful Ordering A Not That Good One
 We can sequence operations in a specific order, so that sequence can be interrupted safely.
 Enable post-crash recovery, read data structures to see if there were any operations in progress, clean up or finish as needed.
 This is the approach taken by FAT and FFS.
@@ -666,4 +666,31 @@ There are some **issues**:
 - Slow updates, file systems are forced to insert sync operations barriers between dependent operations.
 - Extremely slow recovery, need to scan all of its disks for inconsistent metadata structures
 
-### Transactions
+### Transactions Itself
+Use *transactions* for atomic updates, it is like a group of atomic updates. The system can be either before transaction or after transaction, not allowed to be in the middle of the transaction.
+**Definition**: an **atomic sequence** of actions (read/write) on storage system (or database, i first learn this pattern from database). That takes the system from one **consistent state** to another.
+#### Typical Structure
+**Begin** a transaction: get transaction id.
+Do a bunch of updates, if any fail along the way, **roll back**, or if any conflicts with other transactions **roll back**.
+**Commit** the transaction.
+#### Key Properties
+- **Atomic**: all actions in the transaction happen, or none happen
+- **Consistency**: transactions maintain data integrity, e.g. balance cannot be negative, or cannot reschedule meeting on February 30
+- **Isolation**: execution of one transaction is isolated from that of all others; no problems from concurrency
+- **Durability**: if a transaction commits, its effects persist despite crashes
+#### Logging
+**Definition**: instead of modifying data structure on disk directly, write changes to a log, once all changes are in log, it is safe to apply changes to data structures on disk. Log is **append only**.
+If we crash **during logging**, the recovery is also faster, we can just look into the log, detect transactions with no commit, then discard log entries and disk remains unchanged.
+Recover after **commit**, we can detect committed logs are redo them (may be scheduled later).
+#### Detail
+Repeated write-backs are OK, because they don't depend on previous data in the sector, however for operations like add value to data in sector won't be recoverable.
+New requests need to consult the log first to ensure the data consistency, can be alleviated by caching.
+
+### Transaction File Systems
+Two way to use transactions in file systems: journaling and logging.
+**Journaling**: apply updates to the system's metadata via transactions.
+**Logging**: apply both metadata and data in transactions.
+## RAID
+The storage devices itself may be broken some time, to keep the data still reliable under such cases, we have RAID (redundancy arrays of inexpensive disks). There are five levels of RAID initially (more now).
+### RAID 1: Disk Mirroring/Shadowing
+Each disk is fully duplicated onto its "shadow". We have fast
