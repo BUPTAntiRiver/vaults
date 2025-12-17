@@ -693,4 +693,8 @@ Two way to use transactions in file systems: journaling and logging.
 ## RAID
 The storage devices itself may be broken some time, to keep the data still reliable under such cases, we have RAID (redundancy arrays of inexpensive disks). There are five levels of RAID initially (more now).
 ### RAID 1: Disk Mirroring/Shadowing
-Each disk is fully duplicated onto its "shadow". We have fast
+Each disk is fully duplicated onto its "shadow". This is the most expensive solution, because we need 100% capacity overhead. Also, we need to do the write twice, but read can have higher bandwidth.
+### RAID 5+: High IO Rate Parity
+Data are stripped across multiple disks, for example we have 5 disks and 4 data block, then the data are store across 0 to 3, disk 4 instead of storing actual data, it is responsible for storing the parity data, a recovery info constructed with x-or operation over all previous 4 data block. So that once any one of then are down, we can x-or the survived ones with parity to regain the lost data.
+Also, we won't let one disk do all the parity job, each one store the parity info in turns. This is **rotating parity**, parity needs to be changed very often, so we split the workload.
+# Lecture 16 Virtual Machine
