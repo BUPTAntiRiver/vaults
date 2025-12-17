@@ -630,3 +630,40 @@ For even rarer case *huge or badly fragment* files, we can make the attribute li
 The system tries to place a newly allocated file in the smallest free region that is large enough to hold it. NTFS also specifies the expected size of a file at creation time, which helps to plan space use. It also uses some reserved space to avoid fragmentation (about 12.5%).
 ## Virtual File Systems (VFS)
 How to make different file systems work together? This need emerges as we have more and more kinds of devices and networked file system.
+VFS is like java abstract Object, all file systems can extend from it.
+### Core VFS Abstractions
+**Super Block**: file system global data
+**Inode** (index node): metadata for one file
+**Dentry** (direct entry): name to inode mapping
+**File Object**: pointer to dentry and cursor (file offset)
+Super block and inodes are extended by file system developer.
+
+## Summary
+File System:
+- Transform blocks into Files and Directories
+- Optimize for size, access and usage patterns
+- Maximize sequential access, allow efficient random access
+- Projects the OS protection and security regime (UGO vs ACL)
+
+File defined by header, called "inode" (index node).
+Naming: translating from user-visible names to actual system resources
+Multi-level Indexed Scheme: indirect pointer or extent.
+# Lecture 15 Reliable File Systems
+Threats to File System Reliability:
+- Operation interruption
+- Loss of stored data
+
+What a Reliable File System does?
+- "All or Nothing"
+- Quite similar to critical section problem in concurrency
+## Transactions for Atomic Updates
+### Careful Ordering
+We can sequence operations in a specific order, so that sequence can be interrupted safely.
+Enable post-crash recovery, read data structures to see if there were any operations in progress, clean up or finish as needed.
+This is the approach taken by FAT and FFS.
+There are some **issues**:
+- Complex reasoning, there are so many possible operations and failures
+- Slow updates, file systems are forced to insert sync operations barriers between dependent operations.
+- Extremely slow recovery, need to scan all of its disks for inconsistent metadata structures
+
+### Transactions
