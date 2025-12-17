@@ -590,4 +590,4 @@ Limitations on volume and file size.
 
 ### Unix File Systems (FFS)
 #### File Attributes
-We have multi-level index in FFS, 
+We have multi-level index in FFS, which can be represented as 
