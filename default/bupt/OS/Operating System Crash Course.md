@@ -724,5 +724,20 @@ What does hardware do for OS?
 - *System calls* trap to the kernel to perform a privileged action on behalf of a user program.
 - *Return from interrupt*: switch from kernel mode to user mode, to a specific location in a user process.
 
-Quite a lot, OS in virtual machine can no longer execute privileged instructions. For those instructions that cause an *exception*, we trap into VMM, take care of business, return to OS in VM.
+Quite a lot!
+#### Virtualizing Privileged Instructions
+OS in virtual machine can no longer execute privileged instructions. For those instructions that cause an *exception*, we trap into VMM, take care of business, return to OS in VM.
 For those that do not cause an exception, different VMM has different methods. And hardware also has supported new CPU mode, instructions to do **trap and emulate**.
+#### Virtualizing the CPU
+VMM needs to multiplex VM on CPU, time slice the VM, each VM will slice its OS/application during its quantum. And use a typically relative simple scheduler: Round Robin, working-conserving (give unused quantum to other VM).
+#### Virtualizing Events
+VMM receives interrupts, exceptions.
+Needs to vector to appropriate VM, like modify OS to use virtual interrupt register, event queue, or craft appropriate handler invocation, emulate event registers.
+#### Virtualizing IO
+OS in VM can no longer interact directly with IO devices.
+**Xen**: modify OS to use low-level IO interface (hybrid)
+**VMWare**: VMM supports generic devices (hosted)
+#### Virtualizing Memory
+OS assume they have full control over memory. But VMM partitions memory among VM, so VMM needs to assign hardware pages to VM, it also needs to control mappings for isolation.
+Hardware-managed TLB makes this difficult, when TLB misses, the hardware automatically walks the page tables in memory. As a result, VMM needs to control access by OS to page tables.
+**Xen** implementation: page table work the same as before, but OS is constrained to only map to the physical pages it owns.
