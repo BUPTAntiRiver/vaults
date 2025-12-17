@@ -542,3 +542,52 @@ In shell, we have some convention for directory:
 
 **Volume**: a collection of physical storage resources that form a **logical** storage device. Could be a part or many physical devices.
 **Mount**: an operation that creates a mapping from some path in the existing file system to the root directory of the mounted volume's file system.
+# Lecture 14 File System Design
+## Components of File System
+`Open` performs a **Name Resolution**, it translate path name into a "file number", creates a file descriptor in PCB within kernel, returns a "handle" (another integer) to user process.
+`Read`, `Write`, `Seek`, `Sync` operates on the handle, then mapped to the file descriptor and to blocks.
+### inode
+**Definition**: an inode is a data structure on a file system on Linux and other Unix-like operating systems that store all the information about a file except its name and its actual data.
+Q: Does each file has exactly one corresponding inode?
+A: True for most traditional Unix-like file systems, but not true with hard links (covered later).
+When a file is copied, a new inode is created. When a file is moved, nothing changed.
+The number of inode is configurable in many file systems, depends on how many bits does the inode number have.
+### In Memory File System Structures
+`open` system call:
+- Resolve file name, find file control block (inode)
+- Makes entries in per-process and system-wide tables
+- Return index (called "file handle") in open file table
+
+`read` / `write` system call:
+- Use file handle to locate inode
+- Perform appropriate reads or writes
+
+## Directory
+### Structure
+Directory is treated as a file with a list of (file name, file number) mappings.
+The file number of the root directory is agreed ahead of time, in many Unix file systems, it is 2.
+Modern file systems organize directory's contents as a tree, typically B+ tree, just like database systems!
+### Hard Link
+`ln` command, link: it creates another name in the directory you are creating the link to, and refers it to the same inode number of the original file. Os will maintain a reference count for each inode. When we create file 1 and link file 2 to it, even we remove file 1, we can still access data in that inode through file 2m because the reference count is 1 now but still greater than 0. Usually used for version control.
+### Soft Link
+`ln -s` command, soft (symbolic) link: a special type of file whose contents are the path name of the linked-to file. The size of soft link file changes as they are linked to files with different names. Soft link does not add reference count. Usually used for shortcuts.
+
+## Files
+How do we locate storage blocks based on file number? It is different across file systems.
+### FAT (File Allocation Table)
+#### Features
+FAT is a linked list as a one to one map with blocks.
+Each entry in FAT contains a pointer to the next FAT entry of the same file, or a special end of file value.
+FAT is stored on disk, on boot cache in memory. It also has a back up copy on disk.
+To free space in FAT, we can just set the value of FAT list to 0. If we want to find a free space, we scan through the list.
+To improve IO performance, locality is important, so when placing the files, we want to make sure it is stored in sequential blocks, but this is just like segmentation, the fragment will keep increasing.
+#### Issues
+Poor locality: there will be fragmentation.
+Poor random access: scan through the list.
+No support for hard link, because FAT does not use inodes.
+File meta data stored in directory entries, therefore being limited: only has file name, size, creation time, but cannot specify the file's owner or group.
+Limitations on volume and file size.
+
+### Unix File Systems (FFS)
+#### File Attributes
+We have multi-level index in FFS, 
