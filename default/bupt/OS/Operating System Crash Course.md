@@ -698,3 +698,31 @@ Each disk is fully duplicated onto its "shadow". This is the most expensive solu
 Data are stripped across multiple disks, for example we have 5 disks and 4 data block, then the data are store across 0 to 3, disk 4 instead of storing actual data, it is responsible for storing the parity data, a recovery info constructed with x-or operation over all previous 4 data block. So that once any one of then are down, we can x-or the survived ones with parity to regain the lost data.
 Also, we won't let one disk do all the parity job, each one store the parity info in turns. This is **rotating parity**, parity needs to be changed very often, so we split the workload.
 # Lecture 16 Virtual Machine
+Virtualization is a technology that allows for the creation of virtual versions of physical resources.
+Virtual machine is a very hot topic in both academia and industry, it is an old idea, but becomes very successful with cloud computing. Now we have, Virtual Machine Monitor (VMM), also named Hypervisor.
+## What is a VM?
+We have already seen virtualization in OS: system calls, virtual memory, file system, etc. However a VMM virtualize an entire physical machine. The interface supported is hardware level (OS defines a higher level interface), VMM provides an illusion that software has the full control over the hardware, while actually VMM is under control.
+This means that we can boot an operating system in a virtual machine; run multiple instances of an OS on same physical machine; run different OS simultaneously on the same machine.
+## Why VM?
+Machines today are very powerful, we want to multiplex them so that one machine can support the need of multiple workers. VM is also easier to migrate across machines, it is secure, portable, and can be used for emulation, etc.
+## How does VM run?
+VMM runs with privilege, OS in VM runs with lesser privilege (like user-level). Since we are going to run OS code in a VM directly on CPU, we need to make OS looks like a user-level process. We also want privilege instructions to trap.
+We have some concepts here: *virtualization, simulation, emulation*.
+Emulation aims at providing an environment of hardware or software. Simulation aims at mimicking certain process or object.
+### Implementation
+What needs to be virtualized? CPU, events (exceptions and interrupts), memory and IO devices.
+This seems like we are just duplicating OS functionality in VMM, and indeed yes it is, but we are implementing a different abstraction. We used to face hardware interface, but now we have an OS interface.
+What does hardware do for OS?
+- *Privilege levels*, user and kernel.
+- *Privileged instructions*: instructions available only in kernel mode.
+- *Memory translation* prevents user programs from accessing kernel data structures and aids in memory management.
+- *Processor exceptions* trap to the kernel on a privilege violation or other unexpected event.
+- *Timer interrupts* return control to the kernel on time expiration.
+- *Device interrupts* return control to the kernel to signal I/O completion.
+- *Inter-processor interrupts* cause another processor to return control to the kernel.
+- *Interrupt masking* prevents interrupts from being delivered at inopportune times.
+- *System calls* trap to the kernel to perform a privileged action on behalf of a user program.
+- *Return from interrupt*: switch from kernel mode to user mode, to a specific location in a user process.
+
+Quite a lot, OS in virtual machine can no longer execute privileged instructions. For those instructions that cause an *exception*, we trap into VMM, take care of business, return to OS in VM.
+For those that do not cause an exception, different VMM has different methods. And hardware also has supported new CPU mode, instructions to do **trap and emulate**.
