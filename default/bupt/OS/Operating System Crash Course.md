@@ -703,7 +703,7 @@ Virtual machine is a very hot topic in both academia and industry, it is an old 
 ## What is a VM?
 We have already seen virtualization in OS: system calls, virtual memory, file system, etc. However a VMM virtualize an entire physical machine. The interface supported is hardware level (OS defines a higher level interface), VMM provides an illusion that software has the full control over the hardware, while actually VMM is under control.
 This means that we can boot an operating system in a virtual machine; run multiple instances of an OS on same physical machine; run different OS simultaneously on the same machine.
-VMM is like the OS for OS, it creates an illusion that the OS has its own private CPU and a large virtual memroy for each OS running on top of it.
+VMM is like the OS for OS, it creates an illusion that the OS has its own private CPU and a large virtual memroy for each OS running on top of it. VMM is similar to OS because they both focus on virtualizing hardware, OS virtualize CPU and memory, VMM virtualize other hardware that supports OS.
 ## Why VM?
 Machines today are very powerful, we want to multiplex them so that one machine can support the need of multiple workers. VM is also easier to migrate across machines, it is secure, portable, and can be used for emulation, etc.
 ## How does VM run?
