@@ -34,13 +34,47 @@ Six basic operators:
 - set difference: $-$
 - rename: $\rho$
 
-I am also going to list their corresponding SQL code too:
+I am also going to list some corresponding SQL code too:
 ```sql
 -- select
 SELECT *
 FROM instructor
-WHERE dept_name =
+WHERE dept_name = "Physics"
+
+-- project
+SELECT name, id
+FROM instructor
+
+-- Cartesian product
+SELECT *
+FROM instructor, teaches
+
+-- Join, a combination of select and Cartesian product
+SELECT *
+FROM instructor NATURAL JOIN teaches
 ```
 
-```
-```
+Different queries may have same results, but differs in performance, which leads to query optimization, discussed later.
+# Chapter 3 Introduction to SQL
+**Definition**: Structured Query Language, widely used query language, but not all examples work on particular systems.
+SQL can do a lot of things with DB:
+- query
+- manipulation
+- definition
+- control
+- transaction processing
+- etc
+## Definition
+We create a new table with `create table`, google the syntax.
+One thing needs to mention here is we can add integrity constraints in create table, like:
+- Defining primary key
+- Defining foreign key
+- Set some attributes to be not null
+
+To remove table, we just `drop` it.
+To modify attributes, we can use `alter` to add or drop specific attributes.
+Typically tuples are stored row by row (row major), which makes it very slow to modify attributes, because we are modifying whole column, which requires modification across all rows. Some new structure store data column major to tackle such case.
+## Query
+Use `select` clause to query, we can add some description to the attributes we want to select, like `all`, `distinct` (duplicate is allowed in SQL).
+If we select from two table, then we are actually selecting from their Cartesian product.
+Rather than Cartesian product (outer join), inner join (natural join) is more common, which only care about the tuples has something in common. You may use `join` `on` or add some restrictions in `where` clause, the previous one is recommended.
