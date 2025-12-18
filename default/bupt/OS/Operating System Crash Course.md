@@ -741,3 +741,22 @@ OS in VM can no longer interact directly with IO devices.
 OS assume they have full control over memory. But VMM partitions memory among VM, so VMM needs to assign hardware pages to VM, it also needs to control mappings for isolation.
 Hardware-managed TLB makes this difficult, when TLB misses, the hardware automatically walks the page tables in memory. As a result, VMM needs to control access by OS to page tables.
 **Xen** implementation: page table work the same as before, but OS is constrained to only map to the physical pages it owns.
+#### Example of Address Translation
+In a 4-level page table in VM, each translation requires up to 24 memory accesses. Because first, we need find the next level address for guest address 4 times, and each time, we need to go to host, and the host also has a 4-level page table, so 4 time for each phase. In the end, we also need 1 more memory access to pass the result back to guest address, so that will be 20 in total. After we get the guest physical address, we still need to do translation in host, that will cost another 4 memory access, so add up to 24 times.
+For 5-level page table, it should be 35 times.
+#### Shadow Page Tables
+VMM creates and manage page tables that map virtual pages directly to machine pages. These VMM page tables are the shadow page tables, they are loaded into the MMU on a context switch.
+VMM needs to keep its shadow page tables up-to-date. When guest kernel changes its page table, it will trap into VMM because OS page tables are set read only. Then VMM applies write to shadow page table and OS table. This cause some more overhead.
+Nowadays hardware support for shadow page table directly. The hardware can be set up with 2 page tables. The hardware can translate the guest virtual address to guest physical address then to host physical address directly.
+This simplifies the VM implementation and make it faster, but adds overhead to the synchronization between shadow page table and guest page table.
+#### Memory Allocation
+VMM tends to have simple hardware memory allocation policy, just allocate static size with no dynamic resizing based on workload. And guest OS are not designed to handle changes in physical memory and often **no swap to disk**.
+There is more advanced approach, like overcommit with balloon driver, which means there is a balloon driver in the OS to collect unused available resources, so that VMM can assign them to other VM. When memory pressure decreases, the balloon driver shrinks and reduce less memory in VM OS.
+Further optimization can be share identical physical pages like some all zero pages across VM to save memory space.
+#### Hardware Support
+Hardware company like intel and AMD added more and more features to work with virtual machine better.
+## Usage
+### Java Virtual Machine (JVM)
+Java programs run on top of JVM, that is why it is ubiquitous and runs slower than native C code. It supports garbage collection and just-in-time compile.
+### VM v.s. Container
+The difference between VM and container is that suppose we have a hardware, VM will has a VMM, which controls multiple VM with different guest OS running on them. While container has a host OS kernel, in each container they runs different apps and libraries, which means they have same OS!
