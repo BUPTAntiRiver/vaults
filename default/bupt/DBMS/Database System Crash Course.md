@@ -78,3 +78,18 @@ Typically tuples are stored row by row (row major), which makes it very slow to 
 Use `select` clause to query, we can add some description to the attributes we want to select, like `all`, `distinct` (duplicate is allowed in SQL).
 If we select from two table, then we are actually selecting from their Cartesian product.
 Rather than Cartesian product (outer join), inner join (natural join) is more common, which only care about the tuples has something in common. You may use `join` `on` or add some restrictions in `where` clause, the previous one is recommended.
+The running order of SQL queries is:
+1. FROM + JOIN
+2. WHERE
+3. GROUP BY
+4. HAVING
+5. SELECT
+6. ORDER BY
+7. LIMIT
+
+We can use `as` to rename relations and attributes. For string operations we can use `like` to do pattern matching:
+- `%` to match any string
+- `_` to match any character
+- these two special char can combine with patterns like `%comp%___` to match string has `comp` as substring and has at least three chars after it.
+
+The set operations mentioned in relational algebra can has keywords like `union`, `interset`, `except`.
