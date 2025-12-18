@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BUPT/DBMS/Database System Crash Course.md",
+                "file": "BUPT/OS/Operating System Crash Course.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Database System Crash Course"
+              "title": "Operating System Crash Course"
             }
           }
         ]
@@ -172,8 +172,8 @@
   },
   "active": "b49c755e54e53d0f",
   "lastOpenFiles": [
-    "BUPT/OS/Operating System Crash Course.md",
     "BUPT/DBMS/Database System Crash Course.md",
+    "BUPT/OS/Operating System Crash Course.md",
     "Untitled.md",
     "BUPT/OS/homework/homework 10.md",
     "诗文/赠近代史学家昱尧.md",

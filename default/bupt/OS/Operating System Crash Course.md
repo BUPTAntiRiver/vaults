@@ -703,6 +703,7 @@ Virtual machine is a very hot topic in both academia and industry, it is an old 
 ## What is a VM?
 We have already seen virtualization in OS: system calls, virtual memory, file system, etc. However a VMM virtualize an entire physical machine. The interface supported is hardware level (OS defines a higher level interface), VMM provides an illusion that software has the full control over the hardware, while actually VMM is under control.
 This means that we can boot an operating system in a virtual machine; run multiple instances of an OS on same physical machine; run different OS simultaneously on the same machine.
+VMM is like the OS for OS, it creates an illusion that the OS has its own private CPU and a large virtual memroy for each OS running on top of it.
 ## Why VM?
 Machines today are very powerful, we want to multiplex them so that one machine can support the need of multiple workers. VM is also easier to migrate across machines, it is secure, portable, and can be used for emulation, etc.
 ## How does VM run?
@@ -728,6 +729,7 @@ Quite a lot!
 #### Virtualizing Privileged Instructions
 OS in virtual machine can no longer execute privileged instructions. For those instructions that cause an *exception*, we trap into VMM, take care of business, return to OS in VM.
 For those that do not cause an exception, different VMM has different methods. And hardware also has supported new CPU mode, instructions to do **trap and emulate**.
+In real OS, when we try to run privileged instructions, we interrupt to hardware, it catches info and then transfer control to OS, finally OS handles and return. However in VM, we don't have such hardware to do the intermediate work for us. Instead we let VMM to do this. It catches interrupts and call corresponding handler installed in VM OS.
 #### Virtualizing the CPU
 VMM needs to multiplex VM on CPU, time slice the VM, each VM will slice its OS/application during its quantum. And use a typically relative simple scheduler: Round Robin, working-conserving (give unused quantum to other VM).
 #### Virtualizing Events
@@ -738,7 +740,8 @@ OS in VM can no longer interact directly with IO devices.
 **Xen**: modify OS to use low-level IO interface (hybrid)
 **VMWare**: VMM supports generic devices (hosted)
 #### Virtualizing Memory
-OS assume they have full control over memory. But VMM partitions memory among VM, so VMM needs to assign hardware pages to VM, it also needs to control mappings for isolation.
+Each OS thinks of physical memory as a linear array of pages and assign each page to itself or user processes. But VMM partitions memory among VM, so VMM needs to add an extra layer of virtualization makes "physical" memory a virtualization on top of what the VMM refers to as **machine memory**.
+Now the work flow becomes like this: each OS maps virtual-to-physical addresses via its per-process page tables, then VMM maps the resulting physical address to underlying machine address via its per-OS page tables.
 Hardware-managed TLB makes this difficult, when TLB misses, the hardware automatically walks the page tables in memory. As a result, VMM needs to control access by OS to page tables.
 **Xen** implementation: page table work the same as before, but OS is constrained to only map to the physical pages it owns.
 #### Example of Address Translation
