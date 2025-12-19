@@ -103,3 +103,39 @@ Similar to select, use `from` clause.
 `insert into`, can use `value` to insert single tuple or use `select` to insert multiple tuples.
 ### UPDATE
 `update` to determine which table to update, and `set` to define how to update the value. We can also use `from` clause to use data from other table.
+# Chapter 4 Intermediate SQL
+## Join
+There are many join methods. We can use `on` to utilized predicates just like `where` clause.
+We also have **outer join** which extends join operation avoids loss of information. It will keep the not matched tuples and pad it with null. Since then, we have left outer, right outer and full outer.
+## View
+Usually we don't want client to see the full table but only the data they want. So we may select some of the attributes, or we can use `create view` to do this explicitly.
+In previous chapters, I was using table to call these selected views, actually they are virtual tables.
+You can materialize views, but after that, if we update dependent tables, the view will not change, so we will spend extra effort to maintain it by ourselves. But this enables use to update view solely too.
+## Transactions
+**Definition**: a transaction consists of a *sequence* of query and/or update statements and it is a *unit* of work. (similar to what we learned in OS)
+**Properties**: Atomicity, Consistency, Isolation, Durability.
+```sql
+DECLARE @transfer_name varchar(10)
+	SET @transfer_name = "I-transfer-from-A-to-B"
+	BEGIN TRANSACTION @transfer_name
+	USE ACCOUNT
+	GO
+	UPDATE A
+		SET balance = balance – 50
+		WHERE branch_name = ‘Brooklyn’
+	UPDATE B
+		SET balance = balance + 50
+		WHERE branch_name = ‘Brooklyn’
+	GO
+	COMMIT TRANSACTION @transfer_name
+	GO
+```
+## Integrity Constraints
+**Definition**: used to guard DB from accidental damage.
+The constraints on single DB can be:
+- primary key
+- not null
+- unique
+- check(P), where P is a predicate
+
+Reference also shows integrity constraints. The foreign key must be the subset of referenced table's primary key. Primary key, foreign key are also part of `create table` syntax. There is one more thing called `cascade`,
