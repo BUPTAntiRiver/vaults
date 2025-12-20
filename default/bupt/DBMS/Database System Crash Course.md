@@ -202,3 +202,31 @@ e.g. if we mix instructor and department into a `in_dep` like (ID, name, dept_na
 - $\alpha$ is a super key
 - each attributes in $\beta-\alpha$ is contained in a candidate key
 
+# Chapter 13 Storage Structures
+We have two main issues in physical DB:
+- data organization, e.g. physical storage structure of data.
+- data access, e.g. how to index.
+## File Organization
+Each relational table is a set of **tuples**.
+Each file is a sequences of **records**. So it is natural to store each tuple as a record in DB. But we may have fixed length record and variable length record for things like `varchar`.
+### Fixed-length Records
+A simple approach is we can just store the records in a contiguous region. When deleting old records, we can delete and compact, or move the bottom one to this position and we can also do nothing but use a free list to track, but free list allow record to be stored in non-contiguous space, kind of breaking the rule.
+### Variable length Records
+Variable length attributes can be represented by **fixed** size things like offset and length with actual data stored **after** all fixed length attributes. Null value can be represented by a null-value bitmap.
+Another method is we store the size and location info in the header of the block, then store the record from the end of the block to the start. So the free spaces are in the middle. When the records meet the header, the block is full.
+## Organization of Records
+DB file can be viewed as a set of records at logical level. These records are logically organized as: **heap, sequential, hash, clustering**.
+### Heap
+Any record can be placed anywhere in the file where there is space for the record:
+- There is **no ordering** of records
+- Records usually do not move once allocated
+- There is **a single file for a relation**
+
+We use a free-space map, it is an array with 1 entry per-block, each entry records fraction of block that is free. We can extend it into second level free-space map to control more blocks.
+
+### Sequential
+Records are logically ordered by **search keys**. So the records are stored physically in search key order but may not be exactly the same due to deletion and insertion, but as close as possible.
+The records are chained by pointers, so its actually a link list, but has approximate ordered. Pointers enabled records to be stored in non-contiguous space and to be **reordered from time to time** to maintain sequential order.
+### Clustering
+Better for search and IO with tables has relationship with each other, but worse for single table operations, due to overhead with other tables.
+### Hashing
