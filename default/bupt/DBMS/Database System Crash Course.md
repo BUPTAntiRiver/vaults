@@ -230,3 +230,20 @@ The records are chained by pointers, so its actually a link list, but has approx
 ### Clustering
 Better for search and IO with tables has relationship with each other, but worse for single table operations, due to overhead with other tables.
 ### Hashing
+The file records are stored in *buckets*, the bucket is the address of the record. We have a hash function **on some attributes** (search key), determines the addresses of the records.
+## Data Dictionary Storage
+Stores the catalog, metadata about data. Supports advanced optimization towards data storage. It can store statistical and descriptive data and so on.
+## Data Buffer
+Data are stored in disk, which is slow to access, we need to keep them in memory for efficient manipulation.
+**Definition**: **portion of main memory** available to store *copies* of disk blocks.
+It is usually called buffer pool, and we have a buffer pool manager to do the allocation scheduling, eviction, etc.
+### Replacement Strategy
+Least Recently Used, LRU.
+Toss-immediate: **free** the space occupied by block as soon as the final tuple of that block has been processed.
+Most Recently Used: pin the currently being processed block, after done with it, remove the pin.
+Buffer manage can have more advanced strategies with respect to statistical information like data dictionary.
+## Column Oriented Storage
+Store each attribute of a relation separately.
+Pros: reduce IO if only access some of attributes, improve CPU cache performance and compression.
+Cons: need to reconstruct tuple and has higher cost when update or delete tuple.
+# Chapter 14 Indexing
