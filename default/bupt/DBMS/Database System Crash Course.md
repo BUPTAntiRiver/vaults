@@ -247,3 +247,23 @@ Store each attribute of a relation separately.
 Pros: reduce IO if only access some of attributes, improve CPU cache performance and compression.
 Cons: need to reconstruct tuple and has higher cost when update or delete tuple.
 # Chapter 14 Indexing
+In this chapter, we are going to talk about how to increase accessing speed to DB with indexing. And the effect on select/update/insert/delete.
+## Basic Concepts
+The problem is how to locate tuples/records quickly. And **indexing** mechanisms speed up access to desired data, e.g. if we let dept_name be index, it might just equal to the **physical address of record** in DB file instructor.
+### Search Key
+**Definition** of search key: an attribute or set of attributes used to look up records.
+The file might be logically sequential, but physically non-contiguous to be compatible with search key.
+### Index File
+We can also use a **index file** to do this.
+**Definition** of index file: a file consists of records (index entries) of the form, search key and pointer to real data.
+And **indexing** is just: mapping from search key to storage locations of the records in disk. This introduces other methods like hash indices. Instead of building a index file that takes extra space cost, we can use a smart hash function that hashes search key to storage locations.
+#### Dense and Sparse Index
+Dense means we have index record for every search key in the table file, and each value of search key corresponds to an index entry in the index file.
+Sparse means index files contains index entries for **only some** search key values.
+#### Multi-level Index
+If the index file is very large (the table is even larger! So we need index!), we can create multi-level index, so that each time we only put part of the index file into memory, then check the inner index file to locate the record. If the outer index file is still too big to put in, we can create more levels.
+## B+Tree Index
+**Definition**: B tree is self-balancing tree structure that allows sequential accesses, insertions, deletions in **logarithmic time**.
+B+ tree derives from B tree, its indices are an alternative to the design of indexed-sequential file, it uses multi-level index with advantages of automatically reorganizing itself for insertions and deletions. The indices are stored at the leaf node, the value in intermediate nodes are used for structure maintenance.
+### Properties
+B+ tree is a rooted tree, with the parameter degree factor n (at most n brach)
