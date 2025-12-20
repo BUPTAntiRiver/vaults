@@ -266,4 +266,28 @@ If the index file is very large (the table is even larger! So we need index!), w
 **Definition**: B tree is self-balancing tree structure that allows sequential accesses, insertions, deletions in **logarithmic time**.
 B+ tree derives from B tree, its indices are an alternative to the design of indexed-sequential file, it uses multi-level index with advantages of automatically reorganizing itself for insertions and deletions. The indices are stored at the leaf node, the value in intermediate nodes are used for structure maintenance.
 ### Properties
-B+ tree is a rooted tree, with the parameter degree factor n (at most n brach)
+B+ tree is a rooted tree, with the parameter degree factor n (at most n branches), it is also a balanced tree, which means all paths from root to leaf are of the same length. And:
+- Each **internal** node (not root or leaf) has between $\lceil \frac{n}{2} \rceil$ and $n$ children
+- Each **leaf** node has between $\left\lceil  \frac{n-1}{2}  \right\rceil$ and $n-1$ search key values.
+- Special cases for the root, if it is not a leaf, it has at least 2 children, if it is a leaf, it has between 0 and $n-1$ values.
+
+### Node Structure
+The search keys in node are ordered, between the search keys, there are pointers to children for non-leaf nodes, and pointers to records or buckets of records for leaf nodes.
+In **LEAF NODE**:
+- $P_{i}$ points to a record with search key value $K_{i}$, $i<n-1$
+- $P_{n}$ points to the *next leaf node*
+- If $L_{i}, L_{j}$ are leaf nodes and $i<j$, then all search key values in $L_{i}$ will be less than or equal to $L_{j}$
+
+In **NON-LEAF NODE**: it is quite similar, the search key values that pointers points to are in between the search key values around it.
+## Hash Indices
+The records are stored in buckets. **Bucket** is a *unit* of storage containing records, such as a disk block. Bucket can be obtained from search key using hash function.
+**Hash function** is a function from *search key* $K$ to *bucket address*. Entries with different search key may map to the same bucket, and the entire bucket is sequentially searched to locate an entry.
+### Bucket Overflow
+There might not be enough buckets or non-uniform distribution of records due to bad hash function or non-uniform distribution of search key, so some of the buckets may be full, we can add overflow buckets to it like link list.
+### Comparing
+Hashing is better at retrieving records having a specified value of the key. If range queries are more common, the ordered indices are preferred.
+## Multiple Indices
+We can take one as primary index and sort in this way. Or we can create two ordered version and take intersection (not recommended). If the primary index is **not used** in a query, then even secondary index is used, the query won't be sped up.
+## Create Indices
+The attributes after `where` `group by` `join` are better to be set as indices.
+With indexing, `update` will be much faster, but `insert` and `delete` will be slower because after modification, these two operations might change the structure of B+ tree, so the system will run some transform. But `update` does not have such concern.
