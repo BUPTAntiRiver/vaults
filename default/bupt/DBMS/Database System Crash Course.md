@@ -181,3 +181,24 @@ For **partial on the many-side**, we treat it like many-to-many, build a new rel
 #### One-to-One
 For one-to-one relationship sets, either side can be chosen to act as the many side. An extra attribute can be added to either of the tables corresponding to the two entity sets.
 # Chapter 7 Relational DB Design
+This chapter is about how to make our tables in the DB more robust and easy to use.
+## Normal Forms
+### First Normal Form and Atomic Domains
+**Definition**: a relational schema is in **first normal form** if the domains of all attributes in it are *atomic*.
+A domain is atomic if its elements are *indivisible* units. e.g. names can be decomposed into last name, middle name and first name.
+### Second Normal Form
+**Definition**: the schema is in first normal form and each attributes $A$ meets one of the criteria:
+- if it appears in a **candidate key**, it is okay
+- if it does not appear in a **candidate key**, it must be completely dependent on a **candidate key**
+### Boyce-Codd Normal Form
+**Definition**: a relation schema $R$ is in **BCNF** with respect to a function dependency set if for all function dependencies in it of the form $\alpha\to\beta$ at least one of the following statement holds:
+- $\alpha\to\beta$ is trivial, which means $\beta\subseteq\alpha$
+- $\alpha$ is a super key
+
+e.g. if we mix instructor and department into a `in_dep` like (ID, name, dept_name, building), then the super key is ID and dept_name, but we have function dependency like dept_name to building, so it is not BCNF, it can be decomposed into two distinct table.
+### Third Normal Form
+**Definition**: 3NF is a weaker form of BCNF, it is 2NF plus for all $\alpha\to\beta$ at least one of the following holds:
+- $\alpha\to\beta$ is trivial
+- $\alpha$ is a super key
+- each attributes in $\beta-\alpha$ is contained in a candidate key
+
