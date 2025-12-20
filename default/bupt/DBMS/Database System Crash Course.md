@@ -141,3 +141,6 @@ The constraints on single DB can be:
 Reference also shows integrity constraints. The foreign key must be the subset of referenced table's primary key. Primary key, foreign key are also part of `create table` syntax.
 There is one more thing called `cascade`, we can set `UPDATE cascade` and `DELETE cascade`, so that when update or delete on the referenced table, it will also affect the table that references it. e.g. we have department table and course table, course references department on `dept_name`, when we change it in department table, it will also change course when `UPDATE cascade` is set.
 When initializing information in two table with foreign references, we should always insert the referenced data before inserting the table references it. Or we can initialize the data with null first, then update it again.
+# Chapter 5 Advanced SQL
+Use SQL with programming language.
+# Chapter 6
