@@ -143,4 +143,41 @@ There is one more thing called `cascade`, we can set `UPDATE cascade` and `DELET
 When initializing information in two table with foreign references, we should always insert the referenced data before inserting the table references it. Or we can initialize the data with null first, then update it again.
 # Chapter 5 Advanced SQL
 Use SQL with programming language.
-# Chapter 6
+# Chapter 6 E-R Model
+**Definition**: the entity-relationship model, which facilitates database design. Represents the overall logical structure of DB, useful in mapping the meanings and interactions of *real world enterprises* onto a *conceptual schema*.
+## Concepts
+ER model employs three concepts:
+- entity sets
+- relationship sets
+- attributes
+
+**Entities** are specific people or objects represented by attributes. e.g. an instructor entity can be represented by a instructor id and instructor name.
+**Relationships** represents associations between the entities in real world enterprise. e.g. we may have advisor relationship between an instructor and a student.
+**Attributes** can also be associated with a relationship set. e.g. the advisor relationship may have a data attribute to tell when the relationship starts.
+**Roles** can be used to label entity sets in relationship sets, which makes thing clearer.
+## Constraints
+### Cardinalities Constraints
+The mapping in relationship may be constrained like in database. So we may have one-to-one, one-to-many, many-to-one, many-to-many.
+When drawing the ER diagram, we use *directed* line to signify "one" and *undirected* line to signify "many" between the relationship set and entity sets.
+### Participation Constraints
+For cases like every entity must have at least one relationship.
+We just write it in the ER diagram on the line between entity set and relationship set like: 0..\*. In the instructor case above, we write it on the line between instructor and advisor, it means an instructor has at least 0 and at most many students. So we have lowest bound on left side and highest bound on right side of the "..".
+### Primary Key
+We also have things like primary keys in ER diagram, they have same definition as we talked before.
+## Reduce Into Relation Schema
+How to reduce ER diagram into relation schema?
+### Entity Set
+For **strong entity sets**, they can reduce to relation schema with the same attributes.
+For **weak entity sets** (depends on other entities, like section to course), they need to *include a column for the primary key* of the identifying strong entity set.
+For composite attributes, we flatten it with separate ones.
+### Relationship Set
+The reduction of relationship sets is strongly dependent on the mapping cardinality constraint and partial constraint.
+#### Many-to-Many
+A many-to-many relationship set is represented as a table with columns for the primary keys of two participating entity sets, and any descriptive attributes of the relationship set.
+Only in this case, relationship set can **have attributes**.
+#### Many-to-One, One-to-Many
+Many-to-one and one-to-many relationship sets that **total on the many-side** can be represented by adding an extra attribute to the many side, containing the primary key of the one side.
+For **partial on the many-side**, we treat it like many-to-many, build a new relationship table.
+#### One-to-One
+For one-to-one relationship sets, either side can be chosen to act as the many side. An extra attribute can be added to either of the tables corresponding to the two entity sets.
+# Chapter 7 Relational DB Design
