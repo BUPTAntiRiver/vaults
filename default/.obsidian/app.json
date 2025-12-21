@@ -7,5 +7,6 @@
   },
   "alwaysUpdateLinks": true,
   "vimMode": true,
-  "showLineNumber": true
+  "showLineNumber": false,
+  "tabSize": 4
 }

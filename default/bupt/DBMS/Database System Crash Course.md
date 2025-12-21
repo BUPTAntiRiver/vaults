@@ -1,4 +1,4 @@
-# chapter 1 introduction
+# Chapter 1 introduction
 let's clarify some concepts first:
 - database (db): a collection of **interrelated data**, stored as files.
 - database management system (dbms): a program to access db. responsible for **definition** of structures for storage of information, **data manipulation** mechanisms and **safety** mechanisms.
@@ -10,7 +10,7 @@ let's clarify some concepts first:
 - transaction management
 
 they will be introduced later.
-# chapter 2 relational model
+# Chapter 2 relational model
 ## structure of relational database (syntax)
 **definition**: a relational database consists of a **collection of tables**. attributes as columns, tuples as rows.
 the order of tuples is irrelevant, attribute orders are also irrelevant.
@@ -55,7 +55,7 @@ from instructor natural join teaches
 ```
 
 different queries may have same results, but differs in performance, which leads to query optimization, discussed later.
-# chapter 3 introduction to sql
+# Chapter 3 introduction to sql
 **definition**: structured query language, widely used query language, but not all examples work on particular systems.
 sql can do a lot of things with db:
 - query
@@ -87,7 +87,7 @@ the running order of sql queries is:
 6. order by
 7. limit
 
-we can use `as` to rename relations and attributes. for string operations we can use `like` to do pattern matching:
+We can use `as` to rename relations and attributes. for string operations we can use `like` to do pattern matching:
 - `%` to match any string
 - `_` to match any character
 - these two special char can combine with patterns like `%comp%___` to match string has `comp` as substring and has at least three chars after it.
@@ -320,6 +320,37 @@ It is **suitable** for:
 
 ### Selections using Indices
 Search algorithms with an index, but the selection condition can be on search key or not.
-#### Primary Index, B+ Tree, Equality On Key
+#### Primary Index, Equality On Key
 Such cases need to retrieve a single record.
 The cost will be $(h_{i} + 1)\times(t_{T}+t_{S})$, $h_{i}$ refers to the height of the tree.
+#### Primary Index, Equality On Non-Key
+This case will be slower than previous one, because we may have multiple results.
+cost = $h_{i}\times(t_{T}+t_{S})+t_{S}+t_{T}\times b$, $b$ refers to the number of blocks containing matching records.
+#### Secondary Index
+The logic of secondary index and primary index is the same, maybe there index attributes are different. The difference between secondary index and primary index is that, we can only have one physical storage of the table, or that would be much waste of space, so we can only make primary index compatible layout compatible with the physical layout, and secondary index lose the contiguous property.
+SO, if equality on key, then its just like primary index, cost is $(h_{i} + 1)\times(t_{T}+t_{S})$.
+But if on non-key, it becomes different, because same non-key value may not resides in contiguous space, so the cost becomes $(h_{i} + n)\times(t_{T}+t_{S})$, $n$ refers to the number of matching records.
+
+### Selections Involving Comparison - Range Search
+#### Primary Index
+The comparing attribute is already sorted, so we can use **index** to find the **first** tuple that greater than lower bound, and start linear scanning until we find a tuple greater than upper bound.
+The cost is $h_{i}\times(t_{T}+t_{S})+t_{S}+t_{T}\times b$, since they are in contiguous region.
+#### Secondary Index
+The access to data cost also changes from contiguous blocks to physically separated nodes.
+cost = $(h_{i} + n)\times(t_{T}+t_{S})$. Linear scan maybe cheaper in this case.
+### Complex Selections - Conjunction
+#### Using One Index
+We have a lot of conditions, we pick one as index, *seek* the tuples with previous introduced algorithms and *test* whether or not other conditions are satisfied.
+#### Using Composite Index
+Try to use multiple-key index if available.
+#### Set Operation
+Selection each condition to get sets, then do intersection or union over them to get the final results.
+## Sorting
+Sorting data is needed in `order by` and `join` to improve efficiency.
+Records are ordered physically, like the primary key index makes the tuples stored in **ascending order** of primary key.
+## Evaluation of Expressions
+### Materialization
+Generate results of an expression whose inputs are relations or are already computed, materialize (store) it on disk. Start from the lowest level of the parser tree, evaluated one operation at a time. The results of each evaluation is stored to *temporal relations* on **disk**. The cost is high.
+### Pipelining
+Pass on tuples to parent operations even as the operation is being executed. This enables parallel execution and no need to store temporary relations to disk.
+# Chapter 16 Query Optimization
