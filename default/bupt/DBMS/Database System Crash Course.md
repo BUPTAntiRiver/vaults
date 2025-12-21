@@ -370,4 +370,18 @@ The optimization procedure is:
 Why? For each tuple on left hand side, we scan through it and do search on right hand side. So the complexity will be $O(m+m\log_{d}(n))$. $m$ for left, $n$ for right, this clearly shows why we should left $m$ be smaller.
 **Rule 6**. Natural join and theta joins are associative.
 **Rule 7**. Selection operation distributes over theta join, if a selection only involve the attributes of one of the expressions, it can be done before join.
-**Rule 8**. Projection operation distributes over theta join.
+**Rule 8**. Projection operation distributes over theta join. The core rule is we can do the projections that **retain the attributes going to be used** ahead of time. For example we will use $a$ in theta join and $b,c$ in projection but the relations actually has $a$ to $z$, then, we can drop $d$ to $z$ (by projecting $a,b,c$) since they are not used.
+**Rule 9**. The set operations union and intersection are **commutative and associative**.
+**Rule 10**. The selection operation distributes over union, intersection and difference.
+**Rule 11**. The projection operation distributes over union.
+## Join Ordering
+**Principle**: use relation with smaller size as outer relation.
+## Heuristic Optimization
+Practically we use two methods: cost-based and heuristic optimization. We mainly introduce heuristic optimization here.
+**Definition**: we choose better plan following heuristics, sub-optimal plan with lower costs may be obtained.
+**Principles**: transforms query tree by heuristics to reduce cost.
+- perform *selection* early to reduce the number of tuples
+- perform projection early to reduce the number of attributes
+- perform *join* to substitute Cartesian product and selection
+- perform *restrictive selection and join* before other operations, since the most restrictive operations generates the smallest relations
+
