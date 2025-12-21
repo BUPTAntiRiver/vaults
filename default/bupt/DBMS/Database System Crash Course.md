@@ -385,3 +385,5 @@ Practically we use two methods: cost-based and heuristic optimization. We mainly
 - perform *join* to substitute Cartesian product and selection
 - perform *restrictive selection and join* before other operations, since the most restrictive operations generates the smallest relations
 
+There are many examples in the slides, worth taking a look.
+# Chapter 17
