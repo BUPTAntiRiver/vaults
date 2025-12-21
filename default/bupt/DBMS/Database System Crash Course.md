@@ -386,4 +386,10 @@ Practically we use two methods: cost-based and heuristic optimization. We mainly
 - perform *restrictive selection and join* before other operations, since the most restrictive operations generates the smallest relations
 
 There are many examples in the slides, worth taking a look.
-# Chapter 17
+# Chapter 17 Transactions
+Transaction is the basic logical unit of DBAS and basic unit of DBMS managing DB. Access of single user to DB appears to be the execution of 1 or multiple transactions. It also represents the concurrent access of multiple users.
+## Concepts
+**Definition**: transaction is a *unit* of DBAS. Executing *accesses and updates* various data items in DB.
+A transaction consists of operations delimited by statements like begin and end.
+## Transaction Model
+Each data access, such as **select, update** in SQL
