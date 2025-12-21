@@ -392,4 +392,19 @@ Transaction is the basic logical unit of DBAS and basic unit of DBMS managing DB
 **Definition**: transaction is a *unit* of DBAS. Executing *accesses and updates* various data items in DB.
 A transaction consists of operations delimited by statements like begin and end.
 ## Transaction Model
-Each data access, such as **select, update** in SQL
+Each data access, such as **select, update** in SQL is translated/decomposed into **read** and **write** operations.
+DBMS executes read and write operations to fulfill data access in transactions. It allocates **local buffer** in main memory as working area. The DB permanently resides on disk, but some portion is temporarily residing in buffer in main memory.
+The *write* operation does not result in the *immediate update* of data on disk. It may be *temporarily stored* in disk buffer.
+### Consistency
+Execution of a transaction in isolation preserves **consistency** of DB. DB is in a correct DB state (like the total currency keeps the same), before and after the transaction execution.
+### Atomicity
+Either all operations of transaction are reflected/persisted or none. It is all or zero.
+### Isolation
+Even though multiple transactions execute concurrently, all transactions seem to execute serially, so the consistence is preserved. Each transaction is unaware of other transactions executing concurrently.
+### Durability
+Once the transaction has completed, the updates to the DB by the transaction must **persist** even if there are hardware or software failures.
+## State Model for Atomicity and Durability
+**Aborted**: a transaction may not complete its execution successfully.
+**Committed**: it completes its execution successfully.
+**Rollback**: the changes by an **aborted** transaction has been **undone**.
+**Terminated**: either committed or aborted.
