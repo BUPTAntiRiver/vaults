@@ -291,3 +291,35 @@ We can take one as primary index and sort in this way. Or we can create two orde
 ## Create Indices
 The attributes after `where` `group by` `join` are better to be set as indices.
 With indexing, `update` will be much faster, but `insert` and `delete` will be slower because after modification, these two operations might change the structure of B+ tree, so the system will run some transform. But `update` does not have such concern.
+# Chapter 15 Query Processing
+**Definition**: Query Processing refers to activities *extracting* data from DB, including:
+1. translation of SQL into *physical* level of the system
+2. query optimization
+3. actual evaluation of queries
+
+## Overview
+**Step 1: Parsing and translation**. Translate each query into a parser tree, the parser will check *syntax* and *replaces* the view with relations on which built. Then it is translated into *relational algebra*.
+**Step 2: Optimization**. Choose the lowest cost plan with among *equivalent query evaluation plans*.
+**Step 3: Evaluation plan execution**. The execution engine runs the query and returns.
+## Measure of Query Costs
+**Definition**: cost is measured as *the total elapsed* time for answering query. Factors contribute to time cost are: disk access and network communication.
+**Disk access** is the *predominant* cost, measured by:
+1. number of seeks
+2. number of block *read*
+3. number of block *written*, the cost of write is greater than read
+
+Time cost can be computed with: $b\times t_{T} +s\times t_{S}$, $b$ refers to the number of block transferred from disk, $t_{T}$ refers to time to transfer one block, $s$ refers to the number of seeks, $t_{S}$ refers to time for one seek. When analyzing cost, we can just pay attention to transfer number and seek number.
+## Selection Operation
+Types of query conditions are different: equality, range, comparison.
+We also have different scan algorithms, so will have different cost estimations.
+### Linear Scan
+Just scan all the blocks and test all records, on average cost $\frac{b_{r}}{2}$ transfer and 1 seek.
+It is **suitable** for:
+- **heap file** organized relational table
+- seeking on **non-index** attributes
+
+### Selections using Indices
+Search algorithms with an index, but the selection condition can be on search key or not.
+#### Primary Index, B+ Tree, Equality On Key
+Such cases need to retrieve a single record.
+The cost will be $(h_{i} + 1)\times(t_{T}+t_{S})$, $h_{i}$ refers to the height of the tree.
