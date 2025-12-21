@@ -408,3 +408,18 @@ Once the transaction has completed, the updates to the DB by the transaction mus
 **Committed**: it completes its execution successfully.
 **Rollback**: the changes by an **aborted** transaction has been **undone**.
 **Terminated**: either committed or aborted.
+## Transaction Isolation
+Schedule on a set of concurrent transactions, specifies the order of the executed operations of concurrent transactions. It consists of *all* operations of transactions, preserves *the order* of operations in each individual transaction.
+A success transaction will have a **commit** as last statement, a failed transaction will have an **abort** as last statement.
+## Serializability
+If we process all transactions sequentially, it ensures ACID properties, but lose efficiency, but if we process them concurrently, there might be errors. So we should obey the principle that: do conflict operations sequentially, do non-conflict operations concurrently.
+### So what is conflict?
+**Definition**: for transaction $T_{i},T_{j}$, there are instructions $I_{i},I_{j}$ that conflict with each other, if and only if for some item $Q$ accessed by both $I_{i},I_{j}$ and at least one of these two instructions is `WRITE(Q)`.
+Two schedules are *conflict equivalent*, if they can be transformed into each other by a series of swaps of *non-conflicting* instructions.
+Note that the swap must happen between two transactions, not inside one transaction! Which means swapping should **not change the orders of instruction** in each transaction.
+### Identification
+Whether a concurrent schedule $S$ is conflict?
+1. starting from the concurrent $S$, do the conflict equivalent swap and see whether a serial $S'$ can be obtained
+2. precedence graph
+
+The first method is quite easy to understand, let's dive into precedence graph here.
