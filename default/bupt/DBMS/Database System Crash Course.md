@@ -354,3 +354,20 @@ Generate results of an expression whose inputs are relations or are already comp
 ### Pipelining
 Pass on tuples to parent operations even as the operation is being executed. This enables parallel execution and no need to store temporary relations to disk.
 # Chapter 16 Query Optimization
+## Procedure
+An evaluation plan is: **what algorithm** is used for each operation, **how execution** of the operations is coordinated.
+The optimization procedure is:
+1. Generating the *equivalent* query trees/expressions by transforming relational algebra expressions using *equivalence rules*.
+2. Generating the alternative *evaluation plans* by annotating the resultant equivalent expressions with algorithms for each operations.
+3. Choosing the optimal or near optimal plan based on *estimated cost* by **heuristic optimization** or **cost-based optimization**.
+
+## Equivalence Rules
+**Rule 1**. Conjunctive selection operations can be deconstructed into a sequence of individual selections.
+**Rule 2**. Selection operations are commutative.
+**Rule 3**. Only the final projection is needed, in final projection is subset of inner projection.
+**Rule 4**. Theta Join on condition can replace condition over Cartesian product.
+**Rule 5**. Theta Join operations are commutative. We should use relation of smaller size as the outer relation to reduce cost (better locality on larger relation).
+Why? For each tuple on left hand side, we scan through it and do search on right hand side. So the complexity will be $O(m+m\log_{d}(n))$. $m$ for left, $n$ for right, this clearly shows why we should left $m$ be smaller.
+**Rule 6**. Natural join and theta joins are associative.
+**Rule 7**. Selection operation distributes over theta join, if a selection only involve the attributes of one of the expressions, it can be done before join.
+**Rule 8**. Projection operation distributes over theta join.
