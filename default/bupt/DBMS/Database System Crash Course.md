@@ -483,3 +483,14 @@ Leading to *cascadeless*, recoverable and *serializable* schedules.
 #### Rigorous 2PL
 **Definition**: all *X-locks and S-locks* are held until commits or aborts.
 Ensure recoverability and avoids cascading roll-backs.
+## Multiple Granularity
+**Definition**: granularity means the size of the data items Q, multiple granularity means data items Q can be of various sizes such as logical units like tuple, relation, index, even DB, or physical units like data page, index page, data block and file.
+With multiple granularity, we can represent the hierarchy as a tree. When locking coarsely (high level), we have low locking overhead but low concurrency. When locking finely (low level), we have high locking overhead but high concurrency. The lowest granularity level is usually tuple.
+### Intention Lock Modes
+**Definition**: if a node is locked in an *intention* mode, explicit locking is being done at a lower level of the tree. Intention locks are put on *all ancestors* of a node before that node is locked explicitly. With intention lock, we can avoid cases like A locked relation but B locked DB to access same item, then neither can access the item (locked by each other).
+There are three modes:
+- Intention-Shared (IS): means only shared is done in lower level
+- Intention-Exclusive (IX): means exclusive or shared is done in lower level
+- Shared and Intention-Exclusive: means the sub-tree rooted by that node (its children) is locked in shared mode and exists exclusive mode lock at lower level of that(those) sub-tree(s).
+### Locking Scheme
+Acquired from root to leaf, release from leaf to root.
