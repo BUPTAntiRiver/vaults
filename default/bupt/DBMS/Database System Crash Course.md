@@ -451,11 +451,25 @@ If a transaction is not recoverable, then it mustn't be cascadeless.
 # Chapter 18 Concurrent Control
 When we have multiple concurrent transactions, we apply concurrency control through **transaction scheduling**. We have principles like *serializability*.
 Now the question is, how to implement it?
-## Lock-based Protocol
+## Locks
 Use lock to control concurrent transactions' access to shared item. Acquire, process, release.
-### Locks
 We have two kinds of locks:
 - Exclusive (X) mode, data item can be *both* read as well as written.
 - Shared (S) mode, data item can *only be read*.
 
 We use lock-S and lock-X to differ. S-lock is compatible with S-lock, all other cases are incompatible.
+There are also problems like dead lock and writer starvation due to too many S-lock holders. We should design a smart concurrency control manager to prevent such cases.
+## Locking Protocol
+**Motivation**: the *orders* of granting locks and revoking locks must be limited to avoid transaction *deadlock*.
+**Locking protocols** restrict the possible schedules **leading to** the conflict serializable schedules.
+### Two Phase Locking Protocol (2PL)
+**Definition**: $T_{i}$ issues lock and unlock requests in two phases,
+- **Growing Phase**: $T_{i}$ may obtain locks but may *not* release any locks, when $T_{i}$ begins, it enters growing phase
+- **Shrinking Phase**: $T_{i}$ may release locks, but may *not* obtain any locks, when $T_{i}$ releases *the first lock*, it enters shrinking phase
+
+It is quite easy to understand, we can imagine a graph of two phase lock number looks like a mountain.
+![[2PL.png]]
+The red line denotes when the transaction has acquired to obtain its *final lock*, we call it a *lock point*. The motivation of naming a lock point is that transactions can be serialized in the order of their lock points.
+#### Properties
+2PL guarantees *conflict serializability*, but does *not* ensure *deadlock* and *cascading rollback prevention*. The equivalent serial schedule has the same transaction order as the lock point order in 2PL schedule.
+#### How to Construct?
