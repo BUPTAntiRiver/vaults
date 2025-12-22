@@ -423,3 +423,10 @@ Whether a concurrent schedule $S$ is conflict?
 2. precedence graph
 
 The first method is quite easy to understand, let's dive into precedence graph here.
+**Definition**: it is a direct graph with transactions as vertices. Arc from $T_{i}$ to $T_{j}$ exists for which one of the three conditions holds:
+- $T_{i}$ executes write $Q$ before $T_{j}$ executes read $Q$
+- $T_{i}$ executes read $Q$ before $T_{j}$ executes write $Q$
+- $T_{i}$ executes write $Q$ before $T_{j}$ executes write $Q$
+
+Then we can infer that a schedule is **conflict serializable** if and only if its precedence graph is **acyclic**.
+## Isolation and Atomicity
