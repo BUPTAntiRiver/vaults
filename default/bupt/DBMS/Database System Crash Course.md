@@ -473,3 +473,13 @@ The red line denotes when the transaction has acquired to obtain its *final lock
 #### Properties
 2PL guarantees *conflict serializability*, but does *not* ensure *deadlock* and *cascading rollback prevention*. The equivalent serial schedule has the same transaction order as the lock point order in 2PL schedule.
 #### How to Construct?
+First we are going to add lock and release to each transaction, and make sure they obey the rules of 2PL, which is separate the transaction into growing and shrinking phase.
+According to the lock point and exclusion, arrange the concurrent execution of each transaction. The growing phase and shrinking phase of each transaction should be as disjoint as possible.
+The **key point** is, we do not allow two *conflict transactions* (accessing same item) being at growing phase at the same time.
+### Enhanced 2PL Protocol
+#### Strict 2PL
+**Definition**: all *X-locks* taken by a transaction are held until that transaction *commits/aborts*, all X-locks can only be unlocked *at the end* of the transaction.
+Leading to *cascadeless*, recoverable and *serializable* schedules.
+#### Rigorous 2PL
+**Definition**: all *X-locks and S-locks* are held until commits or aborts.
+Ensure recoverability and avoids cascading roll-backs.
