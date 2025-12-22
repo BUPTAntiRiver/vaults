@@ -1,32 +1,32 @@
-# Chapter 1 introduction
-let's clarify some concepts first:
+# Chapter 1 Introduction
+Let's clarify some concepts first:
 - database (db): a collection of **interrelated data**, stored as files.
 - database management system (dbms): a program to access db. responsible for **definition** of structures for storage of information, **data manipulation** mechanisms and **safety** mechanisms.
 
-## database engine (dbms)
-**definition**: a dbms is partitioned into modules that deal with each responsibility.
+## Database Engine (DBMS)
+**Definition**: a DBMS is partitioned into modules that deal with each responsibility.
 - query processor
 - storage manager
 - transaction management
 
 they will be introduced later.
-# Chapter 2 relational model
-## structure of relational database (syntax)
-**definition**: a relational database consists of a **collection of tables**. attributes as columns, tuples as rows.
+# Chapter 2 Relational Model
+## Structure of Relational Database (syntax)
+**Definition**: a relational database consists of a **collection of tables**. attributes as columns, tuples as rows.
 the order of tuples is irrelevant, attribute orders are also irrelevant.
-### schema
-**definition**: the logical structure of database.
-it looks like: `instructor (id, name, dept_name, salary)`
-the attributes are in parenthesis.
-### key
-**definition**: super key is a set of one or more attributes, that can be used to *identify uniquely* a tuple in the relation.
-**candidate key** is the *minimal* super key.
-**primary key** is a candidate key as *principle means* to identify tuples, values on the primary key are not permitted to be **null**. e.g. we usually choose `id` as primary key.
+### Schema
+**Definition**: the logical structure of database.
+It looks like: `instructor (id, name, dept_name, salary)`
+The attributes are in parenthesis.
+### Key
+**Definition**: super key is a set of one or more attributes, that can be used to *identify uniquely* a tuple in the relation.
+**Candidate key** is the *minimal* super key.
+**Primary key** is a candidate key as *principle means* to identify tuples, values on the primary key are not permitted to be **null**. e.g. we usually choose `id` as primary key.
 primary attributes are the attributes in candidate keys.
-**foreign key**: describing the relationship among relations, e.g. a *instructor* has `dept_name` which is the **primary key** of another schema *department*, then `dept_name` is called a foreign key from instructor to department. it should be the primary key of the referenced schema!
-## integrity constraints (semantic)
-## relational algebra
-six basic operators:
+**Foreign key**: describing the relationship among relations, e.g. a *instructor* has `dept_name` which is the **primary key** of another schema *department*, then `dept_name` is called a foreign key from instructor to department. it should be the primary key of the referenced schema!
+## Integrity Constraints (semantic)
+## Relational Algebra
+Six basic operators:
 - select: $\sigma$
 - project: $\prod$
 - cartesian product: $\times$
@@ -34,7 +34,7 @@ six basic operators:
 - set difference: $-$
 - rename: $\rho$
 
-i am also going to list some corresponding sql code too:
+I am also going to list some corresponding sql code too:
 ```sql
 -- select
 select *
@@ -54,9 +54,9 @@ select *
 from instructor natural join teaches
 ```
 
-different queries may have same results, but differs in performance, which leads to query optimization, discussed later.
-# Chapter 3 introduction to sql
-**definition**: structured query language, widely used query language, but not all examples work on particular systems.
+Different queries may have same results, but differs in performance, which leads to query optimization, discussed later.
+# Chapter 3 Introduction to SQL
+**Definition**: structured query language, widely used query language, but not all examples work on particular systems.
 sql can do a lot of things with db:
 - query
 - manipulation
@@ -65,7 +65,7 @@ sql can do a lot of things with db:
 - transaction processing
 - etc
 ## Definition
-we create a new table with `create table`, google the syntax.
+We create a new table with `create table`, google the syntax.
 one thing needs to mention here is we can add integrity constraints in create table, like:
 - defining primary key
 - defining foreign key
@@ -75,7 +75,7 @@ to remove table, we just `drop` it.
 to modify attributes, we can use `alter` to add or drop specific attributes.
 typically tuples are stored row by row (row major), which makes it very slow to modify attributes, because we are modifying whole column, which requires modification across all rows. some new structure store data column major to tackle such case.
 ## Query
-use `select` clause to query, we can add some description to the attributes we want to select, like `all`, `distinct` (duplicate is allowed in sql).
+Use `select` clause to query, we can add some description to the attributes we want to select, like `all`, `distinct` (duplicate is allowed in sql).
 if we select from two table, then we are actually selecting from their cartesian product.
 rather than cartesian product (outer join), inner join (natural join) is more common, which only care about the tuples has something in common. you may use `join` `on` or add some restrictions in `where` clause, the previous one is recommended.
 the running order of sql queries is:
@@ -430,3 +430,32 @@ The first method is quite easy to understand, let's dive into precedence graph h
 
 Then we can infer that a schedule is **conflict serializable** if and only if its precedence graph is **acyclic**.
 ## Isolation and Atomicity
+Two schedules:
+- Recoverable scheduling
+- Cascadeless scheduling
+
+The two schedule methods will be introduced later.
+The requirements are:
+- when one transaction failed, all operations that depends on it already executed should rollback or aborted
+- ensure **atomicity**
+### Recoverable
+**Definition**: recoverable schedule is a schedule for each pair of $T_{i}$ and $T_{j}$, if $T_{j}$ reads data item $Q$ previously **written** by $T_{i}$, commit of $T_{i}$ should appear before commit of $T_{j}$.
+WHY? This is because $T_{j}$ reads data from $T_{i}$ written data, so if we encounter a failure, we are sure that $T_{j}$ definitely hasn't committed (it is the last to commit). While, if $T_{j}$ commits before $T_{i}$, then it could be possible that $T_{j}$ committed but $T_{i}$ aborted, when it is redone, the value it write to $Q$ maybe different, or it is just canceled then $Q$ never exists. $T_{j}$ will be interacting with **ghost** value, that will be a problem.
+### Cascadeless
+Before talking about cascadeless, let's take a look at cascading rollback.
+**Definition**: a *single* transaction failure leads to series of transactions rollbacks.
+It describes scenarios like $T_{1}$ rollbacks due to failure, so that $T_{2}$ should rollback (read from $T_{1}$ written data), so that $T_{3}$ should rollback (read from $T_{2}$ written data).
+Cascading rollback is undesirable, because we need to undo a lot of previous works. This leads to *cascadeless schedules*.
+**Definition**: for each pair of $T_{i},T_{j}$, where $T_{j}$ reads $Q$ written by $T_{i}$, and the *commit* of $T_{i}$ happens before the read. It's just $T_{j}$ only read data from *committed* $T_{i}$. So that we can avoid a lot of rollback.
+If a transaction is not recoverable, then it mustn't be cascadeless.
+# Chapter 18 Concurrent Control
+When we have multiple concurrent transactions, we apply concurrency control through **transaction scheduling**. We have principles like *serializability*.
+Now the question is, how to implement it?
+## Lock-based Protocol
+Use lock to control concurrent transactions' access to shared item. Acquire, process, release.
+### Locks
+We have two kinds of locks:
+- Exclusive (X) mode, data item can be *both* read as well as written.
+- Shared (S) mode, data item can *only be read*.
+
+We use lock-S and lock-X to differ. S-lock is compatible with S-lock, all other cases are incompatible.

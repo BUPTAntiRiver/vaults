@@ -1,5 +1,8 @@
 {
   "cssTheme": "Minimal",
   "accentColor": "",
-  "theme": "system"
+  "theme": "system",
+  "textFontFamily": "JetBrainsMono Nerd Font",
+  "monospaceFontFamily": "JetBrainsMono Nerd Font",
+  "interfaceFontFamily": "JetBrainsMono Nerd Font"
 }
