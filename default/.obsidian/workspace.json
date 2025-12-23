@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "f68cb670a8b345bc",
+        "id": "38f8098015057eee",
         "type": "tabs",
         "children": [
           {
-            "id": "8263449593e10d42",
+            "id": "03d1942fffae3d9e",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "BUPT/DBMS/Database System Crash Course.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Database System Crash Course"
+              "title": "New tab"
             }
           }
         ]
@@ -78,8 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -171,34 +166,35 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "8263449593e10d42",
+  "active": "03d1942fffae3d9e",
   "lastOpenFiles": [
-    "BUPT/DBMS/Database System Crash Course.md",
+    "Machine Learning/CS 285 Reinforcement Learning/Lecture 22 Transfer Learning & Meta Learning.md",
+    "Machine Learning/CS 285 Reinforcement Learning/Lecture 21 RL with Sequence Models.md",
+    "Machine Learning/CS 285 Reinforcement Learning/Lecture 20 Inverse Reinforcement Learning.md",
+    "Machine Learning/CS 285 Reinforcement Learning/Lecture 19 Control as Inference.md",
+    "Machine Learning/CS 285 Reinforcement Learning/Lecture 18 Variational Inference and Generative Models.md",
+    "Machine Learning/CS 285 Reinforcement Learning/Lecture 17 Reinforcement Learning Theory Basics.md",
+    "Machine Learning/CS 285 Reinforcement Learning/Lecture 16 Offline Reinforcement Learning Part 2.md",
+    "Machine Learning/CS 285 Reinforcement Learning/Lecture 11 Model-Based Reinforcement Learning.md",
+    "Machine Learning/CS 285 Reinforcement Learning/Lecture 10 Optimal Control and Planning.md",
+    "Machine Learning/CS 285 Reinforcement Learning/Lecture 5 Policy Gradient.md",
+    "Machine Learning/CS 285 Reinforcement Learning/Lecture 4 Introduction to Reinforcement Learning.md",
+    "Machine Learning/CS 285 Reinforcement Learning/Lecture 2.md",
+    "Machine Learning/MIT 6.S184/Lecture 1.md",
+    "Machine Learning/MIT 6.S184/Lecture 3.md",
+    "Machine Learning/MIT 6.S184/Lecture 2.md",
+    "Machine Learning/NLP/CS224n Lec 08.md",
+    "Machine Learning/NLP/Perplexity.md",
+    "Machine Learning/RL/Actor Critic.md",
+    "Machine Learning/Computational Graph.md",
+    "Machine Learning/Convolution.md",
+    "Machine Learning/Cross Entropy Loss.md",
+    "Machine Learning/d2l notes.md",
+    "Machine Learning/Deep Learning Systems notes.md",
+    "Machine Learning/DeepSeek-OCR.md",
+    "Machine Learning/DeepSeek-R1.md",
+    "Machine Learning/DeepSeek-V3.md",
     "images/2PL.png",
-    "BUPT/OS/Operating System Crash Course.md",
-    "BUPT/DBMS/数据库系统原理.md",
-    "BUPT/DBMS/hw1 报告.md",
-    "TVM.md",
-    "素数.md",
-    "ELF.md",
-    "Web Development/React.md",
-    "Web Development/JSX.md",
-    "Web Development/JS.md",
-    "Web Development/HTML.md",
-    "Web Development/CRUD.md",
-    "Web Development/CSS.md",
-    "拉格朗日对偶 Lagrange duality.md",
-    "Binary Search.md",
-    "Euler's formula.md",
-    "NumPy.md",
-    "Scheduler BIG 3.md",
-    "Hexo.md",
-    "BUPT/OS/homework/homework 10.md",
-    "诗文/赠近代史学家昱尧.md",
-    "诗文/仿生人会梦到电子羊吗？.md",
-    "诗文/批评.md",
-    "诗文/惜昔时.md",
-    "Machine Learning/Mamba.md",
     "lec2_vae.pdf",
     "lec2_vae.pdf.crdownload",
     "images/Pasted image 20251020210407.png",
