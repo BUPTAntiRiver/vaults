@@ -1,3 +1,4 @@
+[lec5_diffusion.pdf](https://mit-6s978.github.io/assets/pdfs/lec5_diffusion.pdf)
 We are going to talk about four parts about diffusion model in this little article:
 - Forward process: add noise to data
 - Reverse process: learn to denoise
@@ -116,3 +117,10 @@ $$
 ## Score Matching
 Instead of parameterizing $p$, we can parameterize the score, and learn data score with some kind of divergence.
 Really similar to Diffusion Model, we can also apply score matching to denoising, use it to match the negative biased noise.
+### Langevin Dynamics
+Score is gradient, so when we do the "reverse", we sample $x$ from $p$ by iterating:
+$$
+x_{t}\leftarrow x_{t-1}+ \frac{\sigma^{2}}{2}\nabla_{x}\log p_{\theta}(x_{t-1})+\sigma z_{t}
+$$
+With $z_{t}\sim \mathcal{N}(0,1)$ then replace score function with energy gradient (don't forget negative).
+This also explains why we want to find the $x$ that minimizes energy, because with gradient descent, we are moving forward in reverse until reaching the lowest point which is also the minimal energy.[lec5_diffusion.pdf](https://mit-6s978.github.io/assets/pdfs/lec5_diffusion.pdf)
