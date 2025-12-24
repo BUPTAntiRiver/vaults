@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BUPT/OS/homework/easy lab3 报告.md",
+                "file": "Undergraduate/BUPT/OS/homework/easy lab3 报告.md",
                 "mode": "preview",
                 "source": false
               },
@@ -170,14 +170,22 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6f7bb493f7b9eeb3",
+  "active": "bba62f1707ffcf40",
   "lastOpenFiles": [
-    "BUPT/OS/homework/easy lab2 报告.md",
+    "Postgraduate/Math/Untitled",
+    "Postgraduate/Math/Calculus",
+    "Postgraduate/Politics",
+    "Postgraduate/CS",
+    "Postgraduate/English",
+    "Untitled",
+    "Postgraduate/Math",
+    "Postgraduate",
+    "Undergraduate",
+    "Undergraduate/BUPT/OS/homework/easy lab2 报告.md",
     "Machine Learning/Diffusion Model.md",
     "拉格朗日对偶 Lagrange duality.md",
     "素数.md",
     "Machine Learning/CS 285 Reinforcement Learning/Lecture 2.md",
-    "Untitled",
     "Machine Learning/CS 285 Reinforcement Learning/Lecture 4 Introduction to Reinforcement Learning.md",
     "Machine Learning/CS 285 Reinforcement Learning/Lecture 22 Transfer Learning & Meta Learning.md",
     "Machine Learning/CS 285 Reinforcement Learning/Lecture 21 RL with Sequence Models.md",
@@ -198,19 +206,11 @@
     "Machine Learning/Computational Graph.md",
     "Machine Learning/Convolution.md",
     "Machine Learning/Cross Entropy Loss.md",
-    "Machine Learning/d2l notes.md",
     "images/2PL.png",
     "lec2_vae.pdf",
     "lec2_vae.pdf.crdownload",
     "images/Pasted image 20251020210407.png",
     "images/Pasted image 20251020210209.png",
-    "images/Pasted image 20251020210415.png",
-    "BUPT/DBMS",
-    "社团",
-    "OSTEP",
-    "哲学基础",
-    "BUPT/NNDL",
-    "BUPT/OS/homework",
-    "BUPT/OS"
+    "images/Pasted image 20251020210415.png"
   ]
 }
