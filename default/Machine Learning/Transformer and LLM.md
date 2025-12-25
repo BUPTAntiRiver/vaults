@@ -39,10 +39,10 @@ There is no non-linear activation so far, then we use FFN to bring this function
 - Relative
 ### KV Cache Optimization
 During Transformer decoding, we need to store the **Keys** and **Values** of all previous tokens so that we can perform the attention computation, namely the KV cache, but the KV cache can be very large for with long context. But we only need the **current** query token.
-We can reduce the KV cache by reducing $\#\text{kv-heads}$.
+We can reduce the KV cache by reducing \#KV-heads.
 - Multi-head attention (MHA): $N$ heads for query, $N$ heads for key/value
 - Multi-query attention (MQA):$N$ heads for query, 1 heads for key/value
-- Grouped-query attention (GQA): $N$ heads for query, $G$ heads for key/value (typically $G = N / 8$)
+- Grouped-query attention (GQA): $N$ heads for query, $G$ heads for key/value (typically $G = N / 8$) ^GQA
 # Visual Transformer
 ## Basics of Visual Transformer (ViT)
 **How to tokenize images?**
