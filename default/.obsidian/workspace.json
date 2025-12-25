@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "6b27cc7faf3e6f1c",
+        "id": "ae3ad7be3e6104e7",
         "type": "tabs",
         "children": [
           {
-            "id": "3ffcf8e8022e7858",
+            "id": "9bf49a99c66f3463",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -53,7 +53,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "cache",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -171,9 +170,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "3ffcf8e8022e7858",
+  "active": "9bf49a99c66f3463",
   "lastOpenFiles": [
+    "简历.md",
     "Postgraduate/Math/Calculus.md",
+    "CSAPP/Lecture 06 Machine-Level Programming 2 Control.md",
+    "CSAPP/Lecture 11 Memory Hierarchy.md",
+    "Undergraduate/BUPT/OS/homework/homework 3.md",
+    "Undergraduate/BUPT/计算机网络.md",
     "Undergraduate/BUPT/OS/homework/easy lab3 报告.md",
     "Postgraduate/Math/Untitled",
     "Postgraduate/Math/Calculus",
@@ -203,11 +207,6 @@
     "Machine Learning/MIT 6.S184/Lecture 1.md",
     "Machine Learning/MIT 6.S184/Lecture 3.md",
     "Machine Learning/MIT 6.S184/Lecture 2.md",
-    "Machine Learning/NLP/CS224n Lec 08.md",
-    "Machine Learning/NLP/Perplexity.md",
-    "Machine Learning/RL/Actor Critic.md",
-    "Machine Learning/Computational Graph.md",
-    "Machine Learning/Convolution.md",
     "images/2PL.png",
     "lec2_vae.pdf",
     "images/Pasted image 20251020210407.png",

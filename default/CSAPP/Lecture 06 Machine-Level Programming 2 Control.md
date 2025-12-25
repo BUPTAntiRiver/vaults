@@ -9,7 +9,7 @@ Information about currently executing program
 
 #### Conditional Codes (Implicit Setting)
 
-##### Single Bit registers
+##### Single Bit Registers
 
 - CF Carry Flag (for unsigned)
 - SF Sign Flag (for signed)
