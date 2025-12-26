@@ -17,3 +17,26 @@ The starting point is Transformer, but since 2017, we have done a lot of things 
 - Challengers: state space models like [[Mamba]]
 
 ## Systems
+We are going to talk about GPU.
+And things like *Kernel*, *Parallelism*, *Inference* (which is said to be the main consumption of computing power).
+## Scaling Laws
+Do experiments at small scale, predict hyperparameters/loss at large scale.
+## Data
+What capabilities do I want the model to do?
+Wikipedia, GitHub, ArXiv, etc.
+### Evaluation
+Perplexity, instruction following, LM-as-a-judge, etc.
+### Data Curation
+Data does not fall from the sky, it has to be actively acquired somehow. It may be html, pdf or directories. Also some online public data requires license.
+### Data processing
+Transformation, filtering, deduplication, etc.
+## Alignment
+After all the previous training work, we are not getting a chat model, but a next-token predict model. We call it a *base model*, we need to get it good at:
+- Following instructions
+- Good response style
+- Safety
+
+Generally two phases:
+- supervised fine tuning
+- learn from feedback
+
