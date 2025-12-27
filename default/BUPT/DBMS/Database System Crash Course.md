@@ -337,17 +337,23 @@ It is **suitable** for:
 - seeking on **non-index** attributes
 
 ### Selections using Indices
+
 Search algorithms with an index, but the selection condition can be on search key or not.
+We have two kinds of index: primary and secondary.
+The logic of secondary index and primary index is the same, maybe their index attributes are different. The key difference between secondary index and primary index is that, we can *only have one* physical storage of the table, or that would be much waste of space, so we can only make *primary index layout compatible with the physical layout, and secondary index lose the contiguous property*.
+We also has two cases for the predication: it is a key (unique), it is non-key (maybe multiple result).
+
 #### Primary Index, Equality On Key
 Such cases need to retrieve a single record.
 The cost will be $(h_{i} + 1)\times(t_{T}+t_{S})$, $h_{i}$ refers to the height of the tree.
 #### Primary Index, Equality On Non-Key
 This case will be slower than previous one, because we may have multiple results.
 cost = $h_{i}\times(t_{T}+t_{S})+t_{S}+t_{T}\times b$, $b$ refers to the number of blocks containing matching records.
+
 #### Secondary Index
-The logic of secondary index and primary index is the same, maybe there index attributes are different. The difference between secondary index and primary index is that, we can only have one physical storage of the table, or that would be much waste of space, so we can only make primary index compatible layout compatible with the physical layout, and secondary index lose the contiguous property.
-So, if equality on key, then its just like primary index, cost is $(h_{i} + 1)\times(t_{T}+t_{S})$.
-But if on non-key, it becomes different, because same non-key value may not resides in contiguous space, so the cost becomes $(h_{i} + n)\times(t_{T}+t_{S})$, $n$ refers to the number of matching records.
+
+If equality on key, then it's just like primary index, we only need to find one record,  cost is $(h_{i} + 1)\times(t_{T}+t_{S})$.
+But if on non-key, it becomes different, because same non-key value may not resides in contiguous space (we are using secondary index!), so the cost becomes $(h_{i} + n)\times(t_{T}+t_{S})$, each time fetching the tuple needs to do random access. $n$ refers to the number of matching records.
 
 ### Selections Involving Comparison - Range Search
 #### Primary Index
