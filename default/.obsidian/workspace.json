@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS336/Lecture 3 Architectures, Hyperparameters.md",
-                "mode": "source",
+                "file": "BUPT/DBMS/Database System Crash Course.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Lecture 3 Architectures, Hyperparameters"
+              "title": "Database System Crash Course"
             }
           }
         ]
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -172,9 +173,9 @@
   },
   "active": "cdc323aec3a241e9",
   "lastOpenFiles": [
+    "CS336/Lecture 3 Architectures, Hyperparameters.md",
     "Machine Learning/Transformer and LLM.md",
     "Machine Learning/DeepSeek-V3.md",
-    "CS336/Lecture 3 Architectures, Hyperparameters.md",
     "CS336/Lecture 2 PyTorch, Resource Accounting.md",
     "CS336/Lecture 1 Overview and Tokenization.md",
     "Machine Learning/Mamba.md",

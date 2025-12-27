@@ -71,14 +71,14 @@ one thing needs to mention here is we can add integrity constraints in create ta
 - defining foreign key
 - set some attributes to be not null
 
-to remove table, we just `drop` it.
-to modify attributes, we can use `alter` to add or drop specific attributes.
-typically tuples are stored row by row (row major), which makes it very slow to modify attributes, because we are modifying whole column, which requires modification across all rows. some new structure store data column major to tackle such case.
+To remove table, we just `drop` it.
+To modify attributes, we can use `alter` to add or drop specific attributes.
+Typically tuples are stored row by row (row major), which makes it very slow to modify attributes, because we are modifying whole column, which requires modification across all rows. some new structure store data column major to tackle such case.
 ## Query
-Use `select` clause to query, we can add some description to the attributes we want to select, like `all`, `distinct` (duplicate is allowed in sql).
-if we select from two table, then we are actually selecting from their cartesian product.
-rather than cartesian product (outer join), inner join (natural join) is more common, which only care about the tuples has something in common. you may use `join` `on` or add some restrictions in `where` clause, the previous one is recommended.
-the running order of sql queries is:
+Use `select` clause to query, we can add some description to the attributes we want to select, like `all`, `distinct` (duplicate is allowed in SQL).
+If we select from two table, then we are actually selecting from their Cartesian product.
+Rather than Cartesian product (outer join), inner join (natural join) is more common, which only care about the tuples has something in common. you may use `join` `on` or add some restrictions in `where` clause, the previous one is recommended.
+The running order of SQL queries is:
 1. from + join
 2. where
 3. group by
@@ -92,10 +92,10 @@ We can use `as` to rename relations and attributes. for string operations we can
 - `_` to match any character
 - these two special char can combine with patterns like `%comp%___` to match string has `comp` as substring and has at least three chars after it.
 
-the set operations mentioned in relational algebra can has keywords like `union`, `interset`, `except`.
-there are also aggregate functions that operate on values of **column**, but return **a value**, like `avg,min,max,sum,count`. we can combine aggregate functions and `group by` to perform finer-grained operations. it is also okay to just use it over the whole table. one note when using `group by`, attributes in select clause **outside** of aggregate functions *must appear in group by list*.
-we also have keywords like `some,all,exist,unique`.
-we can use sub queries in `from` clause to perform more complex operations. But this is not recommended, `with` clause can create table ahead of time, reduce the cost of running sub query again and again.
+The set operations mentioned in relational algebra can has keywords like `union`, `interset`, `except`.
+There are also aggregate functions that operate on values of **column**, but return **a value**, like `avg,min,max,sum,count`. we can combine aggregate functions and `group by` to perform finer-grained operations. It is also okay to just use it over the whole table. one note when using `group by`, attributes in select clause **outside** of aggregate functions *must appear in group by list*.
+We also have keywords like `some,all,exist,unique`.
+We can use sub queries in `from` clause to perform more complex operations. But this is not recommended, `with` clause can create table ahead of time, reduce the cost of running sub query again and again.
 ## Manipulation
 ### DELETE
 Similar to select, use `from` clause.
@@ -110,13 +110,15 @@ We also have **outer join** which extends join operation avoids loss of informat
 ## View
 Usually we don't want client to see the full table but only the data they want. So we may select some of the attributes, or we can use `create view` to do this explicitly.
 In previous chapters, I was using table to call these selected views, actually they are virtual tables.
-You can materialize views, but after that, if we update dependent tables, the view will not change, so we will spend extra effort to maintain it by ourselves. But this enables use to update view solely too.
+You can materialize views, but after that, if we update the original tables, the view will not change, so we will spend extra effort to maintain it by ourselves. But this enables use to update view solely too.
+
 ## Transactions
 **Definition**: a transaction consists of a *sequence* of query and/or update statements and it is a *unit* of work. (similar to what we learned in OS)
 **Properties**: Atomicity, Consistency, Isolation, Durability.
+
 ```sql
 DECLARE @transfer_name varchar(10)
-	SET @transfer_name = "I-transfer-from-A-to-B"
+	SET @transfer_name = "demo"
 	BEGIN TRANSACTION @transfer_name
 	USE ACCOUNT
 	GO
@@ -130,6 +132,7 @@ DECLARE @transfer_name varchar(10)
 	COMMIT TRANSACTION @transfer_name
 	GO
 ```
+
 ## Integrity Constraints
 **Definition**: used to guard DB from accidental damage.
 The constraints on single DB can be:
@@ -139,10 +142,12 @@ The constraints on single DB can be:
 - check(P), where P is a predicate
 
 Reference also shows integrity constraints. The foreign key must be the subset of referenced table's primary key. Primary key, foreign key are also part of `create table` syntax.
-There is one more thing called `cascade`, we can set `UPDATE cascade` and `DELETE cascade`, so that when update or delete on the referenced table, it will also affect the table that references it. e.g. we have department table and course table, course references department on `dept_name`, when we change it in department table, it will also change course when `UPDATE cascade` is set.
-When initializing information in two table with foreign references, we should always insert the referenced data before inserting the table references it. Or we can initialize the data with null first, then update it again.
+There is one more thing called `cascade`, we can set `UPDATE cascade` and `DELETE cascade`, so that when update or delete on the referenced table, it will also affect the table that references it. e.g. we have department table and course table, course references department on `dept_name`, when we change it in department table, it will also change `dept_name` of courses have same `dept_name` previously when `UPDATE cascade` is set.
+When initializing information in two table with foreign references, we should always insert the referenced data before inserting the table references it. Or we can initialize the data with null first, then update it afterwards.
+
 # Chapter 5 Advanced SQL
 Use SQL with programming language.
+
 # Chapter 6 E-R Model
 **Definition**: the entity-relationship model, which facilitates database design. Represents the overall logical structure of DB, useful in mapping the meanings and interactions of *real world enterprises* onto a *conceptual schema*.
 ## Concepts
@@ -151,7 +156,7 @@ ER model employs three concepts:
 - relationship sets
 - attributes
 
-**Entities** are specific people or objects represented by attributes. e.g. an instructor entity can be represented by a instructor id and instructor name.
+**Entities** are specific people or objects represented by attributes. e.g. an instructor entity can be represented by an instructor id and an instructor name.
 **Relationships** represents associations between the entities in real world enterprise. e.g. we may have advisor relationship between an instructor and a student.
 **Attributes** can also be associated with a relationship set. e.g. the advisor relationship may have a data attribute to tell when the relationship starts.
 **Roles** can be used to label entity sets in relationship sets, which makes thing clearer.
@@ -159,16 +164,18 @@ ER model employs three concepts:
 ### Cardinalities Constraints
 The mapping in relationship may be constrained like in database. So we may have one-to-one, one-to-many, many-to-one, many-to-many.
 When drawing the ER diagram, we use *directed* line to signify "one" and *undirected* line to signify "many" between the relationship set and entity sets.
+
 ### Participation Constraints
 For cases like every entity must have at least one relationship.
-We just write it in the ER diagram on the line between entity set and relationship set like: 0..\*. In the instructor case above, we write it on the line between instructor and advisor, it means an instructor has at least 0 and at most many students. So we have lowest bound on left side and highest bound on right side of the "..".
+We just write it in the ER diagram on the line between entity set and relationship set like: 0..\*. In the instructor case above, we write it on the line between instructor and advisor, it means an instructor has at least 0 and at most many students. So we have lowest bound on left side and highest bound on right side of the "..". This is called *Cardinality limits*.
+
 ### Primary Key
 We also have things like primary keys in ER diagram, they have same definition as we talked before.
 ## Reduce Into Relation Schema
 How to reduce ER diagram into relation schema?
 ### Entity Set
 For **strong entity sets**, they can reduce to relation schema with the same attributes.
-For **weak entity sets** (depends on other entities, like section to course), they need to *include a column for the primary key* of the identifying strong entity set.
+For **weak entity sets** (do not have their own primary keys, depend on other entities, like section to course), they need to *include a column for the primary key* of the identifying strong entity set. e.g. `section(sec_id, semester, year)` becomes `section(course_id, sec_id, semester, year)`.
 For composite attributes, we flatten it with separate ones.
 ### Relationship Set
 The reduction of relationship sets is strongly dependent on the mapping cardinality constraint and partial constraint.
@@ -176,8 +183,8 @@ The reduction of relationship sets is strongly dependent on the mapping cardinal
 A many-to-many relationship set is represented as a table with columns for the primary keys of two participating entity sets, and any descriptive attributes of the relationship set.
 Only in this case, relationship set can **have attributes**.
 #### Many-to-One, One-to-Many
-Many-to-one and one-to-many relationship sets that **total on the many-side** can be represented by adding an extra attribute to the many side, containing the primary key of the one side.
-For **partial on the many-side**, we treat it like many-to-many, build a new relationship table.
+Many-to-one and one-to-many relationship sets that **total on the many-side** can be represented by adding an extra attribute to the many side, containing the primary key of the one side. e.g. all instructors have a department, so we can just add a new column `dept_id` to instructor.
+For **partial on the many-side**, we treat it like many-to-many, build a new relationship table. Or we will have null values.
 #### One-to-One
 For one-to-one relationship sets, either side can be chosen to act as the many side. An extra attribute can be added to either of the tables corresponding to the two entity sets.
 # Chapter 7 Relational DB Design
@@ -189,13 +196,17 @@ A domain is atomic if its elements are *indivisible* units. e.g. names can be de
 ### Second Normal Form
 **Definition**: the schema is in first normal form and each attributes $A$ meets one of the criteria:
 - if it appears in a **candidate key**, it is okay
-- if it does not appear in a **candidate key**, it must be completely dependent on a **candidate key**
+- if it does not appear in a **candidate key**, it must be completely dependent on a **candidate key**, not *partially*, which means it is dependent on a subset of the candidate key
+
+If $A$ breaks the second rule, this reminds us we can separate the schema into two. e.g. `demo(a_id, a_item, b_id, b_item)` where we have `a_id -> a_item, b_id -> b_item` and candidate key is `(a_id, b_id)`, so `a_item, b_item` both partially depend on candidate key, which means this schema is not 2NF.
+
 ### Boyce-Codd Normal Form
 **Definition**: a relation schema $R$ is in **BCNF** with respect to a function dependency set if for all function dependencies in it of the form $\alpha\to\beta$ at least one of the following statement holds:
 - $\alpha\to\beta$ is trivial, which means $\beta\subseteq\alpha$
 - $\alpha$ is a super key
 
-e.g. if we mix instructor and department into a `in_dep` like (ID, name, dept_name, building), then the super key is ID and dept_name, but we have function dependency like dept_name to building, so it is not BCNF, it can be decomposed into two distinct table.
+e.g. if we mix instructor and department into a `in_dep` like `(ID, name, dept_name, building)`, then the super key is `(ID, dept_name)`, but we have function dependency like `dept_name -> building`, since `dept_name` is not super key solely, it is not BCNF, it can be decomposed into two distinct table.
+
 ### Third Normal Form
 **Definition**: 3NF is a weaker form of BCNF, it is 2NF plus for all $\alpha\to\beta$ at least one of the following holds:
 - $\alpha\to\beta$ is trivial
