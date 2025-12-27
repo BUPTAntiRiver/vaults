@@ -217,12 +217,18 @@ e.g. if we mix instructor and department into a `in_dep` like `(ID, name, dept_n
 We have two main issues in physical DB:
 - data organization, e.g. physical storage structure of data.
 - data access, e.g. how to index.
+
 ## File Organization
+
 Each relational table is a set of **tuples**.
 Each file is a sequences of **records**. So it is natural to store each tuple as a record in DB. But we may have fixed length record and variable length record for things like `varchar`.
+
 ### Fixed-length Records
-A simple approach is we can just store the records in a contiguous region. When deleting old records, we can delete and compact, or move the bottom one to this position and we can also do nothing but use a free list to track, but free list allow record to be stored in non-contiguous space, kind of breaking the rule.
+
+A simple approach is we can just store the records in a contiguous region. When deleting old records, we can delete and compact, or move the bottom one to this position and we can also do nothing but use a free list to track, thought free list allow record to be stored in non-contiguous space, kind of breaking the rule.
+
 ### Variable length Records
+
 Variable length attributes can be represented by **fixed** size things like offset and length with actual data stored **after** all fixed length attributes. Null value can be represented by a null-value bitmap.
 Another method is we store the size and location info in the header of the block, then store the record from the end of the block to the start. So the free spaces are in the middle. When the records meet the header, the block is full.
 ## Organization of Records
@@ -231,15 +237,15 @@ DB file can be viewed as a set of records at logical level. These records are lo
 Any record can be placed anywhere in the file where there is space for the record:
 - There is **no ordering** of records
 - Records usually do not move once allocated
-- There is **a single file for a relation**
+- There is **one single file for a relation**
 
 We use a free-space map, it is an array with 1 entry per-block, each entry records fraction of block that is free. We can extend it into second level free-space map to control more blocks.
 
 ### Sequential
-Records are logically ordered by **search keys**. So the records are stored physically in search key order but may not be exactly the same due to deletion and insertion, but as close as possible.
+Records are logically ordered by **search keys**. So the records are stored physically in search key order but may not be exactly the same due to deletion and insertion, we try to make it as close as possible.
 The records are chained by pointers, so its actually a link list, but has approximate ordered. Pointers enabled records to be stored in non-contiguous space and to be **reordered from time to time** to maintain sequential order.
 ### Clustering
-Better for search and IO with tables has relationship with each other, but worse for single table operations, due to overhead with other tables.
+Better for search and IO with tables has relationship with each other, but worse for single table operations, due to overheads on other tables.
 ### Hashing
 The file records are stored in *buckets*, the bucket is the address of the record. We have a hash function **on some attributes** (search key), determines the addresses of the records.
 ## Data Dictionary Storage
@@ -273,7 +279,7 @@ Dense means we have index record for every search key in the table file, and eac
 Sparse means index files contains index entries for **only some** search key values.
 #### Multi-level Index
 If the index file is very large (the table is even larger! So we need index!), we can create multi-level index, so that each time we only put part of the index file into memory, then check the inner index file to locate the record. If the outer index file is still too big to put in, we can create more levels.
-## B+Tree Index
+## B+ Tree Index
 **Definition**: B tree is self-balancing tree structure that allows sequential accesses, insertions, deletions in **logarithmic time**.
 B+ tree derives from B tree, its indices are an alternative to the design of indexed-sequential file, it uses multi-level index with advantages of automatically reorganizing itself for insertions and deletions. The indices are stored at the leaf node, the value in intermediate nodes are used for structure maintenance.
 ### Properties
@@ -289,7 +295,8 @@ In **LEAF NODE**:
 - $P_{n}$ points to the *next leaf node*
 - If $L_{i}, L_{j}$ are leaf nodes and $i<j$, then all search key values in $L_{i}$ will be less than or equal to $L_{j}$
 
-In **NON-LEAF NODE**: it is quite similar, the search key values that pointers points to are in between the search key values around it.
+In **NON-LEAF NODE**: it is quite similar, the search key values in the node that pointers points to are in between the search key values around it.
+
 ## Hash Indices
 The records are stored in buckets. **Bucket** is a *unit* of storage containing records, such as a disk block. Bucket can be obtained from search key using hash function.
 **Hash function** is a function from *search key* $K$ to *bucket address*. Entries with different search key may map to the same bucket, and the entire bucket is sequentially searched to locate an entry.
@@ -339,7 +346,7 @@ This case will be slower than previous one, because we may have multiple results
 cost = $h_{i}\times(t_{T}+t_{S})+t_{S}+t_{T}\times b$, $b$ refers to the number of blocks containing matching records.
 #### Secondary Index
 The logic of secondary index and primary index is the same, maybe there index attributes are different. The difference between secondary index and primary index is that, we can only have one physical storage of the table, or that would be much waste of space, so we can only make primary index compatible layout compatible with the physical layout, and secondary index lose the contiguous property.
-SO, if equality on key, then its just like primary index, cost is $(h_{i} + 1)\times(t_{T}+t_{S})$.
+So, if equality on key, then its just like primary index, cost is $(h_{i} + 1)\times(t_{T}+t_{S})$.
 But if on non-key, it becomes different, because same non-key value may not resides in contiguous space, so the cost becomes $(h_{i} + n)\times(t_{T}+t_{S})$, $n$ refers to the number of matching records.
 
 ### Selections Involving Comparison - Range Search
