@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BUPT/DBMS/Database System Crash Course.md",
+                "file": "CS336/Lecture 3 Architectures, Hyperparameters.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Database System Crash Course"
+              "title": "Lecture 3 Architectures, Hyperparameters"
             }
           }
         ]
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -172,6 +173,7 @@
   },
   "active": "cdc323aec3a241e9",
   "lastOpenFiles": [
+    "BUPT/DBMS/Database System Crash Course.md",
     "CS336/Lecture 3 Architectures, Hyperparameters.md",
     "Machine Learning/Transformer and LLM.md",
     "Machine Learning/DeepSeek-V3.md",
@@ -206,7 +208,6 @@
     "拉格朗日对偶 Lagrange duality.md",
     "素数.md",
     "Machine Learning/CS 285 Reinforcement Learning/Lecture 2.md",
-    "Machine Learning/CS 285 Reinforcement Learning/Lecture 4 Introduction to Reinforcement Learning.md",
     "images/2PL.png",
     "lec2_vae.pdf",
     "images/Pasted image 20251020210407.png",
