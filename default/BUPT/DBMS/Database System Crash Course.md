@@ -1,7 +1,7 @@
 # Chapter 1 Introduction
 Let's clarify some concepts first:
-- database (db): a collection of **interrelated data**, stored as files.
-- database management system (dbms): a program to access db. responsible for **definition** of structures for storage of information, **data manipulation** mechanisms and **safety** mechanisms.
+- Database (DB): a collection of **interrelated data**, stored as files.
+- Database management system (DBMS): a program to access db. responsible for **definition** of structures for storage of information, **data manipulation** mechanisms and **safety** mechanisms.
 
 ## Database Engine (DBMS)
 **Definition**: a DBMS is partitioned into modules that deal with each responsibility.
