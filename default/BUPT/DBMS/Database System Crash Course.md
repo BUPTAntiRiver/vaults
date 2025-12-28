@@ -27,14 +27,14 @@ primary attributes are the attributes in candidate keys.
 ## Integrity Constraints (semantic)
 ## Relational Algebra
 Six basic operators:
-- select: $\sigma$
-- project: $\prod$
-- cartesian product: $\times$
-- union: $\cup$
-- set difference: $-$
-- rename: $\rho$
+- Select: $\sigma$
+- Project: $\prod$
+- Cartesian product: $\times$
+- Union: $\cup$
+- Set difference: $-$
+- Rename: $\rho$
 
-I am also going to list some corresponding sql code too:
+I am also going to list some corresponding SQL code too:
 ```sql
 -- select
 select *
