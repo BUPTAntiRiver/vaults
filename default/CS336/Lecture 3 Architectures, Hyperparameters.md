@@ -31,4 +31,21 @@ Sine embedding, absolute embedding, relative embedding, etc.
 Nowadays, seems RoPE has won the game. Its idea is that we only care about the relative distance between two tokens, and it is very similar to inner product of two vectors, if the angle between two vectors stays the same, then their inner product won't change. They turn the offset of position into rotation, so that if the relative distance of two token does not change, their embedding relation won't change.
 The rotation in 2 dimension is straight forward, but our token has huge embedding dimension, so the RoPE inventors find an simple way which is breaking down the token vector into pieces of 2 dimension and embed them separately.
 
+### Attention Heads
+
+#### GQA/MQA
+
+Let's think about the compute involved for attention. Total arithmetic operations is $bnd^{2}$, total memory access is $bnd+bhn^{2}+d^{2}$, for input transform, softmax and projection. We can infer that *arithmetic intensity* is high $O\left( \left( \frac{1}{k} + \frac{1}{bh} \right)^{-1} \right)$, so we can keep our GPUs running.
+But this is different at inference time. We cannot parallel the generation process, in this case we need to recompute/update attention via *KV cache*. Total arithmetic operations is still $bnd^{2}$, but memory access becomes $bn^{2}d+nd^{2}$ and arithmetic intensity becomes $O\left( \left( \frac{n}{d} + \frac{1}{b} \right)^{-1} \right)$
+
 ## Hyperparameters
+
+### Some Ratioes
+
+The dimension of FF layer is usually 4 times of attention output for non-gate activation and $\frac{8}{3}$ which is around 2.6 for gate activation, because we have additional parameter for gating.
+And in multi-head attention, the typical method is separating the model dimension to each head rather than letting each head has the same dimension as model dimension. The common choice of ratio between `num_head * head_dim` and `model_dim` is 1.
+**Aspect ratio**, ratio of model dimension and number of layers, the common choice is around 100.
+
+### Regularization
+
+Do we really need regularization in pretraining? Because in modern large language model training, we have trillions of pretrain data, and we usually train it with a single epoch, so it is not going to overfit easily. Actually, in modern models, people use low dropout rate or just don't use it during pretraining. However weight decay is still in use, it has more complex effects.
