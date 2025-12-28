@@ -13,7 +13,7 @@ they will be introduced later.
 # Chapter 2 Relational Model
 ## Structure of Relational Database (syntax)
 **Definition**: a relational database consists of a **collection of tables**. attributes as columns, tuples as rows.
-the order of tuples is irrelevant, attribute orders are also irrelevant.
+The order of tuples is irrelevant, attribute orders are also irrelevant.
 ### Schema
 **Definition**: the logical structure of database.
 It looks like: `instructor (id, name, dept_name, salary)`
@@ -405,7 +405,7 @@ Practically we use two methods: cost-based and heuristic optimization. We mainly
 **Definition**: we choose better plan following heuristics, sub-optimal plan with lower costs may be obtained.
 **Principles**: transforms query tree by heuristics to reduce cost.
 - perform *selection* early to reduce the number of tuples
-- perform projection early to reduce the number of attributes
+- perform *projection* early to reduce the number of attributes
 - perform *join* to substitute Cartesian product and selection
 - perform *restrictive selection and join* before other operations, since the most restrictive operations generates the smallest relations
 
