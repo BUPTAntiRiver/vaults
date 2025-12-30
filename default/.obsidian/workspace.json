@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "9455eca02b07d81a",
+        "id": "c6fed87d1844bdbc",
         "type": "tabs",
         "children": [
           {
-            "id": "b5f8e683502ef733",
+            "id": "48faeab535c421cb",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "CS336/Lecture 4 Mix of Experts.md",
+                "file": "开发者故事.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Lecture 4 Mix of Experts"
+              "title": "开发者故事"
             }
           }
         ]
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -171,11 +170,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "b5f8e683502ef733",
+  "active": "48faeab535c421cb",
   "lastOpenFiles": [
-    "CS336/Lecture 3 Architectures, Hyperparameters.md",
+    "开发者故事.md",
+    "诗文/多想再有一个我.md",
     "CS336/Lecture 4 Mix of Experts.md",
-    "多想再有一个我.md",
+    "CS336/Lecture 3 Architectures, Hyperparameters.md",
     "BUPT/DBMS/Database System Crash Course.md",
     "BUPT/PRML.md",
     "Machine Learning/Transformer and LLM.md",
@@ -207,7 +207,6 @@
     "Postgraduate",
     "Undergraduate",
     "BUPT/OS/homework/easy lab2 报告.md",
-    "Machine Learning/Diffusion Model.md",
     "images/2PL.png",
     "lec2_vae.pdf",
     "images/Pasted image 20251020210407.png",
