@@ -11,10 +11,14 @@
             "id": "5eb66c556eccb0e7",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "Byte Pair Encoding Tokenizer.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Byte Pair Encoding Tokenizer"
             }
           }
         ]
@@ -74,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -169,6 +172,8 @@
   },
   "active": "5eb66c556eccb0e7",
   "lastOpenFiles": [
+    "ELF.md",
+    "Binary Search.md",
     "Byte Pair Encoding Tokenizer.md",
     "CS336/Lecture 4 Mix of Experts.md",
     "开发者故事.md",
@@ -194,8 +199,6 @@
     "简历.md",
     "CSAPP/Lecture 06 Machine-Level Programming 2 Control.md",
     "CSAPP/Lecture 11 Memory Hierarchy.md",
-    "BUPT/OS/homework/homework 3.md",
-    "BUPT/OS/homework/easy lab3 报告.md",
     "Postgraduate/Math/Untitled",
     "Postgraduate/Math/Calculus",
     "Postgraduate/Politics",

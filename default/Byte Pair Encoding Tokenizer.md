@@ -22,4 +22,8 @@ There are pre-defined special tokens like `end-of-text` or `start-of-text`  to p
 
 ### Merging
 
-This becomes the simplest part, just count and update.
+This becomes the simplest part, just count and update
+
+### Parallel Pre-tokenization
+
+The biggest bottleneck of bpe training is the pre-tokenization. And luckily, it can be parallelized.
