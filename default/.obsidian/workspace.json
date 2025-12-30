@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "5e0d07f2d518559a",
+        "id": "5ead6b14b667ca09",
         "type": "tabs",
         "children": [
           {
-            "id": "bd0f30c4906cdce0",
+            "id": "5eb66c556eccb0e7",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -74,7 +74,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -166,8 +167,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "bd0f30c4906cdce0",
+  "active": "5eb66c556eccb0e7",
   "lastOpenFiles": [
+    "Byte Pair Encoding Tokenizer.md",
     "CS336/Lecture 4 Mix of Experts.md",
     "开发者故事.md",
     "诗文/多想再有一个我.md",
@@ -202,7 +204,6 @@
     "Postgraduate/Math",
     "Postgraduate",
     "Undergraduate",
-    "BUPT/OS/homework/easy lab2 报告.md",
     "images/2PL.png",
     "lec2_vae.pdf",
     "images/Pasted image 20251020210407.png",
