@@ -8,7 +8,7 @@ So we use byte pair encoding tokenizer.
 
 We consider pair of bytes, some specific byte pairs may occur more often, so we group them together and assign them a new index to represent them together. After we update the vocab, we also update the original text (in index form), we merge pair indices and do this repeatedly, until we reach the desiring vocabulary size.
 
-## How to implement?
+## How to train?
 
 This is where the demons come out. We are operating with terabytes of data, even more. It would be very slow if we just update the whole text to do the merge.
 
@@ -27,3 +27,17 @@ This becomes the simplest part, just count and update
 ### Parallel Pre-tokenization
 
 The biggest bottleneck of bpe training is the pre-tokenization. And luckily, it can be parallelized.
+
+## How to use?
+
+### Encoding
+
+The encoding of process of BPE mirrors how we train the BPE vocabulary. The major steps are:
+1. **Pre-tokenize**. We also pre-tokenize the sequence and encode each pre-token as a sequence of UTF-8 bytes, then we will merge these bytes within each pre-token into vocabulary elements.
+2. **Apply the merges**. Take the sequence of vocabulary element merges created during BPE training, then apply it to our pre-tokens *in the same order of creation*.
+
+Also we should handle user-defined specially tokens properly during encoding. Memory constraints is also important, when dealing with large files we can chunk it, but should make sure no tokens crosses chunk boundaries.
+
+### Decoding
+
+Decoding is much simpler, we can simply look up the vocabulary and concatenate them together. However the user input is not guaranteed to map to valid Unicode strings (we are playing with bytes), in this case we should replace the malformed bytes with the official Unicode replacement character `U+FFFD`. We can do this by setting the error flag of `bytes.decode` to `errors='replace'`.
