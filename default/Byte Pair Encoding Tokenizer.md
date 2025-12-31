@@ -37,6 +37,9 @@ The encoding of process of BPE mirrors how we train the BPE vocabulary. The majo
 2. **Apply the merges**. Take the sequence of vocabulary element merges created during BPE training, then apply it to our pre-tokens *in the same order of creation*.
 
 Also we should handle user-defined specially tokens properly during encoding. Memory constraints is also important, when dealing with large files we can chunk it, but should make sure no tokens crosses chunk boundaries.
+Encoding is just like merging, which is time consuming. So we may apply some optimizations:
+1. **Cache**. Some words are very common in text like: the, a. We can cache the most common 1000 words, then in most of the time the tokenizer hits the cache.
+2. **Rank-based Lookups**: instead of checking the merges one by one, we can build a dict that maps merge to its priority rank, so that we can just scan through the word to know which merge should be applied.
 
 ### Decoding
 
