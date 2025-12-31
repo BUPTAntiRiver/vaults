@@ -22,7 +22,7 @@ There are pre-defined special tokens like `end-of-text` or `start-of-text`  to p
 
 ### Merging
 
-This becomes the simplest part, just count and update
+This becomes the simplest part, just count and update. But how to implement it efficiently? Imagine a naive implementation: we scan all pretokens and compute the count, then update merges and vocab, then we need to apply the merge back to the pretokens so that we can do further merges with merged bytes. That will also need a scan through.
 
 ### Parallel Pre-tokenization
 
