@@ -317,14 +317,16 @@ A naive version of MFQ is: maintaining many tasks queues with different prioriti
 1. If Priority(A) > Priority(B), A runs, B doesn't
 2. If Priority(A) = Priority(B), A and B run in RR
 
-The key here is how to set the priority. The intuition is if a job repeatedly relinquish the CPU while waiting for input from the keyboard, it shall be kept in high priority. Otherwise, if a job uses CPU intensively for long periods of time it priority shall be reduced.
+The key here is **how to set the priority**. The intuition is if a job repeatedly relinquish the CPU while waiting for input from the keyboard, it shall be kept in high priority. Otherwise, if a job uses CPU intensively for long periods of time it priority shall be reduced.
 Our solution is to assign a quota for each job at a given priority level, and reduces its priority once the quota is used up. So we have some more rules:
+
 3. When a job enters the system, it is placed at the highest priority
 4. If a job uses up its allotment while running, its priority is reduced
 5. If a job gives up the CPU before the allotment is used up (like performing IO), it stays at the same priority level.
 
 There are many issues with this naive version of MFQ. For example, if we have too many interactive jobs in the system, they will consume all CPU time, imagine they are running one after another in perfect order. Thus the long jobs will be starved.
 One solution is priority boost:
+
 6. After some time period S, move all the jobs in the system to the top-most queue
 
 Or we can slice the time of queues.
