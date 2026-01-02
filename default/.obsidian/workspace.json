@@ -13,8 +13,8 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BUPT/OS/Operating System Crash Course.md",
-                "mode": "source",
+                "file": "BUPT/Operating System Crash Course.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -94,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "BUPT/OS/Operating System Crash Course.md",
+                "file": "BUPT/Operating System Crash Course.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -142,7 +143,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "BUPT/OS/Operating System Crash Course.md",
+                "file": "BUPT/Operating System Crash Course.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
@@ -173,8 +174,24 @@
   },
   "active": "8eb16885cc41245a",
   "lastOpenFiles": [
+    "开发者故事.md",
+    "素数.md",
+    "拉格朗日对偶 Lagrange duality.md",
+    "TVM.md",
+    "TODO.md",
+    "BUPT/Operating System Crash Course.md",
+    "Untitled.canvas",
+    "Untitled.base",
+    "BUPT/Database System Crash Course.md",
+    "BUPT/形式语言与自动机.md",
+    "BUPT/PRML.md",
+    "BUPT/计算机网络.md",
+    "BUPT/软件工程.md",
+    "BUPT/智能计算系统：实验报告：Tacotron2 + WaveGlow 语音合成推理实验.md",
+    "BUPT/NNDL/hw1.md",
+    "BUPT/NNDL/神经网络与深度学习.md",
+    "BUPT/DBMS/hw1 报告.md",
     "BUPT/OS/homework/homework 5.md",
-    "BUPT/OS/Operating System Crash Course.md",
     "BUPT/OS/homework/homework 8.md",
     "BUPT/OS/homework/homework 7.md",
     "诗文/元旦.md",
@@ -185,20 +202,6 @@
     "诗文/哈姆雷特.md",
     "诗文/别从前.md",
     "诗文/别.md",
-    "Byte Pair Encoding Tokenizer.md",
-    "CS336/Lecture 4 Mix of Experts.md",
-    "开发者故事.md",
-    "TVM.md",
-    "ELF.md",
-    "Binary Search.md",
-    "CS336/Lecture 3 Architectures, Hyperparameters.md",
-    "BUPT/DBMS/Database System Crash Course.md",
-    "BUPT/PRML.md",
-    "Machine Learning/Transformer and LLM.md",
-    "Machine Learning/DeepSeek-V3.md",
-    "CS336/Lecture 2 PyTorch, Resource Accounting.md",
-    "CS336/Lecture 1 Overview and Tokenization.md",
-    "Machine Learning/Mamba.md",
     "CS336",
     "Postgraduate/Math/Untitled",
     "Postgraduate/Math/Calculus",
@@ -209,7 +212,6 @@
     "Postgraduate",
     "Undergraduate",
     "images/2PL.png",
-    "lec2_vae.pdf",
     "images/Pasted image 20251020210407.png",
     "images/Pasted image 20251020210209.png",
     "images/Pasted image 20251020210415.png"

@@ -155,7 +155,8 @@ We can even extend such multi-level to 3 or more layers.
 #### Interesting Question: how to find the physical address of page? Or page table?
 
 When we dereferencing a pointer, we get the value it points to, when we print it, we get the virtual address. How to get its physical address? The physical address is just frame id + offset. The offset is the same as lower 12 bits of virtual address, so we only needs to get frame id, which is stored in page table with a pointer pointing to it. So we need to build a pointer that points to the same place. In page directory, there is a special entry that stores position pointing to itself, which is also the value of `CR3`, so we can set the first 10 bits to this offset, and next 10 bits to the original 10 bits. Then when processing this address, we will go from page directory to itself then treat it as page table and go to the real page table. Then we can just set the 12 bits offset as the page table offset to get the frame id. Combine it with real offset, we get the physical address.
-This method can also be used to get physical address of page table, we set the page directory jump to itself for 2 times, then we set last 12 bits with page directory offs
+This method can also be used to get physical address of page table, we set the page directory jump to itself for 2 times, then we set last 12 bits with page directory offset to get the page table address. Combine it with page table offset to get entry address.
+Jump to self for 3 times to get page directory address, which is just `CR3`.
 
 ___
 Memory management unit (MMU), a hardware, does such translation for us.
@@ -233,23 +234,35 @@ Random is simple and has no overhead, sometimes simple is good.
 First-In-First-Out (FIFO) could lead to some worst case in typical workloads like scan through small size array repetitively.
 Least Recently Used (LRU) kind of smart, learning from the past, evict the least recently used.
 Also we have Least Frequently Used (LFU).
+
 ### Further Knowledge
+
 #### Page Coloring
-When the page offset does not match with Set index and Line Offset, the set number of two different page may be the same, so the value with same page offset will frequently collide with each other. So OS invented Page Coloring the distinguish them with extra information.
+
+When the page offset does not match with Set index and Line Offset, the set number of two different page may be the same, so the value with same page offset will frequently collide with each other. So OS invented Page Coloring the distinguish them with extra information. The extra info here is actually just unused info. They color comes from the page address directly.
+Page coloring is not truly coloring, it is a new cache line routing policy.
+
 # Lecture 8 Demand Paging
+
 **Scenario**: modern programs require a lot of physical memory, but they don't use all their memory all of the time.
 **Solution**: use main memory as cache for disk, "lazy" memory allocation.
+
 ## Memory-mapped Files
+
 **Definition**: memory-mapped files is a segment of virtual memory that has been assigned a direct byte-for-byte correlation with some portion of a file or file-like source.
 For example, you can open a file first, but since we are doing lazy allocation, so it is not fully in the memory now, then we can call `mmap` on it to get a pointer, and do some modification with it. This provides a illusion that we have the whole file in our memory, while we are actually processing a block (page) of data.
+
 ## The Dirty Bit & Page Eviction Policy
+
 **Definition**: it is used to determine whether a page has been modified.
 The page eviction policy becomes more important now. Because the cost of being wrong is high, we probably need to flush the data into disk, we need to interact with disk and that is slow.
 FIFO, MIN, RANDOM, LRU, etc. LRU seems to be the best among them, let's explain how to implement it.
 We can use a list to track used pages, on each use, we remove the page from list and insert it to the head, when evicting, we evict the tail page.
 But this method still has problem, we need to know immediately when each page is used, so we can change its position in the list, but this involves many instructions for each hardware access. So it is inefficient.
 In practice, people use **Approximate LRU**.
+
 ### Clocking algorithm
+
 **Definition**: Implementation with the *use* bit. The use bit is initialized to 0 in page table, and set to 1 whenever there is a page access. When we need to evict a page, we look at the page under the hand, if the use bit is 1, we clear the bit and move the hand to next page, repeat until we find a 0 use bit, when find, evict it.
 The running hand looks like a clock, right?
 There is also a **variant** of clock algorithm, that is **N chance** algorithm: when we find a 0 use bit page, we give it a chance by increasing its counter instead of immediately eviction. When the counter reaches N, we do the eviction, and if its use bit is 1, we clear the use bit also clear the counter.
