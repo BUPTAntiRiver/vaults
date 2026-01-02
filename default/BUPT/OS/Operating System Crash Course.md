@@ -40,27 +40,41 @@ I/O read/write, context switch, changing privilege level, set system time... Any
 ### Memory Protection
 Segmentation: base and bound.
 Paging: every memory address a process sees is *"discontinuously"* mapped to a physical address in memory.
-The kernel code is usually placed at high address, but not low address, this is to prevent user accidentally wants to access kernel code and we can separate kernel code and user with the prefix of address easily.
+The kernel code is usually placed at high address, but not low address, this is to prevent user accidentally wants to access kernel code (uninitialized pointers pointing to 0) and we can separate kernel code and user with the prefix of address easily.
+
 # Lecture 3 Context Switch
+
 ## User to Kernel Mode Switch
+
 ### Exceptions
+
 When processor encounter *unexpected* condition.
 e.g. divide-by-zero, perform privileged instructions, etc.
+
 ### Interrupts
+
 *Asynchronous* signal to the processor that some *external* event has occurred.
+
 ### System calls
+
 User processes *request* the kernel to do some operations.
-### Interrupt Vector Table (中断向量表)
-It stores the entries of different handlers for exceptions, interrupts and traps (all of three, the name is confusing). There is a register pointing to the vector table which is stored in kernel memory, and each element in the vector points to handler.
-Nowadays we have something like Interrupt Descriptor Table (IDT, 中断描述符表), which tells CPU where the Interrupt Service Routines (ISR, 中断服务程序) are located.
+
+### Interrupt Vector Table
+
+It stores the entries of different handlers for exceptions, interrupts and traps (all of three, the naming is confusing). There is a register pointing to the vector table which is stored in kernel memory, and each element in the vector points to a corresponding handler.
+Nowadays we have something like Interrupt Descriptor Table (IDT), which tells CPU where the Interrupt Service Routines (ISR) are located.
 *Entries* are called "**Gates**" (the gate that separates user and kernel), its location is kept in **IDTR** (IDT register) and is loaded with **LIDT** assembly instruction.
-### Interrupt Masking (中断屏蔽)
+
+### Interrupt Masking
+
 *Disable interrupts* and *enable interrupts* are two privileged instructions. This means some interrupts can be masked out during processing some important things, but there are still some most important things. So, we have:
 - **Maskable** interrupts: all software interrupts, all system calls, and partial hardware exceptions
 - **Non-Maskable** interrupts: partial hardware exceptions
 
 The masked interrupts are actually deferred but not ignored.
-### Interrupt Stack (中断栈)
+
+### Interrupt Stack
+
 **Definition**: a special stack in kernel memory to store interrupt status.
 We have **one** for **each** process (thread). When first fault, we trap into kernel-exception handler. Second fault, we trap to another handler. Triple fault, we reboot.
 We let each thread has one interrupt stack to make it easier to switch a new process inside an interrupt or system call handler.
@@ -97,7 +111,7 @@ There is difference between `Ctrl-C` and `Ctrl-Z`, though they both can stop a p
 Introduce two concepts first.
 **Concurrency**: *dealing* with a lot of work at once, one worker, multiple tasks.
 **Parallel**: *doing* a lot of work at once, multiple worker, multiple tasks.
-Concurrency is about what does one core do, parallel is about what does multiple cores do.
+Concurrency is about what does one core do, parallel is about what do multiple cores do.
 ## Thread Abstraction
 **Definition**: thread is a single *execution sequence* that represents a *separately schedulable task*. It is the **minimal scheduling unit in OS**.
 Threads in the same process share memory space like: code, data, files, but has their own execution context like: registers and stack.
@@ -121,13 +135,13 @@ As the name suggests, address translation translate from virtual memory address 
 The **GOAL** and motivation of address translation: memory protection, memory sharing, flexible memory placement, sparse addresses, runtime lookup efficiency, compact translation tables, portability, etc.
 ## Segmentation
 **Simplest Approach**: *base* and *bounds* registers, every memory access is checked on those registers. We will need a segment table to record these bases, bounds and read write permissions.
-However, it reality, we find the usage of physical memory is fragmented, there are a lot of "holes", this is because process comes and goes, not every process can fit in spare space. Many methods are designed to enable fine-grained allocation.
-In real mode (for anyone who forgets about real mode, it is just like kernel mode), there is no segment table, we shift left the segment register value and add offset value to it.
-In protected mode, the segment table is called global descriptor table (GDT) or local descriptor table (LDT). Linear address = base address + offset.
-Segmentation is easy to implement quite straight forward, but the principle downside is: overhead of managing a large number of variable size and dynamically growing memory segments, it would be easy if you are satisfied with a bad strategy. And that will lead to *external fragmentation*, free space becomes non-contiguous. Compacting the memory will be slow, and even more complex if the segments can grow.
+However, in reality, we find the usage of physical memory is fragmented, there are a lot of "holes", this is because process comes and goes, not every process can fit in spare space. Many methods are designed to enable fine-grained allocation.
+In real mode (for anyone who forgets about real mode, it is an older CPU mode, typically uses 16 bits address, don't mix it with kernel mode and user mode! They are OS modes!), there is no segment table, we shift left the segment register value and add offset value to it.
+In protected mode (modern CPU mode), the segment table is called global descriptor table (GDT) or local descriptor table (LDT). Linear address = base address + offset.
+Segmentation is easy to implement and quite straight forward, but the principle downside is: overhead of managing a large number of variable size and dynamically growing memory segments, it would be easy if you are satisfied with a bad strategy. And that will lead to *external fragmentation*, free space becomes non-contiguous. Compacting the memory will be slow, and even more complex if the segments can grow.
 ## Paging
 **Definition**: allocating memory in *fixed-sized* chunks called *page frames*. We have a *page table* stores for each process whose entries contain pointers to the page frames.
-Page table is more compact that segment table because it does not need to store bounds. And now the pages are scattered across physical memory regions, yet with each page, the memory access is still contiguous. The memory allocation becomes very simple, we only need to find a page frame.
+Page table is more compact than segment table because it does not need to store bounds. And now the pages are scattered across physical memory regions, yet with each page, the memory access is still contiguous. The memory allocation becomes very simple, we only need to find a page frame.
 ### How does it work?
 Since we have fixed page size, suppose we have a 4 KB page size (the most common one), then we let the lowest 12 bits of our virtual address be the offset, and use the first 20 bits (suppose we have 32 bits address) to locate the frame id in the page table. Then we combine the frame id and offset to get the physical address. This is also the only way to get physical address: combine frame id in page table with offset. This will be mentioned again later.
 ### How large is the page table?
@@ -137,6 +151,12 @@ To solve such overhead, we introduce multi-level paging, **page directory**.
 Separate the address into 3 parts: **page directory number** (10 bits), **page table number** (10 bits), **page offset** (12 bits). We use page directory number and page directory register `CR3` (tells you which directory to visit) to locate which entry in the page directory to visit, which is the address of page table, then we use page table number to locate the frame id. Finally combine frame id with offset to get physical address.
 Note that page directory and page table only takes 4 KB now. So for processes that only needs small space, the cost of page directory and page table now reduces to 8 KB. The philosophy behind such improvement is to make page table finer-grained.
 We can even extend such multi-level to 3 or more layers.
+
+#### Interesting Question: how to find the physical address of page? Or page table?
+
+When we dereferencing a pointer, we get the value it points to, when we print it, we get the virtual address. How to get its physical address? The physical address is just frame id + offset. The offset is the same as lower 12 bits of virtual address, so we only needs to get frame id, which is stored in page table with a pointer pointing to it. So we need to build a pointer that points to the same place. In page directory, there is a special entry that stores position pointing to itself, which is also the value of `CR3`, so we can set the first 10 bits to this offset, and next 10 bits to the original 10 bits. Then when processing this address, we will go from page directory to itself then treat it as page table and go to the real page table. Then we can just set the 12 bits offset as the page table offset to get the frame id. Combine it with real offset, we get the physical address.
+This method can also be used to get physical address of page table, we set the page directory jump to itself for 2 times, then we set last 12 bits with page directory offs
+
 ___
 Memory management unit (MMU), a hardware, does such translation for us.
 The page size shall be neither too small or too large. Too small will lead to large page table size and low cache hit ratio, too large will lead to internal fragmentation (frame is not fully used), typically page size range from 512 B to 8192 B. Default 4 KB on Linux. Page tables can be sparse, not every page directory entry has a corresponding page table, this saves a lot of space.

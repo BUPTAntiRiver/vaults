@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "BUPT/OS/Operating System Crash Course.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -96,7 +95,7 @@
               "type": "backlink",
               "state": {
                 "file": "BUPT/OS/Operating System Crash Course.md",
-                "collapseAll": false,
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
                 "showSearch": false,
@@ -143,16 +142,17 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Scheduler BIG 3.md",
+                "file": "BUPT/OS/Operating System Crash Course.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Scheduler BIG 3"
+              "title": "Outline of Operating System Crash Course"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -173,6 +173,10 @@
   },
   "active": "8eb16885cc41245a",
   "lastOpenFiles": [
+    "BUPT/OS/homework/homework 5.md",
+    "BUPT/OS/Operating System Crash Course.md",
+    "BUPT/OS/homework/homework 8.md",
+    "BUPT/OS/homework/homework 7.md",
     "诗文/元旦.md",
     "诗文/赠近代史学家昱尧.md",
     "诗文/批评.md",
@@ -195,10 +199,6 @@
     "CS336/Lecture 2 PyTorch, Resource Accounting.md",
     "CS336/Lecture 1 Overview and Tokenization.md",
     "Machine Learning/Mamba.md",
-    "BUPT/计算机网络.md",
-    "Transformer.md",
-    "Machine Learning/MoE-Mixture-of-Experts.md",
-    "mixture of experts.md",
     "CS336",
     "Postgraduate/Math/Untitled",
     "Postgraduate/Math/Calculus",
