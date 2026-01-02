@@ -378,7 +378,7 @@ Implementation:
 ```c
 class bounded_queue {
 	Lock lock;
-	CV itemAdd;
+	CV itemAdded;
 	CV itemRemoved;
 	void insert(int item);
 	int remove();
@@ -386,7 +386,7 @@ class bounded_queue {
 
 void bounded_queue::insert(int item) {
 	lock.acquire();
-	while(queue.full()) {
+	while (queue.full()) {
 		itemRemoved.wait(&lock);
 	}
 	add_item(item);
@@ -396,6 +396,9 @@ void bounded_queue::insert(int item) {
 
 void bounded_queue::remove() {
 	lock.acquire();
+	while (queue.empty()) {
+		itemAdded.wait(&lock);
+	}
 	remove_item(item);
 	itemRemoved.signal();
 	lock.release();
@@ -403,7 +406,7 @@ void bounded_queue::remove() {
 ```
 Two key principles of using conditional variables:
 - CV is always used with lock acquired
-- CV is put in a while loop, we need to check again and again, if we are not using loop, when insert is waked but failed to grab the lock and queue was full, then it will try to add item! With loop we can re-check the condition.
+- CV is put in a while loop, we need to check again and again, if we are not using loop, when insert is waked but failed to grab the lock and then some other insertion made the queue full, then it will try to add item! With loop we can re-check the condition.
 
 ## Semaphores
 **Definition**: a kind of generalized lock. A semaphore has a non-negative integer value and supports the following two operations:
