@@ -16,13 +16,13 @@ Unified Extensible Firmware Interface. A successor of BIOS, which is more modern
 ### Process Control Block
 **Definition**: PCB is a data structure used by Linux to keep track of a process execution.
 ### Process In Memory
-An executable mainly consist of bss(Block Starting by Symbol), data and code regions. And the running process will have its own stack and heap. Uninitialized data are stored in bss region and initialized data are stored in data region.
+An executable mainly consist of BSS (Block Starting by Symbol), data and code regions. And the running process will have its own stack and heap. Uninitialized data are stored in bss region and initialized data are stored in data region.
 ## Dual Mode
 ### How to Virtualize?
 The basic model of CPU virtualization: run one process for a little while, then run another one, and so forth.
 This leads to 2 challenges:
 1. **Performance**: how to virtualize without adding excessive overhead to the system?
-2. **Control**: OS must take control whenever it wants;otherwise a process can run forever. OS must control how certain resources can be accessed by processes. We can just let OS take charge of every instruction of process, but this seems like we are running them on a Virtual Machine to test whether it is safe then actually run it, which is too slow.
+2. **Control**: OS must take control whenever it wants; otherwise a process can run forever. OS must control how certain resources can be accessed by processes. We can just let OS take charge of every instruction of process, but this seems like we are running them on a Virtual Machine to test whether it is safe then actually run it, which is too slow.
 
 So rather than always direct run or always go through OS, we perform the philosophy of Computer Science, absorbing the advantages. We design a method that **"sensitive" instructions go through OS and most instructions directly run on CPU**. The "sensitive" instructions are predefined by human, what are they?
 ### Limited Direct Execution
@@ -33,9 +33,9 @@ The following instructions are limited:
 
 The next problem is how to implement?
 ### Dual Mode
-User mode (用户态) and kernel mode (内核态) 这两者都是 CPU 的状态，由 OS 控制。
+User mode and kernel mode both are CPU status，which is controlled by OS.
 The status is stored in `cs` register, 0 for kernel mode, 3 for user mode (use only 2 bits).
-### Privileged Instructions (特权指令)
+### Privileged Instructions
 I/O read/write, context switch, changing privilege level, set system time... Any instructions that *could affect other processes* are likely to be privileged.
 ### Memory Protection
 Segmentation: base and bound.

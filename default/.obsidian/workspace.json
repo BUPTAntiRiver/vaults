@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "诗文/元旦.md",
-                "mode": "source",
+                "file": "BUPT/OS/Operating System Crash Course.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "元旦"
+              "title": "Operating System Crash Course"
             }
           }
         ]
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -172,6 +173,7 @@
   },
   "active": "8eb16885cc41245a",
   "lastOpenFiles": [
+    "诗文/元旦.md",
     "诗文/赠近代史学家昱尧.md",
     "诗文/批评.md",
     "诗文/满江红·蝇.md",
@@ -179,7 +181,6 @@
     "诗文/哈姆雷特.md",
     "诗文/别从前.md",
     "诗文/别.md",
-    "诗文/元旦.md",
     "Byte Pair Encoding Tokenizer.md",
     "CS336/Lecture 4 Mix of Experts.md",
     "开发者故事.md",
