@@ -417,11 +417,11 @@ Two key principles of using conditional variables:
 2. Scheduling Constraints (initial value = 0), allow some thread to wait for signal from another thread.
 
 ### Producer Consumer
-Implement Producer Consumer with semaphore. We meed 3 semaphore in total, one to count used slot, one to count available items, one to act as a binary mutex.
+Implement Producer Consumer with semaphore. We need 3 semaphore in total, one to count used slot, one to count available items, one to act as a binary mutex.
 # Lecture 11 Lock and Conditional Variables Implementation
 ## How to Implement Locks?
 ### With Interrupts
-A naive method would be disable interrupts when acquire locks and enable interrupts when release locks. But we can let user do this! If they acquire lock and do a infinite loop, they can take over the system.
+A naive method would be disable interrupts when acquire locks and enable interrupts when release locks. But we cannot let user do this! If they acquire lock and do a infinite loop, they can take over the system.
 A better implementation would be putting both disable and enable interrupts in acquire and release. Disable and enable interrupts acts like a lock for lock, they set up a critical section, we can modify data structures to maintain lock information between them.
 However, interrupts are enabled and disabled during context switch and it becomes really time consuming to implement on multi-processor. We have the following alternative.
 ### Atomic Read-Modify-Write Instructions
@@ -444,7 +444,8 @@ Release() {
 	value = 0;
 }
 ```
-The key idea is that we keep an **only single** 0 in all the values, so who has the 0 can enter the critical section.
+
+The key idea is that we keep an **only single** 0 in all the values, so who has the 0 can break the while loop and enter the critical section.
 The disadvantage is **busy waiting**, thread consumes cycles while waiting. How to solve this? The first thing come into mind is probably **conditional variable**, which can sleep and be signaled. That will be introduced later, with `test&set` only, we can also minimize wait cost with some engineering effort.
 ## How to implement Conditional Variables?
 Recap the operations: `Wait(&lock)`, `Signal()`, `Broadcast()`. Since when we are using CV we are inside critical section, the implementation is quite simple, check by yourself.
@@ -463,12 +464,17 @@ The motivation is suppose we have a database, and there are two kinds of operati
 2. No hold-and-wait: use another lock to lock the locks, which may decrease concurrency.
 3. No mutual exclusion: this may be very complicated, and need hardware support.
 4. Smart scheduling: banking algorithm
+
 ### Banking Algorithm
+
 Usually the request and assignment of resources are not determined at a single point, which means resources are taken/released over time. So we can't know order/amount of requests ahead of time, we can only assume some worst-case "max" resource needed by each process.
-So we should state maximum resource needed in advance;
+So we should state maximum resource needed in advance.
 Only allow particular thread to proceed if available resources is greater than requested plus max remaining need resource.
+
 # Lecture 13 IO devices and disk
+
 ## IO Devices
+
 **Definition**: IO devices usually have two parts, an interface and in internal structure. Some complex IO devices may have their own CPU and memory.
 The interface usually has 3 registers:
 - **status** register
