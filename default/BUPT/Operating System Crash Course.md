@@ -625,7 +625,7 @@ Directory is treated as a file with a list of (file name, file number) mappings.
 The file number of the root directory is agreed ahead of time, in many Unix file systems, it is 2.
 Modern file systems organize directory's contents as a tree, typically B+ tree, just like database systems!
 ### Hard Link
-`ln` command, link: it creates another name in the directory you are creating the link to, and refers it to the same inode number of the original file. Os will maintain a reference count for each inode. When we create file 1 and link file 2 to it, even we remove file 1, we can still access data in that inode through file 2m because the reference count is 1 now but still greater than 0. Usually used for version control.
+`ln` command, link: it creates another name in the directory you are creating the link to, and refers it to the same inode number of the original file. Os will maintain a reference count for each inode. When we create file 1 and link file 2 to it, even we remove file 1, we can still access data in that inode through file 2 because the reference count still has 1 now and is greater than 0. Usually used for version control.
 ### Soft Link
 `ln -s` command, soft (symbolic) link: a special type of file whose contents are the path name of the linked-to file. The size of soft link file changes as they are linked to files with different names. Soft link does not add reference count. Usually used for shortcuts.
 
@@ -656,7 +656,7 @@ We have multi-level index in FFS, which can be represented as fixed, asymmetric 
 **Tree Structure**. Each file is represented by a tree, which allows the file system to efficiently find any block of a file.
 **High Degree**.
 **Fixed structure**.
-**Asymmetric**. Makes FFS fits both small and big files very well.
+**Asymmetric**. Direct and indirect pointers make FFS fits both small and big files very well.
 **Locality Heuristics**:
 - Block group placement: FFS places data to optimize for the common case where a file’s data blocks, a file’s data and metadata, and different files from the same directory are accessed together.
 - Reserved space: reserved for locality optimization even when the disk is full, about 10%.
@@ -687,13 +687,13 @@ For even rarer case *huge or badly fragment* files, we can make the attribute li
 The system tries to place a newly allocated file in the smallest free region that is large enough to hold it. NTFS also specifies the expected size of a file at creation time, which helps to plan space use. It also uses some reserved space to avoid fragmentation (about 12.5%).
 ## Virtual File Systems (VFS)
 How to make different file systems work together? This need emerges as we have more and more kinds of devices and networked file system.
-VFS is like java abstract Object, all file systems can extend from it.
+VFS is like java abstract Object, all file systems can implement it.
 ### Core VFS Abstractions
 **Super Block**: file system global data
 **Inode** (index node): metadata for one file
 **Dentry** (direct entry): name to inode mapping
 **File Object**: pointer to dentry and cursor (file offset)
-Super block and inodes are extended by file system developer.
+Super block and inodes are implemented by file system developer.
 
 ## Summary
 File System:
@@ -741,7 +741,7 @@ If we crash **during logging**, the recovery is also faster, we can just look in
 Recover after **commit**, we can detect committed logs are redo them (may be scheduled later).
 #### Detail
 Repeated write-backs are OK, because they don't depend on previous data in the sector, however for operations like add value to data in sector won't be recoverable.
-New requests need to consult the log first to ensure the data consistency, can be alleviated by caching.
+New requests need to consult the log first to ensure the data consistency, this can be alleviated by caching.
 
 ### Transaction File Systems
 Two way to use transactions in file systems: journaling and logging.
@@ -751,10 +751,14 @@ Two way to use transactions in file systems: journaling and logging.
 The storage devices itself may be broken some time, to keep the data still reliable under such cases, we have RAID (redundancy arrays of inexpensive disks). There are five levels of RAID initially (more now).
 ### RAID 1: Disk Mirroring/Shadowing
 Each disk is fully duplicated onto its "shadow". This is the most expensive solution, because we need 100% capacity overhead. Also, we need to do the write twice, but read can have higher bandwidth.
+
 ### RAID 5+: High IO Rate Parity
-Data are stripped across multiple disks, for example we have 5 disks and 4 data block, then the data are store across 0 to 3, disk 4 instead of storing actual data, it is responsible for storing the parity data, a recovery info constructed with x-or operation over all previous 4 data block. So that once any one of then are down, we can x-or the survived ones with parity to regain the lost data.
+
+Data are stripped across multiple disks, for example we have 5 disks and 4 data block, then the data are store across 0 to 3, disk 4 instead of storing actual data, it is responsible for storing the parity data, a recovery info constructed with X-OR operation over all previous 4 data block. So that once any one of them is down, we can X-OR the survived ones with parity to regain the lost data.
 Also, we won't let one disk do all the parity job, each one store the parity info in turns. This is **rotating parity**, parity needs to be changed very often, so we split the workload.
+
 # Lecture 16 Virtual Machine
+
 Virtualization is a technology that allows for the creation of virtual versions of physical resources.
 Virtual machine is a very hot topic in both academia and industry, it is an old idea, but becomes very successful with cloud computing. Now we have, Virtual Machine Monitor (VMM), also named Hypervisor.
 ## What is a VM?
@@ -771,52 +775,76 @@ Emulation aims at providing an environment of hardware or software. Simulation a
 What needs to be virtualized? CPU, events (exceptions and interrupts), memory and IO devices.
 This seems like we are just duplicating OS functionality in VMM, and indeed yes it is, but we are implementing a different abstraction. We used to face hardware interface, but now we have an OS interface.
 What does hardware do for OS?
-- *Privilege levels*, user and kernel.
+
+- *Privilege levels*: user and kernel.
 - *Privileged instructions*: instructions available only in kernel mode.
-- *Memory translation* prevents user programs from accessing kernel data structures and aids in memory management.
-- *Processor exceptions* trap to the kernel on a privilege violation or other unexpected event.
-- *Timer interrupts* return control to the kernel on time expiration.
-- *Device interrupts* return control to the kernel to signal I/O completion.
-- *Inter-processor interrupts* cause another processor to return control to the kernel.
-- *Interrupt masking* prevents interrupts from being delivered at inopportune times.
-- *System calls* trap to the kernel to perform a privileged action on behalf of a user program.
+- *Memory translation*: prevents user programs from accessing kernel data structures and aids in memory management.
+- *Processor exceptions*: trap to the kernel on a privilege violation or other unexpected event.
+- *Timer interrupts*: return control to the kernel on time expiration.
+- *Device interrupts*: return control to the kernel to signal I/O completion.
+- *Inter-processor interrupts*: cause another processor to return control to the kernel.
+- *Interrupt masking*: prevents interrupts from being delivered at inopportune times.
+- *System calls*: trap to the kernel to perform a privileged action on behalf of a user program.
 - *Return from interrupt*: switch from kernel mode to user mode, to a specific location in a user process.
 
 Quite a lot!
+
 #### Virtualizing Privileged Instructions
+
 OS in virtual machine can no longer execute privileged instructions. For those instructions that cause an *exception*, we trap into VMM, take care of business, return to OS in VM.
 For those that do not cause an exception, different VMM has different methods. And hardware also has supported new CPU mode, instructions to do **trap and emulate**.
 In real OS, when we try to run privileged instructions, we interrupt to hardware, it catches info and then transfer control to OS, finally OS handles and return. However in VM, we don't have such hardware to do the intermediate work for us. Instead we let VMM to do this. It catches interrupts and call corresponding handler installed in VM OS.
+
 #### Virtualizing the CPU
+
 VMM needs to multiplex VM on CPU, time slice the VM, each VM will slice its OS/application during its quantum. And use a typically relative simple scheduler: Round Robin, working-conserving (give unused quantum to other VM).
+
 #### Virtualizing Events
+
 VMM receives interrupts, exceptions.
 Needs to vector to appropriate VM, like modify OS to use virtual interrupt register, event queue, or craft appropriate handler invocation, emulate event registers.
+
 #### Virtualizing IO
+
 OS in VM can no longer interact directly with IO devices.
 **Xen**: modify OS to use low-level IO interface (hybrid)
 **VMWare**: VMM supports generic devices (hosted)
+
 #### Virtualizing Memory
+
 Each OS thinks of physical memory as a linear array of pages and assign each page to itself or user processes. But VMM partitions memory among VM, so VMM needs to add an extra layer of virtualization makes "physical" memory a virtualization on top of what the VMM refers to as **machine memory**.
 Now the work flow becomes like this: each OS maps virtual-to-physical addresses via its per-process page tables, then VMM maps the resulting physical address to underlying machine address via its per-OS page tables.
 Hardware-managed TLB makes this difficult, when TLB misses, the hardware automatically walks the page tables in memory. As a result, VMM needs to control access by OS to page tables.
 **Xen** implementation: page table work the same as before, but OS is constrained to only map to the physical pages it owns.
+
 #### Example of Address Translation
+
 In a 4-level page table in VM, each translation requires up to 24 memory accesses. Because first, we need find the next level address for guest address 4 times, and each time, we need to go to host, and the host also has a 4-level page table, so 4 time for each phase. In the end, we also need 1 more memory access to pass the result back to guest address, so that will be 20 in total. After we get the guest physical address, we still need to do translation in host, that will cost another 4 memory access, so add up to 24 times.
 For 5-level page table, it should be 35 times.
+
 #### Shadow Page Tables
+
 VMM creates and manage page tables that map virtual pages directly to machine pages. These VMM page tables are the shadow page tables, they are loaded into the MMU on a context switch.
 VMM needs to keep its shadow page tables up-to-date. When guest kernel changes its page table, it will trap into VMM because OS page tables are set read only. Then VMM applies write to shadow page table and OS table. This cause some more overhead.
-Nowadays hardware support for shadow page table directly. The hardware can be set up with 2 page tables. The hardware can translate the guest virtual address to guest physical address then to host physical address directly.
+Nowadays hardware support for shadow page table directly. The hardware can be set up with 2 page tables. The hardware can translate the guest virtual address to guest physical address then to host machine address directly.
 This simplifies the VM implementation and make it faster, but adds overhead to the synchronization between shadow page table and guest page table.
+
 #### Memory Allocation
+
 VMM tends to have simple hardware memory allocation policy, just allocate static size with no dynamic resizing based on workload. And guest OS are not designed to handle changes in physical memory and often **no swap to disk**.
-There is more advanced approach, like overcommit with balloon driver, which means there is a balloon driver in the OS to collect unused available resources, so that VMM can assign them to other VM. When memory pressure decreases, the balloon driver shrinks and reduce less memory in VM OS.
+There is more advanced approach, like overcommit with balloon driver, which means there is a balloon driver in the OS to collect unused available resources, so that VMM can assign them to other VM. When memory pressure decreases, the balloon driver shrinks and give out more memory in VM OS.
 Further optimization can be share identical physical pages like some all zero pages across VM to save memory space.
+
 #### Hardware Support
+
 Hardware company like intel and AMD added more and more features to work with virtual machine better.
+
 ## Usage
+
 ### Java Virtual Machine (JVM)
+
 Java programs run on top of JVM, that is why it is ubiquitous and runs slower than native C code. It supports garbage collection and just-in-time compile.
+
 ### VM v.s. Container
+
 The difference between VM and container is that suppose we have a hardware, VM will has a VMM, which controls multiple VM with different guest OS running on them. While container has a host OS kernel, in each container they runs different apps and libraries, which means they have same OS!
