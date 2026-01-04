@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Manifold-Constrained Hyper-Connections.md",
+                "file": "BUPT/Operating System Crash Course.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Manifold-Constrained Hyper-Connections"
+              "title": "Operating System Crash Course"
             }
           }
         ]
@@ -174,8 +174,9 @@
   },
   "active": "0a8091a9ee59bbc6",
   "lastOpenFiles": [
-    "Manifold-Constrained Hyper-Connections.md",
+    "BUPT/Database System Crash Course.md",
     "BUPT/Operating System Crash Course.md",
+    "Manifold-Constrained Hyper-Connections.md",
     "开发者故事.md",
     "素数.md",
     "拉格朗日对偶 Lagrange duality.md",
@@ -183,7 +184,6 @@
     "TODO.md",
     "Untitled.canvas",
     "Untitled.base",
-    "BUPT/Database System Crash Course.md",
     "BUPT/形式语言与自动机.md",
     "BUPT/PRML.md",
     "BUPT/计算机网络.md",
