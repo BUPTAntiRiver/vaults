@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -173,11 +174,13 @@
   },
   "active": "7a2d23172aa61df0",
   "lastOpenFiles": [
-    "BUPT/PRML.md",
     "BUPT/Database System Crash Course.md",
+    "BUPT/Operating System Crash Course.md",
+    "BUPT/PRML.md",
+    "BUPT/形式语言与自动机.md",
+    "BUPT/计算机网络.md",
     "TVM.md",
     "Scheduler BIG 3.md",
-    "BUPT/Operating System Crash Course.md",
     "2026-01-05.md",
     "Manifold-Constrained Hyper-Connections.md",
     "开发者故事.md",
@@ -186,8 +189,6 @@
     "TODO.md",
     "Untitled.canvas",
     "Untitled.base",
-    "BUPT/形式语言与自动机.md",
-    "BUPT/计算机网络.md",
     "BUPT/软件工程.md",
     "BUPT/智能计算系统：实验报告：Tacotron2 + WaveGlow 语音合成推理实验.md",
     "BUPT/NNDL/hw1.md",
