@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BUPT/Operating System Crash Course.md",
+                "file": "Manifold-Constrained Hyper-Connections.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Operating System Crash Course"
+              "title": "Manifold-Constrained Hyper-Connections"
             }
           }
         ]
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -174,18 +173,21 @@
   },
   "active": "7a2d23172aa61df0",
   "lastOpenFiles": [
-    "BUPT/Database System Crash Course.md",
+    "开发者故事.md",
+    "Manifold-Constrained Hyper-Connections.md",
+    "Computer Science/Mutable and Immutable.md",
     "BUPT/Operating System Crash Course.md",
+    "Mathematics",
+    "Computer Science",
+    "BUPT/Database System Crash Course.md",
     "BUPT/PRML.md",
     "BUPT/形式语言与自动机.md",
     "BUPT/计算机网络.md",
-    "TVM.md",
-    "Scheduler BIG 3.md",
+    "Machine Learning/TVM.md",
+    "Computer Science/Scheduler BIG 3.md",
     "2026-01-05.md",
-    "Manifold-Constrained Hyper-Connections.md",
-    "开发者故事.md",
-    "素数.md",
-    "拉格朗日对偶 Lagrange duality.md",
+    "Mathematics/素数.md",
+    "Mathematics/拉格朗日对偶 Lagrange duality.md",
     "TODO.md",
     "Untitled.canvas",
     "Untitled.base",
@@ -201,7 +203,6 @@
     "诗文/赠近代史学家昱尧.md",
     "诗文/批评.md",
     "诗文/满江红·蝇.md",
-    "诗文/多想再有一个我.md",
     "CS336",
     "Postgraduate/Math/Untitled",
     "Postgraduate/Math/Calculus",
@@ -209,8 +210,6 @@
     "Postgraduate/CS",
     "Postgraduate/English",
     "Postgraduate/Math",
-    "Postgraduate",
-    "Undergraduate",
     "images/2PL.png",
     "images/Pasted image 20251020210407.png",
     "images/Pasted image 20251020210209.png",
