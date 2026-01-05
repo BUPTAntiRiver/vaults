@@ -13,15 +13,19 @@ Most modern transformers don't have bias terms in order to use less memory and i
 
 We have a whole zoo of activations now: ReLU, GeLU, SwiGLU, etc.
 What are they? What is the difference? Does it matter?
-Most modern models used *gated activations* (GLU).
+Most modern models used _gated activations_ (GLU).
 GLUs modify the first part of a feed forward layer:
+
 $$
 \text{FF}(x)=\max(0, xW_{1})W_{2}
 $$
+
 Instead of a linear + ReLU, augment the above with an (entriywise) linear term:
+
 $$
 \max(0, xW_{1})\to\max(0,xW_{1})\otimes(xV)
 $$
+
 This gives the gated variant, notice that we have an extra parameter $V$.
 So the difference between GeGLU and SwiGLU is that they use different function for non-linearity.
 
@@ -35,8 +39,8 @@ The rotation in 2 dimension is straight forward, but our token has huge embeddin
 
 #### GQA/MQA
 
-Let's think about the compute involved for attention. Total arithmetic operations is $bnd^{2}$, total memory access is $bnd+bhn^{2}+d^{2}$, for input transform, softmax and projection. We can infer that *arithmetic intensity* is high $O\left( \left( \frac{1}{k} + \frac{1}{bh} \right)^{-1} \right)$, so we can keep our GPUs running.
-But this is different at inference time. We cannot parallel the generation process, in this case we need to recompute/update attention via *KV cache*. Total arithmetic operations is still $bnd^{2}$, but memory access becomes $bn^{2}d+nd^{2}$ and arithmetic intensity becomes $O\left( \left( \frac{n}{d} + \frac{1}{b} \right)^{-1} \right)$, so we need large batches or short sequence length and large model. However the model structure is hard to change.
+Let's think about the compute involved for attention. Total arithmetic operations is $bnd^{2}$, total memory access is $bnd+bhn^{2}+d^{2}$, for input transform, softmax and projection. We can infer that _arithmetic intensity_ is high $O\left( \left( \frac{1}{k} + \frac{1}{bh} \right)^{-1} \right)$, so we can keep our GPUs running.
+But this is different at inference time. We cannot parallel the generation process, in this case we need to recompute/update attention via _KV cache_. Total arithmetic operations is still $bnd^{2}$, but memory access becomes $bn^{2}d+nd^{2}$ and arithmetic intensity becomes $O\left( \left( \frac{n}{d} + \frac{1}{b} \right)^{-1} \right)$, so we need large batches or short sequence length and large model. However the model structure is hard to change.
 The key idea of MQA (multi-query attention) is to have multiple queries but just one dimension for keys and values in order to reduce KV cache. GQA (group-query attention) is not as radical as MQA that reduce head dimension of KV to only 1, but has some key-query ratio like 2 query 1 key.
 
 #### Sparse Attention & Sliding Window Attention
