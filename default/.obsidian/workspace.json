@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BUPT/Operating System Crash Course.md",
-                "mode": "source",
+                "file": "开发者故事.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Operating System Crash Course"
+              "title": "开发者故事"
             }
           }
         ]
@@ -173,10 +173,11 @@
   },
   "active": "7a50782f8078f58d",
   "lastOpenFiles": [
+    "为什么我想成为女人.md",
+    "BUPT/Operating System Crash Course.md",
     "Computer Science/Binary Search.md",
     "Computer Science/ELF.md",
     "诗文/赠近代史学家昱尧.md",
-    "为什么我想成为女人.md",
     "诗文/满江红·蝇.md",
     "诗文/惜昔时.md",
     "诗文/忆江南·夏至.md",
@@ -198,7 +199,6 @@
     "CS336/Lecture 1 Overview and Tokenization.md",
     "BUPT/计算机网络.md",
     "BUPT/PRML.md",
-    "BUPT/形式语言与自动机.md",
     "Mathematics",
     "Computer Science",
     "Untitled.canvas",
