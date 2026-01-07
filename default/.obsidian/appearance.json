@@ -2,8 +2,8 @@
   "cssTheme": "Minimal",
   "accentColor": "",
   "theme": "system",
-  "textFontFamily": "JetBrainsMono Nerd Font",
-  "monospaceFontFamily": "JetBrainsMono Nerd Font",
-  "interfaceFontFamily": "JetBrainsMono Nerd Font",
-  "baseFontSize": 24
+  "textFontFamily": "Iosevka Nerd Font Mono",
+  "monospaceFontFamily": "Iosevka Nerd Font Mono",
+  "interfaceFontFamily": "Iosevka Nerd Font Mono",
+  "baseFontSize": 16
 }
