@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "bfa8e6715eec2b50",
+        "id": "9e8a196cf365e3a9",
         "type": "tabs",
         "children": [
           {
-            "id": "7a2d23172aa61df0",
+            "id": "7a50782f8078f58d",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "诗文/书页沐浴露.md",
-                "mode": "preview",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "书页沐浴露"
+              "title": "New tab"
             }
           }
         ]
@@ -171,12 +167,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "bba62f1707ffcf40",
+  "active": "7a50782f8078f58d",
   "lastOpenFiles": [
+    "诗文/书页沐浴露.md",
+    "为什么我想成为女人.md",
     "诗文/仿生人会梦到电子羊吗？.md",
     "Manifold-Constrained Hyper-Connections.md",
     "Machine Learning/Distributed Training - TinyML.md",
-    "诗文/书页沐浴露.md",
     "开发者故事.md",
     "Computer Science/How to master Vim?.md",
     "BUPT/Database System Crash Course.md",
@@ -198,7 +195,6 @@
     "诗文/哈姆雷特.md",
     "诗文/别从前.md",
     "诗文/别.md",
-    "诗文/元旦.md",
     "Mathematics",
     "Computer Science",
     "Untitled.canvas",
