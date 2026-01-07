@@ -41,4 +41,12 @@ HC also adds a lot of memory access costs, which constitutes one of the primary 
 
 ## Manifold-Constrained Hyper-Connections
 
-Drawing inspiration from the identity mapping principle of residual connection, the core premise of $m$HC is to constrain the residual mapping $\mathcal{H}^{\text{res}}$ onto a specific manifold.
+Drawing inspiration from the identity mapping principle of residual connection, the core premise of $m$HC is to constrain the residual mapping $\mathcal{H}^{\text{res}}$ onto a specific manifold. The original identity mapping ensures stability by enforcing $\mathcal{H}^{\text{res}}_{l}=\mathbf{I}$, it precludes information exchange with residual stream, which is critical for maximizing the potential of multi-stream architectures. Therefore, we can maintain signal propagation stability and also preserve model's expressiveness. The solution is to restrict $\mathcal{H}^{\text{res}}_{l}$ to be a **_doubly stochastic matrix_**, which has _non-negative entries where both the rows and columns sum to 1_. Formally, let $\mathcal{M}^{\text{res}}$ denote the manifold of doubly stochastic matrices (also known as the Birkhoff polytope). We constrain $\mathcal{H}^{\text{res}}_{l}$ to $\mathcal{P}_{\mathcal{M}^{\text{res}}}(\mathcal{H}^{\text{res}}_{l})$, defined as:
+
+$$
+\mathcal{P}_{\mathcal{M}^{\text{res}}}(\mathcal{H}^{\text{res}}_{l}) \coloneqq \{\mathcal{H}^{\text{res}}_{l}\in \mathbb{R}^{n\times n}\mid \mathcal{H}^{\text{res}}_{l}\mathbf{1}_{n}=\mathbf{1}_{n},\mathbf{1}_{n}^{\top}\mathcal{H}^{\text{res}}_{l}=\mathbf{1}_{n}^{\top},\mathcal{H}^{\text{res}}_{l}\geq 0\},
+$$
+when $n=1$, the doubly stochastic condition degenerates to the scalar 1, thereby recovering the original identity mapping. The choice of double stochasticity confers to several rigorous theoretical properties beneficial for large-scale model training:
+
+1. **Norm Preservation**: The spectral norm of a doubly stochastic matrix is bounded by 1. This implies that the learnable mapping is non-expansive.
+2. **Compositional Closure**: 
