@@ -74,7 +74,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -183,8 +184,9 @@
   },
   "active": "006021843e05250d",
   "lastOpenFiles": [
-    "诗文/为什么我想成为女人.md",
+    "Machine Learning/Linear Attention.md",
     "Manifold-Constrained Hyper-Connections.md",
+    "诗文/为什么我想成为女人.md",
     "诗文/闷热的后脑.md",
     "诗文/忆江南·夏至.md",
     "诗文/批评.md",
@@ -208,7 +210,6 @@
     "Computer Science/How to master Vim?.md",
     "CS336/Lecture 4 Mix of Experts.md",
     "CS336/Lecture 3 Architectures, Hyperparameters.md",
-    "CS336/Lecture 2 PyTorch, Resource Accounting.md",
     "Mathematics",
     "Computer Science",
     "Untitled.canvas",
