@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "为什么我想成为女人.md",
+                "file": "Manifold-Constrained Hyper-Connections.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "为什么我想成为女人"
+              "title": "Manifold-Constrained Hyper-Connections"
             }
           }
         ]
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "为什么我想成为女人.md",
+                "file": "Manifold-Constrained Hyper-Connections.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of 为什么我想成为女人"
+              "title": "Outline of Manifold-Constrained Hyper-Connections"
             }
           },
           {
@@ -183,6 +183,7 @@
   },
   "active": "006021843e05250d",
   "lastOpenFiles": [
+    "诗文/为什么我想成为女人.md",
     "Manifold-Constrained Hyper-Connections.md",
     "诗文/闷热的后脑.md",
     "诗文/忆江南·夏至.md",
@@ -192,7 +193,6 @@
     "BUPT/Database System Crash Course.md",
     "Mathematics/Euler's formula.md",
     "开发者故事.md",
-    "为什么我想成为女人.md",
     "Computer Science/Binary Search.md",
     "Computer Science/ELF.md",
     "诗文/赠近代史学家昱尧.md",
