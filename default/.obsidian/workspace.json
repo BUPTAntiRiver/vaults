@@ -79,7 +79,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -184,8 +185,9 @@
   },
   "active": "006021843e05250d",
   "lastOpenFiles": [
-    "Machine Learning/Linear Attention.md",
+    "Untitled.md",
     "Manifold-Constrained Hyper-Connections.md",
+    "Machine Learning/Linear Attention.md",
     "诗文/为什么我想成为女人.md",
     "诗文/闷热的后脑.md",
     "诗文/忆江南·夏至.md",
@@ -209,7 +211,6 @@
     "Machine Learning/Distributed Training - TinyML.md",
     "Computer Science/How to master Vim?.md",
     "CS336/Lecture 4 Mix of Experts.md",
-    "CS336/Lecture 3 Architectures, Hyperparameters.md",
     "Mathematics",
     "Computer Science",
     "Untitled.canvas",
