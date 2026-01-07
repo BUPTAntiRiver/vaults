@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Machine Learning/Distributed Training - TinyML.md",
+                "file": "诗文/书页沐浴露.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Distributed Training - TinyML"
+              "title": "书页沐浴露"
             }
           }
         ]
@@ -171,14 +171,16 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "7a2d23172aa61df0",
+  "active": "bba62f1707ffcf40",
   "lastOpenFiles": [
+    "诗文/仿生人会梦到电子羊吗？.md",
+    "Manifold-Constrained Hyper-Connections.md",
+    "Machine Learning/Distributed Training - TinyML.md",
     "诗文/书页沐浴露.md",
     "开发者故事.md",
     "Computer Science/How to master Vim?.md",
     "BUPT/Database System Crash Course.md",
     "诗文/闷热的后脑.md",
-    "Manifold-Constrained Hyper-Connections.md",
     "CS336/Lecture 4 Mix of Experts.md",
     "CS336/Lecture 3 Architectures, Hyperparameters.md",
     "CS336/Lecture 2 PyTorch, Resource Accounting.md",
@@ -197,8 +199,6 @@
     "诗文/别从前.md",
     "诗文/别.md",
     "诗文/元旦.md",
-    "诗文/仿生人会梦到电子羊吗？.md",
-    "Machine Learning/Distributed Training - TinyML.md",
     "Mathematics",
     "Computer Science",
     "Untitled.canvas",
