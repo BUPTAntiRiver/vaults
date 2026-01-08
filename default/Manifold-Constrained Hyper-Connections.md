@@ -46,6 +46,7 @@ Drawing inspiration from the identity mapping principle of residual connection, 
 $$
 \mathcal{P}_{\mathcal{M}^{\text{res}}}(\mathcal{H}^{\text{res}}_{l}) \coloneqq \{\mathcal{H}^{\text{res}}_{l}\in \mathbb{R}^{n\times n}\mid \mathcal{H}^{\text{res}}_{l}\mathbf{1}_{n}=\mathbf{1}_{n},\mathbf{1}_{n}^{\top}\mathcal{H}^{\text{res}}_{l}=\mathbf{1}_{n}^{\top},\mathcal{H}^{\text{res}}_{l}\geq 0\},
 $$
+
 when $n=1$, the doubly stochastic condition degenerates to the scalar 1, thereby recovering the original identity mapping. The choice of double stochasticity confers to several rigorous theoretical properties beneficial for large-scale model training:
 
 1. **Norm Preservation**: The spectral norm of a doubly stochastic matrix is bounded by 1. This implies that the learnable mapping is non-expansive.
@@ -53,3 +54,29 @@ when $n=1$, the doubly stochastic condition degenerates to the scalar 1, thereby
 3. **Geometric Interpretation via the Brikhoff Polytope**: The set $\mathcal{M}^{\text{res}}$ forms the Birkhoff polytope, which is the convex hull of the set of permutation matrices. This provides an interpretation that the residual mapping acts as a convex combination of permutations. Mathematically such repetition tends to increase the mixing of information across streams monotonically.
 
 The non-negativity also prevents signal cancellation between positive and negative coefficients.
+
+## Parameterization and Manifold Projection
+
+$m$HC did some modification to the calculation process. Given the input hidden matrix $\mathbf{x}_{l}\in \mathbb{R}^{n\times C}$ at the $l$-th layer, we first flatten it into a vector $\vec{\mathbf{x}}_{l}=\text{vec}(\mathbf{x}_{l})\in \mathbb{R}^{1\times nC}$ to preserve full context information. Then do the following mapping:
+
+$$
+\begin{cases}
+\vec{\mathbf{x}}_{l}'=\text{RMSNorm}(\vec{\mathbf{x}}_{l}) \\
+\tilde{\mathcal{H}}_{l}^{\text{pre}}=\alpha_{l}^{\text{pre}}\cdot(\vec{x}_{l}'\varphi_{l}^{\text{pre}})+\mathbf{b}_{l}^{\text{pre}} \\
+\tilde{\mathcal{H}}_{l}^{\text{post}}=\alpha_{l}^{\text{post}}\cdot(\vec{x}_{l}'\varphi_{l}^{\text{post}})+\mathbf{b}_{l}^{\text{post}} \\
+\tilde{\mathcal{H}}_{l}^{\text{res}}=\alpha_{l}^{\text{res}}\cdot \text{mat}(\vec{x}_{l}'\varphi_{l}^{\text{res}})+\mathbf{b}_{l}^{\text{res}}, \\
+\end{cases}
+$$
+
+where $\varphi$ are linear projections for dynamic mapping and $\text{mat}(\cdot)$ is reshape function from $\mathbb{R}^{1\times n^{2}}$ to $\mathbb{R}^{n\times n}$.
+Then the final constrained mapping are obtained via:
+
+$$
+\begin{cases}
+\mathcal{H}^{\text{pre}}=\sigma(\tilde{\mathcal{H}}_{l}^{\text{pre}}) \\
+\mathcal{H}^{\text{post}}=2\sigma(\tilde{\mathcal{H}}_{l}^{\text{post}}) \\
+\mathcal{H}^{\text{res}}_{l}=\text{Sinkhorn-Knopp}(\tilde{\mathcal{H}}_{l}^{\text{res}}),
+\end{cases}
+$$
+
+where $\sigma(\cdot)$ denotes the Sigmoid function. The $\text{Sinkhorn-Knopp}(\cdot)$ operator firstly makes all elements to be positive via an exponent operator and then conducts **iterative** normalization process that alternatively rescales rows and columns to sum to 1. They choose 20 iterations as a practical value in experiments.
