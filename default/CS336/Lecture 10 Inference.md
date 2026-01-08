@@ -2,7 +2,12 @@
 
 [[Transformer and LLM]]
 
-The conclusion is that main bottleneck is memory.
+There are two stages of inference:
+
+- **Prefill**: given a sequence, encode tokens in parallel, which is compute limited
+- **Generation**: generate one token at a time, which is memory limited
+
+Compute limited is good because we use up all of our compute resources, but memory limited is bad. So the main bottleneck is memory. Let's see how to mitigate it.
 
 # Taking Shortcuts (lossy)
 
@@ -43,3 +48,8 @@ In summary, the goal is to reduce KV cache size without hurting accuracy. So we 
 ## Pruning
 
 [[Pruning and Sparsity - TinyML]]
+After pruning we usually do distillation to learn from itself then iterate.
+
+## Speculative Sampling
+
+Remember that we have proposed, generation is slower than prefilling, because the later one can parallel, so we can modify the generation a little bit, which is using a cheaper **draft model** to guess a few tokens a head of time (because they are smaller and faster), then evaluate with **target model**, so that it can process tokens in parallel and accept it if looks good. This makes the model behaves like generating multiple tokens at a time.
