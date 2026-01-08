@@ -49,4 +49,7 @@ $$
 when $n=1$, the doubly stochastic condition degenerates to the scalar 1, thereby recovering the original identity mapping. The choice of double stochasticity confers to several rigorous theoretical properties beneficial for large-scale model training:
 
 1. **Norm Preservation**: The spectral norm of a doubly stochastic matrix is bounded by 1. This implies that the learnable mapping is non-expansive.
-2. **Compositional Closure**: 
+2. **Compositional Closure**: The set of doubly stochastic matrix is closed under matrix multiplication, thereby preserving stability throughout the entire depth of the model.
+3. **Geometric Interpretation via the Brikhoff Polytope**: The set $\mathcal{M}^{\text{res}}$ forms the Birkhoff polytope, which is the convex hull of the set of permutation matrices. This provides an interpretation that the residual mapping acts as a convex combination of permutations. Mathematically such repetition tends to increase the mixing of information across streams monotonically.
+
+The non-negativity also prevents signal cancellation between positive and negative coefficients.
