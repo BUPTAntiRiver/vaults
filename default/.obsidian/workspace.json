@@ -74,13 +74,11 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
-    "width": 200,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "6d9fca73aa408d17",
@@ -183,7 +181,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "006021843e05250d",
+  "active": "bba62f1707ffcf40",
   "lastOpenFiles": [
     "Untitled.md",
     "Manifold-Constrained Hyper-Connections.md",

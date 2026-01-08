@@ -1,9 +1,5 @@
 {
-  "cssTheme": "Minimal",
   "accentColor": "",
-  "theme": "system",
-  "textFontFamily": "Iosevka Nerd Font Mono",
-  "monospaceFontFamily": "Iosevka Nerd Font Mono",
-  "interfaceFontFamily": "Iosevka Nerd Font Mono",
-  "baseFontSize": 16
+  "cssTheme": "Minimal",
+  "monospaceFontFamily": ""
 }
